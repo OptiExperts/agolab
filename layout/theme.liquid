@@ -157,9 +157,9 @@
   {% if template contains 'index' %}
   {%- render '__home-css' -%}
   {% elsif template contains 'product' %}
-  {%- render '__home-css' -%}
+  {%- render '__product-css' -%}
   {% elsif template contains 'collection' %}
-  {%- render '__home-css' -%}
+  {%- render '__collection-css' -%}
   {% else %}
   <link rel="stylesheet" href="{{ 'plugins.css' | asset_url }}">
   <link rel="stylesheet" href="{{ 'ultramegamenu.css' | asset_url }}">
