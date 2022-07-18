@@ -154,6 +154,35 @@
   <link rel="stylesheet" data-href="{{ 'layout_full_width.css' | asset_url }}">
   {%- endif -%}
 
+  {% if template contains 'index' %}
+  {%- render '__home-css' -%}
+  {% elsif template contains 'product' %}
+  {%- render '__home-css' -%}
+  {% elsif template contains 'collection' %}
+  {%- render '__home-css' -%}
+  {% else %}
+  <link rel="stylesheet" href="{{ 'plugins.css' | asset_url }}">
+  <link rel="stylesheet" href="{{ 'ultramegamenu.css' | asset_url }}">
+  <link rel="stylesheet" href="{{ 'styles.css' | asset_url }}">
+  {%- capture header_type %}header-{{settings.header_design}}.css{%- endcapture -%}
+  <link rel="stylesheet" href="{{ header_type | asset_url }}"> 
+
+  <link rel="stylesheet" href="{{ 'product-list.css' | asset_url }}">
+  <link rel="stylesheet" href="{{ 'responsive.css' | asset_url }}"> 
+  <link rel="stylesheet" href="{{ 'config.css' | asset_url }}">
+  {%- if settings.layout == '1024px' -%}
+  <link rel="stylesheet" href="{{ 'layout_1024.css' | asset_url }}">
+  {%- endif -%}
+  {%- if settings.layout == '1280px' -%}
+  <link rel="stylesheet" href="{{ 'layout_1280.css' | asset_url }}">
+  {%- endif -%}
+  {%- if settings.layout == '1420px' -%}
+  <link rel="stylesheet" href="{{ 'layout_1420.css' | asset_url }}">
+  {%- endif -%}
+  {%- if settings.layout == 'full_width' -%}
+  <link rel="stylesheet" href="{{ 'layout_full_width.css' | asset_url }}">
+  {%- endif -%}
+  {% endif %}
 
   <!----- Content For Header section -->
   {% unless content_for_header contains "Shopify.designMode" %}
