@@ -1,0 +1,22 @@
+{%- capture token %}{% include 'shortcode-render' render:'token' default: '290116085.dd38710.e727245eec494e069f6e7d51d4743585' -%}{%- endcapture -%}   
+{%- capture limit %}{% include 'shortcode-render' render:'limit' default: '12' -%}{%- endcapture -%}  
+{%- capture autoplay %}{% include 'shortcode-render' render:'autoplay' default: '5000' -%}{%- endcapture -%}  
+{%- capture desktop_large %}{% include 'shortcode-render' render:'desktop_large' default: '9' -%}{%- endcapture -%}  
+{%- capture desktop %}{% include 'shortcode-render' render:'desktop' default: '7' -%}{%- endcapture -%}  
+{%- capture tablet %}{% include 'shortcode-render' render:'tablet' default: '4' -%}{%- endcapture -%}  
+{%- capture mobile %}{% include 'shortcode-render' render:'mobile' default: '2' -%}{%- endcapture -%}
+{%- capture margin %}{% include 'shortcode-render' render:'margin' default: '20' -%}{%- endcapture -%}
+<div class="block-instafeed blog-wrap">
+  <div class="blog-items blog-grid-items"> 
+    <div class="blog-instagrams owl-carousel instagram-feed-carousel owl-lazy-container owl-loaded owl-drag" data-count="{{ limit }}" data-token="{{ token }}" data-itemclass="col-md-ic-1" data-autoplay="{{ autoplay }}" data-desktop="{{ desktop }}" data-desktop-large="{{ desktop_large }}" data-tablet="{{ tablet }}" data-mobile="{{ mobile }}" data-nav="false" data-page="false" data-margin="{{ margin }}"></div>
+  </div>
+</div>
+<style>  
+  .insta-item .content i {
+    display: none;
+    position: absolute;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    -webkit-transform: translate(-50%, -50%); 
+  }
+</style>

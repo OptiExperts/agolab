@@ -1,0 +1,76 @@
+{% assign list = linklists[menu_collection] %}
+<ul id="categories_nav" class="nav-accordion nav-categories">
+  {% for link in list.links %}
+  {% assign child_list_handle = link.title | handleize %}
+  {% if linklists[child_list_handle].links != blank %}
+  <li class="level0 level-top parent {% if link.active %}active{% endif %} {% if forloop.index == list.links.size %}last{% endif %}">
+    <a href="{{ link.url }}" class="level-top">
+      <span> 
+        {{ link.title }} 
+        {% if link.type == 'collection_link' and show_count != blank %} 
+        <span class="count">({{ link.object.products_count }})</span>
+        {%endif%} 
+      </span>
+    </a>
+    <ul class="level0">
+      {% for childlink in linklists[child_list_handle].links %}
+      {% assign grand_child_list_handle = childlink.title | handle %}
+      {% if linklists[grand_child_list_handle].links != blank %}
+      <li class="level1 parent {% if childlink.active %}active{% endif %} {% if forloop.index == linklists[child_list_handle].links.size %}last{% endif %}">
+        <a href="{{ childlink.url }}">
+          <span> 
+            {{ childlink.title }} 
+          </span> 
+          {% if childlink.type == 'collection_link' and show_count != blank %} 
+          <span class="count">({{ childlink.object.products_count }})</span>
+          {%endif%} 
+        </a>
+        <ul class="level1">
+          {% for grand_child_link in linklists[grand_child_list_handle].links %}
+          <li class="level2{% if grand_child_link.active %} active{% endif %}{% if forloop.index == linklists[grand_child_list_handle].links.size %} last{% endif %}">
+            <a href="{{ grand_child_link.url }}" class="site-nav__link"> 
+              {{ grand_child_link.title }} 
+              {% if grand_child_link.type == 'collection_link' and show_count != blank %} 
+              <span class="count">({{ grand_child_link.object.products_count }})</span>
+              {%endif%} 
+            </a>
+          </li>
+          {% endfor %}
+        </ul>
+      </li>
+      {% else %}
+      <li class="level1 {% if childlink.active %}active{% endif %} {% if forloop.index == linklists[child_list_handle].links.size %}last{% endif %}">
+        <a href="{{ childlink.url }}">
+          <span> 
+            {{ childlink.title }} 
+          </span> 
+          {% if childlink.type == 'collection_link' and show_count != blank %} 
+          <span class="count">({{ childlink.object.products_count }})</span>
+          {%endif%} 
+        </a>
+      </li>
+      {% endif %}
+      {% endfor %}
+    </ul>
+  </li>
+  {% else %}
+  <li class="level0 level-top {% if link.active %}active{% endif %} {% if forloop.index == list.links.size %}last{% endif %}">
+    <a href="{{ link.url }}" class="level-top"> 
+      {{ link.title }} 
+      {% if link.type == 'collection_link' and show_count != blank %} 
+      <span class="count">({{ link.object.products_count }})</span>
+      {%endif%} 
+    </a>
+  </li>
+  {% endif %}
+  {% endfor %}
+</ul>
+<script>
+  jQuery(document).ready(function($){
+    $('.nav-categories li').each(function(){
+      if($(this).hasClass('active')) {
+        $(this).parents('li').addClass('active')
+      }
+    });
+  });
+</script>

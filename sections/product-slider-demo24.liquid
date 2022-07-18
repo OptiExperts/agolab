@@ -1,0 +1,165 @@
+<div data-section-id="{{ section.id }}" data-section-type="carousel-section">
+  <div class="home-slider24 row" style="margin-top:{{section.settings.margin_top | remove: 'px' | append: 'px' }}; margin-bottom:{{section.settings.margin_bottom | remove: 'px' | append: 'px' }};padding: {{section.settings.padding}};">
+    <div class="col-md-12"> 
+      <div class="product-slider">
+          <div class="data-carousel" data-auto="{{ section.settings.autoplay }}" data-items="1" data-1200="1" data-992="1" data-768="1" data-480="1" data-320="1" data-paging="{{section.settings.pagination}}" data-nav="{{section.settings.navigation}}" data-margin="0" data-prev='<i class="icon-angle-left"></i>' data-loop="{{section.settings.loop}}" data-next='<i class="icon-angle-right"></i>' style="display: none;"></div>
+          <div class="product-items-wrapper owl-carousel carousel-init owl-carousel-lazy">
+            {%- if section.blocks.size > 0 -%}
+            {%- for block in section.blocks -%}
+            <div class="porto-ultimate-content-box-container">
+              <div class="porto-ultimate-content-box" style="background-image: url({{block.settings.bg_image | img_url: 'master' }});background-size: cover;background-repeat: no-repeat;background-position: center center;background-color: rgba(0, 0, 0, 0);box-shadow: none;">
+                <div class="porto-container container ">
+                  <div class="porto-products wpb_content_element mb-0">
+                    <div class="products products-container list">
+                      {%- if block.settings.product -%}
+                      {%- assign pt_layout = 'outimage' -%}
+                      {%- assign product_handle = block.settings.product -%} 
+                      {%- assign aspect_ratio = block.settings.aspect_ratio -%}
+                      {%- assign img_size = block.settings.img_size -%}
+                      {%- case aspect_ratio -%}
+                      {%- when true -%}
+                        {%- assign image_width = img_size | split: 'x' | first -%}
+                        {%- assign image_height = '' -%} 
+                        {%- assign ar = 1 -%}
+                      {%- else -%}
+                        {%- assign image_width = img_size | split: 'x' | first -%}
+                        {%- assign image_height = img_size | split: 'x' | last -%}
+                        {%- if image_width < image_height -%}
+                          {%- assign ar = image_width | divided_by: 1 -%}
+                        {%- else -%}
+                          {%- assign ar = image_width | divided_by: image_height -%}
+                        {%- endif -%}
+                      {%- endcase -%}   
+                      {%- capture image_size -%}{{ image_width }}x{{ image_height }}{%- endcapture -%} 
+                      {%- assign pt = 100 | divided_by: ar | append: '%' -%}
+                      {%- assign product = all_products[product_handle] -%}
+                      {%- assign sold_out = true -%}
+                      {%- if product.available -%}
+                      {%- assign sold_out = false -%}
+                      {%- endif -%}
+                      {%- assign on_sale = false -%}
+                      {%- if product.compare_at_price_min > product.price_min -%}
+                      {%- assign on_sale = true -%}
+                      {%- endif -%}
+                      {%- assign variant_tmp = product.selected_or_first_available_variant  -%}
+                      {%- for variant in product.variants -%}
+                      {%- if variant.available == true and variant.price < variant_tmp.price -%}
+                      {%- assign variant_tmp = variant -%}
+                      {%- endif -%}
+                      {%- endfor -%}
+                      <div class="product-col product-outimage product type-product">
+                        {% include 'pt-product-loop-layout-default', label: block.settings.lable_sale %}
+                      </div>
+                      {%- endif -%}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            {%- endfor -%}
+            {%- endif -%}
+          </div>
+        </div>  
+    </div> 
+  </div>  
+</div>
+{% schema %}
+{
+  "name": "t:sections.product-slide-demo24.name",
+  "settings": [ 
+    {
+      "type": "header", 
+      "content": "t:sections.product-slide-demo24.settings.header__1.content"
+    }, 
+    {
+      "type": "text",
+      "id": "margin_top",
+      "label": "t:sections.product-slide-demo24.settings.margin_top.label",
+	  "info": "45px"
+    },
+    {
+      "type": "text",
+      "id": "margin_bottom",
+      "label": "t:sections.product-slide-demo24.settings.margin_bottom.label",
+      "default" : "0",
+	  "info": "45px"
+    },
+    {
+      "type": "text",
+      "id": "padding",
+      "label": "t:sections.product-slide-demo24.settings.padding.label",
+      "default" : "0 0 0 0",
+      "info": "t:sections.product-slide-demo24.settings.padding.info"
+    }, 
+    {
+      "type": "header", 
+      "content": "t:sections.product-slide-demo24.settings.header__2.content"
+    },
+    {
+      "type": "text",
+      "id": "autoplay",
+      "label": "t:sections.product-slide-demo24.settings.autoplay.label",
+      "info": "t:sections.product-slide-demo24.settings.autoplay.info",
+ 	  "default": "5000"
+    },  
+    {
+      "type": "checkbox",
+      "id": "navigation",
+      "label": "t:sections.product-slide-demo24.settings.navigation.label",
+      "default" : false
+    },  
+    {
+      "type": "checkbox",
+      "id": "pagination",
+      "label": "t:sections.product-slide-demo24.settings.pagination.label",
+      "default" : true
+    },  
+    {
+      "type": "checkbox",
+      "id": "loop",
+      "label": "t:sections.product-slide-demo24.settings.loop.label",
+      "default" : true
+    }
+  ], 
+  "blocks": [
+    {
+      "type": "product",
+      "name": "t:sections.product-slide-demo24.blocks.product.name",
+      "settings": [ 
+        {
+          "type": "image_picker",
+          "id": "bg_image",
+          "label": "t:sections.product-slide-demo24.blocks.product.settings.bg_image.label" 
+        }, 
+        {
+          "type": "text",
+          "id": "lable_sale",
+          "label": "t:sections.product-slide-demo24.blocks.product.settings.lable_sale.label",
+		  "default": "<small>get yours now</small>"
+        }, 
+        {
+          "type": "product",
+          "id": "product",
+          "label": "t:sections.product-slide-demo24.blocks.product.settings.product.label" 
+        },
+        {
+          "type": "checkbox",
+          "id": "aspect_ratio",
+          "label": "t:sections.product-slide-demo24.blocks.product.settings.aspect_ratio.label", 
+          "default": true
+        },
+        {
+          "type": "text",
+          "id": "img_size",
+          "label": "t:sections.product-slide-demo24.blocks.product.settings.img_size.label",
+          "default":"722x455"
+        }
+      ]
+    } 
+  ],
+  "presets": [{
+    "name": "t:sections.product-slide-demo24.presets.name",
+    "category": "Products"
+  }]
+}
+{% endschema %}

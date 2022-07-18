@@ -1,0 +1,139 @@
+<div class="side-top hidden-sm">
+  <div class="header-left">
+    {% include 'header-setting' %}
+  </div>
+  <div class="header-right">
+    <div class="cart-area"> 
+      <div class="header-contact">
+        <a class="my-account" href="/account" style="padding: 0 .125rem;"><i class="icon-user-2"></i></a>
+        <a class="wishlist-popup wishlist" href="javascript:void(0)"><i class="icon-wishlist-2"></i></a>
+      </div>
+      <div class="mini-cart">
+        {% include 'header-cart' %}
+      </div>
+    </div> 
+  </div> 
+</div>
+<div class="header container">
+  <div class="header-left">
+    {% include 'header-logo' %}
+  </div>
+  <div class="header-center"> 
+    <div class="search-area show-icon-tablet">
+      <a href="javascript:void(0);" class="search-icon"><span><i class="icon-magnifier"></i></span></a>
+      {% include 'header-search' %}
+    </div> 
+    <div class="menu-icon"><a href="javascript:void(0)" title="Menu"><i class="fa fa-bars"></i></a></div> 
+    <div class="mini-cart visible-sm">
+      {% include 'header-cart' %}
+    </div>
+  </div>
+  <div class="header-right hidden-sm">
+    <div class="main-nav wrapper-top-menu">
+      <div class="container">
+        <div id="main-top-nav" class="main-top-nav"> 
+          <!-- Main Menu -->
+          {% include 'side-menu' %}
+          <!-- End Main Menu --> 
+        </div>
+      </div>
+    </div>
+    <div class="side-bottom">
+      {% if settings.header_custom_text != '' %}
+      <div class="custom-block"> 
+        {{ settings.header_custom_text }} 
+      </div>
+      {% endif %} 
+    </div>
+  </div> 
+</div> 
+<script>
+  jQuery(function($) {
+    if($(".header-container.type8").length > 0) {
+      $(".wrapper>.page").addClass('side-nav');
+    }
+    $(window).scroll(function() {
+      var side_header_height = $(".header-container.type8").innerHeight();
+      var window_height = $(window).height();
+      if(side_header_height-window_height<$(window).scrollTop()){
+        if(!$(".header-container.type8").hasClass("fixed-bottom")) {
+          $(".header-container.type8").addClass("fixed-bottom");
+        }
+      }
+      if(side_header_height-window_height>=$(window).scrollTop()){
+        if($(".header-container.type8").hasClass("fixed-bottom")) {
+          $(".header-container.type8").removeClass("fixed-bottom");
+        }
+      } 
+      if($(".wrapper>.page.side-nav .main-container .main-breadcrumbs").length) {
+        if(!$(".wrapper>.page.side-nav .main-container .main-breadcrumbs").hasClass("fixed-position")) {
+          breadcrumb_pos_top = $(".wrapper>.page.side-nav .main-container .main-breadcrumbs").offset().top;
+          if($(".wrapper>.page.side-nav .main-container .main-breadcrumbs").offset().top<$(window).scrollTop()) {
+            $(".wrapper>.page.side-nav .main-container .main-breadcrumbs").addClass("fixed-position");
+          }
+        }
+        else {
+          if($(window).scrollTop()<=1) {
+            $(".wrapper>.page.side-nav .main-container .main-breadcrumbs").removeClass("fixed-position");
+          }
+        }
+      }
+    });
+  });
+</script>
+<style>
+  .container {
+    padding-left: 20px;
+    padding-right: 20px;
+    max-width: 100%;
+    width: 100%; 
+  }
+  @media (min-width: 1440px) {
+    .container {
+      padding-left: 40px;
+      padding-right: 40px; 
+    }
+  }
+  @media (min-width: 992px) { 
+    .main-section-header { 
+      height: auto !important;
+    }
+  }
+  .wrapper>.page {
+    min-height: 100vh;
+    position: relative;
+    left: 0;
+  }
+  @media (min-width: 992px) {
+    .wrapper>.page {
+      display: -ms-flexbox;
+      display: flex;
+      -ms-flex-wrap: wrap;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .page>.main-section-header {
+      -ms-flex: 0 0 256px;
+      flex: 0 0 256px;
+      max-width: 256px;
+    }
+    .page>.shopify-section,.page>.main-container, .page>.box_footer {
+      -ms-flex:  0 0 100%;
+      flex: 0 0 100%;
+      max-width: calc(100% - 256px);
+      order: 2;
+    }
+  }
+  @media (min-width: 1440px) {
+    .page>.main-section-header {
+      -ms-flex: 0 0 300px;
+      flex: 0 0 300px;
+      max-width: 300px;
+    }
+    .page>.shopify-section,.page>.main-container, .page>.box_footer {
+      -ms-flex: 0 0 100%;
+      flex: 0 0 100%;
+      max-width: calc(100% - 300px);
+    }
+  }
+</style>

@@ -1,0 +1,42 @@
+<!-- /templates/page.liquid -->
+{{ 'pages.css' | asset_url | stylesheet_tag }} 
+<div class="page-container">  
+  {% include 'shortcode' load: page.content %} 
+</div> 
+<script>
+  $(document).ready(function() {
+    if ($.fn.countTo) {
+      if ($.fn.waypoint && $('.count').length > 0 ) {
+        var waypoint = new Waypoint({
+          element: $('.count'),
+          handler: function() {
+            $(this.element).countTo({
+              onComplete: function(value) {
+                waypoint.destroy();
+              }
+            });
+          },
+          offset: '90%',
+        });
+      } else {
+        $('.count').countTo({
+        });
+      }
+    } else {
+      // fallback if count plugin doesn't included
+      // Get the data-to value and add it to element
+      $('.count').each(function () {
+        var $this = $(this),
+          countValue = $this.data('to');
+        $this.text(countValue);
+      });
+    }
+  })
+</script> 
+{% schema %}
+{
+  "name": "t:sections.main-page.name",
+  "tag": "section",
+  "class": "spaced-section"
+}
+{% endschema %}

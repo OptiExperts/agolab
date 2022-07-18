@@ -1,0 +1,113 @@
+{%- capture block_title -%}{%- include 'shortcode-render' render:'title' -%}{%- endcapture -%}
+{%- capture title_style -%}{%- include 'shortcode-render' render:'title_style', default:'border-bottom' -%}{%- endcapture -%}
+{%- capture title_align -%}{%- include 'shortcode-render' render:'title_align', default:'left' -%}{%- endcapture -%}
+{%- capture blog %}{% include 'shortcode-render' render:'blog' default: 'news' -%}{%- endcapture -%}    
+{%- capture limit %}{% include 'shortcode-render' render:'limit' default: '4' -%}{%- endcapture -%}   
+{%- capture ratio %}{% include 'shortcode-render' render:'aspect_ratio' default: 'true' -%}{%- endcapture -%}  
+{%- capture img_size %}{% include 'shortcode-render' render:'img_size' default: '400x400' -%}{%- endcapture -%}  
+{%- capture autoplay %}{% include 'shortcode-render' render:'autoplay' default: '5000' -%}{%- endcapture -%}  
+{%- capture item_margin %}{% include 'shortcode-render' render:'item_margin' default: '10' -%}{%- endcapture -%}
+{%- capture nav %}{% include 'shortcode-render' render:'show_nav' default: 'false' -%}{%- endcapture -%}  
+{%- capture nav_side -%}{%- include 'shortcode-render' render:'nav_side' -%}{%- endcapture -%}
+{%- capture nav_position -%}{%- include 'shortcode-render' render:'nav_position' -%}{%- endcapture -%}
+{%- capture nav_type -%}{%- include 'shortcode-render' render:'nav_type' -%}{%- endcapture -%}
+{%- capture nav_onhover -%}{%- include 'shortcode-render' render:'nav_onhover' -%}{%- endcapture -%}
+{%- capture paging %}{% include 'shortcode-render' render:'show_paging' default: 'false' -%}{%- endcapture -%}   
+{%- capture desktop %}{% include 'shortcode-render' render:'desktop' default: '3' -%}{%- endcapture -%}  
+{%- capture tablet %}{% include 'shortcode-render' render:'tablet' default: '2' -%}{%- endcapture -%}  
+{%- capture mobile %}{% include 'shortcode-render' render:'mobile' default: '1' -%}{%- endcapture -%}
+{%- assign aspect_ratio = false  -%} 
+{%- if ratio == 'true' -%}{%- assign aspect_ratio = true -%}{%- endif -%}
+{%- assign show_nav = false  -%} 
+{%- if nav == 'true' -%}{%- assign show_nav = true -%}{%- endif -%}
+{%- assign show_paging = false  -%} 
+{%- if paging == 'true' -%}{%- assign show_paging = true -%}{%- endif -%}
+{%- assign paginate_index = limit | plus: 0  -%}
+{{ 'section-blog-posts.css' | asset_url | stylesheet_tag }}
+<div class="blog_article title-{{title_style}}"> 
+  {%- if block_title != '' -%}
+  <h2 class="section-title text-{{title_align}}">
+    {%- if title_style == 'border-middle' and title_align != 'left' -%}
+    <span class="line-l"></span>
+    {%- endif -%}
+    <span class="inline-title"> 
+      {{ block_title }} 
+    </span>
+    {%- if title_style == 'border-middle' and title_align != 'right' -%}
+    <span class="line-r"></span>
+    {%- endif -%}
+  </h2>
+  {%- endif -%}
+  {%- assign blog = blogs[blog] -%}
+  {%- unless blog.empty? -%} 
+  {%- assign img_size = img_size -%}
+  {%- case aspect_ratio -%}
+  {%- when true -%}
+  {%- assign image_width = img_size | split: 'x' | first -%}
+  {%- assign image_height = '' -%}
+  {%- assign ar = 1 -%}
+  {%- else -%}
+  {%- assign image_width = img_size | split: 'x' | first -%}
+  {%- assign image_height = img_size | split: 'x' | last -%}
+  {%- if image_width < image_height -%}
+  {%- assign ar = image_width | divided_by: 1 -%}
+  {%- else -%}
+  {%- assign ar = image_width | divided_by: image_height -%}
+  {%- endif -%}
+  {%- endcase -%}
+  <div class="latest_news">
+    <div class="recent-posts">
+      <div class="data-carousel"
+           data-auto="{{ autoplay }}"
+           data-items="{{ desktop }}"
+           data-1200="{{ desktop }}"
+           data-992="{{ tablet }}"
+           data-768="{{ tablet }}"
+           data-640="{{ mobile }}"
+           data-480="{{ mobile }}"
+           data-320="{{ mobile }}"
+           data-paging="{{ show_paging }}"
+           data-nav="{{ show_nav }}"
+           data-margin="{{ item_margin }}"
+           data-prev='' 
+           data-next='' style="display: none;"></div>
+      <div class="post-carousel owl-carousel carousel-init dots-style-1 owl-carousel-lazy {{nav_position}} {{nav_side}} {{nav_type}} {% if nav_onhover %}show-nav-hover{% endif %}">
+        {%- for article in blog.articles limit:paginate_index -%} 
+        <div class="item">  
+          <div class="grid-box">
+            <div class="post-image m-b-md"> 
+              {%- if article.image -%} 
+              {%- capture image_size -%}{{ image_width }}x{{ image_height }}{%- endcapture -%} 
+              {%- assign pt = 100 | divided_by: ar | append: '%' -%} 
+              <a href="{{ article.url }}">
+                <div class="img-thumbnail"><img data-src="{{ article | img_url: image_size, crop: 'center' }}" style="padding-top: {{pt}};"/></div>
+              </a>
+              {%- endif -%}
+              <div class="post-date"> 
+                <span class="day">{{ article.published_at | date: '%d' }}</span>
+                <span class="month">{{ article.published_at | date: '%b' }}</span> 
+              </div>
+            </div>
+            <!-- Post meta before content -->
+            <div class="post-content">
+              <h4 class="entry-title">
+                <a href="{{ article.url }}"> 
+                  {{ article.title }} 
+                </a>
+              </h4> 
+              <div class="post-meta m-b-sm d-none">{{ article.published_at | date: '%d-%b-%Y' }}</div>
+              <p class="post-excerpt"> 
+                {{ article.content |strip_html | truncatewords: 10}} 
+                <a class="read-more" href="{{ article.url }}">{{ 'blogs.article.read_more' | t }} <i class="fa fa-angle-right"></i></a>
+              </p>
+            </div>
+            <!-- Post meta after content --> 
+            <div class="clearfix"></div>
+          </div> 
+        </div>
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+  {%- endunless -%}
+</div> 

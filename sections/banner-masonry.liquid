@@ -1,0 +1,247 @@
+<div data-section-id="{{ section.id }}" data-section-type="banner-masonry-section">
+  <div id="banner-masonry-{{ section.id }}" style="margin-top: {{section.settings.margin_top | remove: 'px' | append: 'px' }};margin-bottom: {{section.settings.margin_bottom | remove: 'px' | append: 'px' }};padding: {{section.settings.section_padding}};">
+    {%- if section.settings.section_layout == '0' -%}
+    <div class="container">
+      {%- endif-%}
+      <div class="banner-masonry-grid" style="margin: -{{section.settings.item_space | remove: 'px' | append: 'px' }};">
+        <div class="grid-sizer"></div>
+        {%- for block in section.blocks -%}
+        <div class="masonry-grid-item {% if block.settings.masonry_grid_item == 'w2' %}w2{% endif %}{% if block.settings.masonry_grid_item == 'w3' %}w3{% endif %}{% if block.settings.masonry_grid_item == 'w4' %}w4{% endif %}" style="padding:{{section.settings.item_space | remove: 'px' | append: 'px' }};{% if block.settings.fixed_height != '' %}height: {{block.settings.fixed_height  | remove: 'px' | append: 'px'}};{% endif %}{% if block.settings.fixed_width != '' %}width: {{block.settings.fixed_width}};{% endif %}">
+          {%- if block.settings.home_banner_image != blank -%}
+          {%- assign baner_url = block.settings.home_banner_image | img_url: 'master' -%}
+          {%- else -%}
+          {%- if block.settings.masonry_grid_item == 'w1' -%}
+          {%- assign baner_url = 'baner468x589.png' | asset_url -%}
+          {%- endif -%}
+          {%- if block.settings.masonry_grid_item == 'w2' -%}
+          {%- assign baner_url = 'baner943x589.png' | asset_url -%}
+          {%- endif -%}
+          {%- if block.settings.masonry_grid_item == 'w3' -%}
+          {%- assign baner_url = 'baner1417x243.png' | asset_url -%}
+          {%- endif -%}
+          {%- if block.settings.masonry_grid_item == 'w4' -%}
+          {%- assign baner_url = 'baner1891x401.png' | asset_url -%}
+          {%- endif -%}
+          {%- if block.settings.masonry_grid_item == 'w5' -%}
+          {%- assign baner_url = 'baner468x838.png' | asset_url -%}
+          {%- endif -%}
+          {%- if block.settings.masonry_grid_item == 'w6' -%}
+          {%- assign baner_url = 'baner468x242.png' | asset_url -%}
+          {%- endif -%}
+          {%- endif -%}
+          <div class="banner-wrap {{block.settings.extra_class}}" style="position: relative;">
+            <img src="{{ baner_url }}" alt="{{block.settings.home_banner_image.alt}}"/>
+            {%- if block.settings.content != '' -%}
+            <div class="banner-content" style="position: absolute;width:100%;height:100%;top:0;"> 
+              {{ block.settings.content }} 
+            </div>
+            {%- endif -%} 
+          </div>
+        </div>
+        {%- endfor -%}
+      </div>
+      {%- if section.settings.section_layout == '0' -%}
+    </div>
+    {%- endif-%}
+  </div>
+</div>
+{% schema %}
+{
+  "name": "t:sections.banner-masonry.name",
+  "tag": "section",
+  "class": "spaced-section banner-masonry", 
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.banner-masonry.settings.header__1.content"
+    },
+    {
+      "type": "text",
+      "id": "margin_top",
+      "label": "t:sections.banner-masonry.settings.margin_top.label",
+      "info": "40px"
+    },
+    {
+      "type": "text",
+      "id": "margin_bottom",
+      "label": "t:sections.banner-masonry.settings.margin_bottom.label",
+      "info": "40px"
+    },
+    {
+      "type": "text",
+      "id": "section_padding",
+      "label": "t:sections.banner-masonry.settings.section_padding.label",
+      "info": "t:sections.banner-masonry.settings.section_padding.info"
+    },
+	{
+      "type": "select",
+      "id": "section_layout",
+      "label": "t:sections.banner-masonry.settings.section_layout.label",
+      "options": [
+        {
+          "value": "0",
+          "label": "t:sections.banner-masonry.settings.section_layout.options__1.label"
+        },
+        {
+          "value": "1",
+          "label": "t:sections.banner-masonry.settings.section_layout.options__2.label"
+        } 
+      ],
+      "default": "0"
+    },
+    {
+      "type": "text",
+      "id": "item_space",
+      "label": "t:sections.banner-masonry.settings.item_space.label",
+      "info": "t:sections.banner-masonry.settings.item_space.info",
+      "default": "10px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "t:sections.banner-masonry.blocks.image.name",
+      "settings": [
+        {
+          "type": "select",
+          "id": "masonry_grid_item",
+          "label": "t:sections.banner-masonry.blocks.image.settings.masonry_grid_item.label",
+          "options": [
+            {
+              "value": " ",
+              "label": " "
+            },
+            {
+              "value": "w1",
+              "label": "w1"
+            },
+            {
+              "value": "w2",
+              "label": "w2"
+            },
+            {
+              "value": "w3",
+              "label": "w3"
+            },
+            {
+              "value": "w4",
+              "label": "w4"
+            },
+            {
+              "value": "w5",
+              "label": "w5"
+            },
+            {
+              "value": "w6",
+              "label": "w6"
+            }
+          ],
+          "default": " "
+        },
+        {
+          "type": "text",
+          "id": "fixed_height",
+          "label": "t:sections.banner-masonry.blocks.image.settings.fixed_height.label",
+          "info": "t:sections.banner-masonry.blocks.image.settings.fixed_height.info"
+        },
+        {
+          "type": "text",
+          "id": "fixed_width",
+          "label": "t:sections.banner-masonry.blocks.image.settings.fixed_width.label",
+          "info": "t:sections.banner-masonry.blocks.image.settings.fixed_width.info"
+        },
+        {
+          "type": "image_picker",
+          "id": "home_banner_image",
+          "label": "t:sections.banner-masonry.blocks.image.settings.home_banner_image.label"
+        },
+        {
+          "type": "html",
+          "id": "content",
+          "label": "t:sections.banner-masonry.blocks.image.settings.content.label" 
+        },
+        {
+          "type": "text",
+          "id": "extra_class",
+          "label": "t:sections.banner-masonry.blocks.image.settings.extra_class.label",
+          "info": "t:sections.banner-masonry.blocks.image.settings.extra_class.info"
+        }
+      ]
+    }
+  ],
+  "presets": [{
+    "name": "t:sections.banner-masonry.presets.name",
+    "category": "Banner",
+    "settings": {
+    },
+    "blocks": [
+      {
+        "type": "image",
+      "settings": {
+          "masonry_grid_item": "w2"
+        }
+      },
+      {
+        "type": "image",
+        "settings": {
+          "masonry_grid_item": "w1"
+        }
+      },
+      {
+        "type": "image",
+        "settings": {
+          "masonry_grid_item": "w5"
+        }
+      },
+      {
+        "type": "image",
+        "settings": {
+          "masonry_grid_item": "w3"
+        }
+      },
+      {
+        "type": "image",
+        "settings": {
+          "masonry_grid_item": "w4"
+        }
+      },
+      {
+        "type": "image",
+        "settings": {
+          "masonry_grid_item": "w5"
+        }
+      },
+      {
+        "type": "image",
+        "settings": {
+          "masonry_grid_item": "w1"
+        }
+      },
+      {
+        "type": "image",
+        "settings": {
+          "masonry_grid_item": "w2"
+        }
+      },
+      {
+        "type": "image",
+        "settings": {
+          "masonry_grid_item": "w6"
+        }
+      },
+      {
+        "type": "image",
+        "settings": {
+          "masonry_grid_item": "w6"
+        }
+      },
+      {
+        "type": "image",
+        "settings": {
+          "masonry_grid_item": "w6"
+        }
+      }
+    ]
+  }]
+}
+{% endschema %} 

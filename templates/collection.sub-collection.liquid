@@ -1,0 +1,81 @@
+<!-- /templates/collection.sub-collection.liquid -->
+{%- if settings.sidebar_move == blank -%}
+{% include 'breadcrumb' %}
+{%- endif -%}
+{%- assign sidebar-left = settings.sidebar_left_collection -%}
+{%- assign sidebar-right = settings.sidebar_right_collection -%} 
+<div class="collection-main">
+  <div class="container">
+    <div class="row">
+      {%- assign sidebar_class = 'col-lg-3' -%}
+      {%- if sidebar-left != blank -%}
+      {%- assign main_class = 'col-lg-9' -%}
+      {%- endif -%} 
+      {%- if sidebar-right != blank -%}
+      {%- assign main_class = 'col-lg-9' -%} 
+      {%- endif -%}
+      {%- if sidebar-left != blank and sidebar-right != blank -%}
+      {%- assign main_class = 'col-lg-6' -%} 
+      {%- endif -%}   
+      {%- if sidebar-left == blank and sidebar-right == blank -%}
+      {%- assign main_class = 'col-lg-12' -%} 
+      {%- endif -%}  
+      <div class="{{main_class}} collection-content">
+        {% if collection.description != blank %}
+        <div class="collection-main-banner">  
+          {{collection.description}} 
+        </div>
+        {% endif %}
+        <div class="category-products item-1200-3 item-992-3 item-768-2 item-640-2 item-320-1">
+          <ul id="products-grid" class="products-grid columns3">
+            {%- assign list = linklists[settings.sub_collection_nav] -%}
+            {%- for link in list.links -%}
+            {%- if link.type == 'collection_link' and link.object.handle == collection.handle -%}
+            {%- for sublink in link.links -%}
+            {%- assign sub_collection = collections[sublink.object.handle] -%}
+            {%- if sub_collection.template_suffix == 'sub-collection' -%}
+              {%- assign total_products = 0 -%}
+              {%- for level2 in sublink.links -%}
+                {%- if level2.type == 'collection_link' -%}
+                  {%- assign total_products = total_products | plus: collections[level2.object.handle].all_products_count -%}
+                {%- endif -%}
+              {%- endfor -%}
+            {%- endif -%}
+            <li class="item product product-layout-grid">
+              {% include 'collection-grid-item' %}
+            </li>
+            {%- endfor -%}
+            {%- else -%}
+            {%- for sublink in link.links -%}
+            {%- if sublink.type == 'collection_link' and sublink.object.handle == collection.handle -%}
+            {%- for level2 in sublink.links -%}
+            {%- if level2.type == 'collection_link' -%}
+            {%- assign sub_collection = collections[level2.object.handle] -%}
+            <li class="item product product-layout-grid">
+              {% include 'collection-grid-item' %}
+            </li>
+            {%- endif -%}
+            {%- endfor -%}
+            {%- endif -%}
+            {%- endfor -%}
+            {%- endif -%}
+            {%- endfor -%}
+          </ul>
+        </div>
+      </div>
+      {% if sidebar-left != blank %}
+      <div class="{{sidebar_class}} sidebar col-left">
+        {% section 'sidebar-left' %}
+      </div>
+      {% endif %}
+      {% if sidebar-right != blank %}
+      <div class="{{sidebar_class}} sidebar-right col-right">
+        {% section 'sidebar-right' %}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+
+

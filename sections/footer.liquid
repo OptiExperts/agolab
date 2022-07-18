@@ -1,0 +1,1336 @@
+{%- assign delayTime = settings.time_lazy_load | times : 4 -%}
+<footer class="footer-wrapper {% if section.settings.fixed_position_footer_enabled == 'yes' %}fixed-position{% endif %}">
+  {%- if section.settings.footer_top_enabled == 'yes' -%}
+  <div class="footer-top">   
+    {% include 'shortcode' load: section.settings.footer_top_custom_3 %} 
+  </div>
+  {%- endif -%}
+  {%- if section.settings.footer_middle_enabled == 'yes' -%}
+  <div class="footer-middle">
+    <div class="level0 container">
+      {%- if section.settings.footer_ribbon_enabled == 'yes' -%}
+      <div class="footer-ribbon">
+        <span>{{ section.settings.footer_ribbon_text }}</span>
+      </div>
+      {%- endif -%}
+      <div class="row">
+        {%- if section.settings.footer_middle_column_1 != 'do_not_show' -%}
+        <div class="col-lg-{{ section.settings.footer_middle_column_1_size }} info-footer">
+          <div class="widget-wrapper">
+            {%- if section.settings.footer_column_1_heading != '' -%}
+            <div class="footer-block-title">
+              <h3>
+                <span>{{ section.settings.footer_column_1_heading }}</span>
+              </h3>
+            </div>
+            {%- endif -%}
+            {%- if section.settings.footer_middle_column_1 == 'custom_block' -%}
+            {%- if section.settings.column_content_1 == 'linkslist' -%}
+            <div class="custom-footer-content">
+              {%- assign list = linklists[section.settings.footer_column_linklist1] -%}
+              <ul class="footer-list">
+                {%- for link in list.links -%}
+                <li class="theme-color"> 
+                  <a href="{{ link.url }}">{{ link.title }}</a>
+                </li>
+                {%- endfor -%}
+              </ul>
+            </div>
+            {%- endif -%}
+            {%- if section.settings.column_content_1 == 'static_block_id' -%}
+            <div class="block_content">   
+              {% include 'shortcode' load: section.settings.footer_middle_column_1_custom %} 
+            </div>
+            {%- endif -%}
+            {%- if section.settings.column_content_1 == 'collection_product' -%}
+            <div class="bestseller">
+              <div class="sidebar-content block-content">
+                <div class="category-products">
+                  {%- assign limit = 3 -%}
+                  {%- assign collectionBestseller = collections[section.settings.collection_product_linklist1] -%}
+                  {% include 'collection-product' %}
+                </div>
+              </div>
+            </div>
+            {%- endif -%}
+            {%- endif -%}
+            {%- if section.settings.footer_middle_column_1 == 'facebook_widget' -%}
+            {% include 'facebook_feeds' %}
+            {%- endif -%}
+            {%- if section.settings.footer_middle_column_1 == 'twitter_widget' -%}
+            {% include 'twitter_feeds' %}
+            {%- endif -%}
+            {%- if section.settings.footer_middle_column_1 == 'newsletter_subscribe' -%}
+            {% include 'footer_newsletter_subscribe' %}
+            {%- endif -%}
+          </div>
+          <div style="clear:both;"></div>
+        </div>
+        {%- endif -%}
+        {%- if section.settings.footer_middle_column_2 != 'do_not_show' -%}
+        <div class="col-lg-{{ section.settings.footer_middle_column_2_size }} info-footer">
+          <div class="widget-wrapper">
+            {%- if section.settings.footer_column_2_heading != '' -%}
+            <div class="footer-block-title">
+              <h3>
+                <span>{{ section.settings.footer_column_2_heading }}</span>
+              </h3>
+            </div>
+            {%- endif -%}
+            {%- if section.settings.footer_middle_column_2 == 'custom_block' -%}
+            {%- if section.settings.column_content_2 == 'linkslist' -%}
+            <div class="custom-footer-content">
+              {%- assign list = linklists[section.settings.footer_column_linklist2] -%} 
+              <ul class="footer-list">
+                {%- for link in list.links -%}
+                <li class="theme-color"> 
+                  <a href="{{ link.url }}">{{ link.title }}</a>
+                </li>
+                {%- endfor -%}
+              </ul>
+            </div>
+            {%- endif -%}
+            {%- if section.settings.column_content_2 == 'static_block_id' -%}
+            <div class="block_content">   
+              {% include 'shortcode' load: section.settings.footer_middle_column_2_custom %} 
+            </div>
+            {%- endif -%}
+            {%- if section.settings.column_content_2 == 'collection_product' -%}
+            <div class="bestseller">
+              <div class="sidebar-content block-content">
+                <div class="category-products">
+                  {%- assign limit = 3 -%}
+                  {%- assign collectionBestseller = collections[section.settings.collection_product_linklist2] -%}
+                  {% include 'collection-product' %}
+                </div>
+              </div>
+            </div>
+            {%- endif -%}
+            {%- endif -%}
+            {%- if section.settings.footer_middle_column_2 == 'facebook_widget' -%}
+            {% include 'facebook_feeds' %}
+            {%- endif -%}
+            {%- if section.settings.footer_middle_column_2 == 'twitter_widget' -%}
+            {% include 'twitter_feeds' %}
+            {%- endif -%}
+            {%- if section.settings.footer_middle_column_2 == 'newsletter_subscribe' -%}
+            {% include 'footer_newsletter_subscribe' %}
+            {%- endif -%}
+          </div>
+        </div>
+        {%- endif -%}
+        {%- if section.settings.footer_middle_column_3 != 'do_not_show' -%}
+        <div class="col-lg-{{ section.settings.footer_middle_column_3_size }} info-footer">
+          <div class="widget-wrapper">
+            {%- if section.settings.footer_column_3_heading != '' -%}
+            <div class="footer-block-title">
+              <h3>
+                <span>{{ section.settings.footer_column_3_heading }}</span>
+              </h3>
+            </div>
+            {%- endif -%}
+            {%- if section.settings.footer_middle_column_3 == 'custom_block' -%}
+            {%- if section.settings.column_content_3 == 'linkslist' -%}
+            <div class="custom-footer-content">
+              {%- assign list = linklists[section.settings.footer_column_linklist3] -%}
+              <ul class="footer-list">
+                {%- for link in list.links -%}
+                <li class="theme-color"> 
+                  <a href="{{ link.url }}">{{ link.title }}</a>
+                </li>
+                {%- endfor -%}
+              </ul>
+            </div>
+            {%- endif -%}
+            {%- if section.settings.column_content_3 == 'static_block_id' -%}
+            <div class="block_content"> 
+              {% include 'shortcode' load: section.settings.footer_middle_column_3_custom %}
+            </div>
+            {%- endif -%}
+            {%- endif -%}
+            {%- if section.settings.column_content_3 == 'collection_product' -%}
+            <div class="bestseller">
+              <div class="sidebar-content block-content">
+                <div class="category-products">
+                  {%- assign limit = 3 -%}
+                  {%- assign collectionBestseller = collections[section.settings.collection_product_linklist3] -%}
+                  {% include 'collection-product' %}
+                </div>
+              </div>
+            </div>
+            {%- endif -%}
+            {%- if section.settings.footer_middle_column_3 == 'facebook_widget' -%}
+            {% include 'facebook_feeds' %}
+            {%- endif -%}
+            {%- if section.settings.footer_middle_column_3 == 'twitter_widget' -%}
+            {% include 'twitter_feeds' %}
+            {%- endif -%}
+            {%- if section.settings.footer_middle_column_3 == 'newsletter_subscribe' -%}
+            {% include 'footer_newsletter_subscribe' %}
+            {%- endif -%}
+          </div>
+        </div>
+        {%- endif -%}
+        {%- if section.settings.footer_middle_column_4 != 'do_not_show' -%}
+        <div class="col-lg-{{ section.settings.footer_middle_column_4_size }} info-footer">
+          <div class="widget-wrapper">
+            {%- if section.settings.footer_column_4_heading != '' -%}
+            <div class="footer-block-title">
+              <h3>
+                <span>{{ section.settings.footer_column_4_heading }}</span>
+              </h3>
+            </div>
+            {%- endif -%}
+            {%- if section.settings.footer_middle_column_4 == 'custom_block' -%}
+            {%- if section.settings.column_content_4 == 'linkslist' -%}
+            <div class="custom-footer-content">
+              {%- assign list = linklists[section.settings.footer_column_linklist4] -%}
+              <ul class="footer-list">
+                {%- for link in list.links -%}
+                <li class="theme-color"> 
+                  <a href="{{ link.url }}">{{ link.title }}</a>
+                </li>
+                {%- endfor -%}
+              </ul>
+            </div>
+            {%- endif -%}
+            {%- if section.settings.column_content_4 == 'static_block_id' -%}
+            <div class="block_content">   
+              {% include 'shortcode' load: section.settings.footer_middle_column_4_custom %} 
+            </div>
+            {%- endif -%}
+            {%- endif -%}
+            {%- if section.settings.column_content_4 == 'collection_product' -%}
+            <div class="bestseller">
+              <div class="sidebar-content block-content">
+                <div class="category-products">
+                  {%- assign limit = 3 -%}
+                  {%- assign collectionBestseller = collections[section.settings.collection_product_linklist4] -%}
+                  {% include 'collection-product' %}
+                </div>
+              </div>
+            </div>
+            {%- endif -%}
+            {%- if section.settings.footer_middle_column_4 == 'facebook_widget' -%}
+            {% include 'facebook_feeds' %}
+            {%- endif -%}
+            {%- if section.settings.footer_middle_column_4 == 'twitter_widget' -%}
+            {% include 'twitter_feeds' %}
+            {%- endif -%}
+            {%- if section.settings.footer_middle_column_4 == 'newsletter_subscribe' -%}
+            {% include 'footer_newsletter_subscribe' %}
+            {%- endif -%}
+          </div>
+        </div>
+        {%- endif -%}
+        {%- if section.settings.footer_middle_column_5 != 'do_not_show' -%}
+        <div class="col-lg-{{ section.settings.footer_middle_column_5_size }} info-footer">
+          <div class="widget-wrapper">
+            {%- if section.settings.footer_column_5_heading != '' -%}
+            <div class="footer-block-title">
+              <h3>
+                <span>{{ section.settings.footer_column_5_heading }}</span>
+              </h3>
+            </div>
+            {%- endif -%}
+            {%- if section.settings.footer_middle_column_5 == 'custom_block' -%}
+            {%- if section.settings.column_content_5 == 'linkslist' -%}
+            <div class="custom-footer-content">
+              {%- assign list = linklists[section.settings.footer_column_linklist5] -%}
+              <ul class="footer-list">
+                {%- for link in list.links -%}
+                <li class="theme-color"> 
+                  <a href="{{ link.url }}">{{ link.title }}</a>
+                </li>
+                {%- endfor -%}
+              </ul>
+            </div>
+            {%- endif -%}
+            {%- if section.settings.column_content_5 == 'static_block_id' -%}
+            <div class="block_content">  
+              {% include 'shortcode' load: section.settings.footer_middle_column_5_custom %}
+            </div>
+            {%- endif -%}
+            {%- endif -%}
+            {%- if section.settings.column_content_5 == 'collection_product' -%}
+            <div class="bestseller">
+              <div class="sidebar-content block-content">
+                <div class="category-products">
+                  {%- assign limit = 3 -%}
+                  {%- assign collectionBestseller = collections[section.settings.collection_product_linklist5] -%}
+                  {% include 'collection-product' %}
+                </div>
+              </div>
+            </div>
+            {%- endif -%}
+            {%- if section.settings.footer_middle_column_5 == 'facebook_widget' -%}
+            {% include 'facebook_feeds' %}
+            {%- endif -%}
+            {%- if section.settings.footer_middle_column_5 == 'twitter_widget' -%}
+            {% include 'twitter_feeds' %}
+            {%- endif -%}
+            {%- if section.settings.footer_middle_column_5 == 'newsletter_subscribe' -%}
+            {% include 'footer_newsletter_subscribe' %}
+            {%- endif -%}
+          </div>
+        </div>
+        {%- endif -%}
+        {%- if section.settings.footer_middle_column_6 != 'do_not_show' -%}
+        <div class="col-lg-{{ section.settings.footer_middle_column_6_size }} info-footer">
+          <div class="widget-wrapper">
+            {%- if section.settings.footer_column_6_heading != '' -%}
+            <div class="footer-block-title">
+              <h3>
+                <span>{{ section.settings.footer_column_6_heading }}</span>
+              </h3>
+            </div>
+            {%- endif -%}
+            {%- if section.settings.footer_middle_column_6 == 'custom_block' -%}
+            {%- if section.settings.column_content_6 == 'linkslist' -%}
+            <div class="custom-footer-content">
+              {%- assign list = linklists[section.settings.footer_column_linklist6] -%}
+              <ul class="footer-list">
+                {%- for link in list.links -%}
+                <li class="theme-color"> 
+                  <a href="{{ link.url }}">{{ link.title }}</a>
+                </li>
+                {%- endfor -%}
+              </ul>
+            </div>
+            {%- endif -%}
+            {%- if section.settings.column_content_6 == 'static_block_id' -%}
+            <div class="block_content">  
+              {% include 'shortcode' load: section.settings.footer_middle_column_6_custom %} 
+            </div>
+            {%- endif -%}
+            {%- endif -%}
+            {%- if section.settings.column_content_6 == 'collection_product' -%}
+            <div class="bestseller">
+              <div class="sidebar-content block-content">
+                <div class="category-products">
+                  {%- assign limit = 3 -%}
+                  {%- assign collectionBestseller = collections[section.settings.collection_product_linklist6] -%}
+                  {% include 'collection-product' %}
+                </div>
+              </div>
+            </div>
+            {%- endif -%}
+            {%- if section.settings.footer_middle_column_6 == 'facebook_widget' -%}
+            {% include 'facebook_feeds' %}
+            {%- endif -%}
+            {%- if section.settings.footer_middle_column_6 == 'twitter_widget' -%}
+            {% include 'twitter_feeds' %}
+            {%- endif -%}
+            {%- if section.settings.footer_middle_column_6 == 'newsletter_subscribe' -%}
+            {% include 'footer_newsletter_subscribe' %}
+            {%- endif -%}
+          </div>
+        </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+  {%- endif -%}
+  {%- if section.settings.footer_middle_2_enabled == 'yes' -%}
+  <div class="footer-middle footer-middle-2">
+    <div class="container">
+      <div class="row show-grid">
+        {%- if section.settings.footer_middle_2_column_1 != 'do_not_show' -%}
+        <div class="col-lg-{{ section.settings.footer_middle_2_column_1_size }} info-footer">
+          <div class="widget-wrapper">
+            {%- if section.settings.footer_column_2_1_heading != '' -%}
+            <div class="footer-block-title">
+              <h3>
+                <span>{{ section.settings.footer_column_2_1_heading }}</span>
+              </h3>
+            </div>
+            {%- endif -%}
+            {%- if section.settings.footer_middle_2_column_1 == 'custom_block' -%}
+            {%- if section.settings.column_content_2_1 == 'linkslist' -%}
+            <div class="custom-footer-content">
+              {%- assign list = linklists[section.settings.footer_column_2_linklist1] -%}
+              <ul class="footer-list">
+                {%- for link in list.links -%}
+                <li class="theme-color">
+                  <i class="icon-angle-right theme-color"></i>
+                  <a href="{{ link.url }}">{{ link.title }}</a>
+                </li>
+                {%- endfor -%}
+              </ul>
+            </div>
+            {%- endif -%}
+            {%- if section.settings.column_content_2_1 == 'static_block_id' -%}
+            <div class="block_content">  
+              {% include 'shortcode' load: section.settings.footer_middle_2_column_1_custom %}
+            </div>
+            {%- endif -%}
+            {%- endif -%}
+            {%- if section.settings.footer_middle_2_column_1 == 'facebook_widget' -%}
+            {% include 'facebook_feeds' %}
+            {%- endif -%}
+            {%- if section.settings.footer_middle_2_column_1 == 'twitter_widget' -%}
+            {% include 'twitter_feeds' %}
+            {%- endif -%}
+            {%- if section.settings.footer_middle_2_column_1 == 'newsletter_subscribe' -%}
+            {% include 'footer_newsletter_subscribe' %}
+            {%- endif -%}
+          </div>
+        </div>
+        {%- endif -%}
+        {%- if section.settings.footer_middle_2_column_2 != 'do_not_show' -%}
+        <div class="col-lg-{{ section.settings.footer_middle_2_column_2_size }} info-footer">
+          <div class="widget-wrapper">
+            {%- if section.settings.footer_column_2_2_heading != '' -%}
+            <div class="footer-block-title">
+              <h3>
+                <span>{{ section.settings.footer_column_2_2_heading }}</span>
+              </h3>
+            </div>
+            {%- endif -%}
+            {%- if section.settings.footer_middle_2_column_2 == 'custom_block' -%}
+            {%- if section.settings.column_content_2_2 == 'linkslist' -%}
+            <div class="custom-footer-content">
+              {%- assign list = linklists[section.settings.footer_column_2_linklist2] -%}
+              <ul class="footer-list">
+                {%- for link in list.links -%}
+                <li class="theme-color">
+                  <i class="icon-angle-right theme-color"></i>
+                  <a href="{{ link.url }}">{{ link.title }}</a>
+                </li>
+                {%- endfor -%}
+              </ul>
+            </div>
+            {%- endif -%}
+            {%- if section.settings.column_content_2_2 == 'static_block_id' -%}
+            <div class="block_content">  
+              {% include 'shortcode' load: section.settings.footer_middle_2_column_2_custom %}
+            </div>
+            {%- endif -%}
+            {%- endif -%}
+            {%- if section.settings.footer_middle_2_column_2 == 'facebook_widget' -%}
+            {% include 'facebook_feeds' %}
+            {%- endif -%}
+            {%- if section.settings.footer_middle_2_column_2 == 'twitter_widget' -%}
+            {% include 'twitter_feeds' %}
+            {%- endif -%}
+            {%- if section.settings.footer_middle_2_column_2 == 'newsletter_subscribe' -%}
+            {% include 'footer_newsletter_subscribe' %}
+            {%- endif -%}
+          </div>
+        </div>
+        {%- endif -%}
+        {%- if section.settings.footer_middle_2_column_3 != 'do_not_show' -%}
+        <div class="col-lg-{{ section.settings.footer_middle_2_column_3_size }} info-footer">
+          <div class="widget-wrapper">
+            {%- if section.settings.footer_column_2_3_heading != '' -%}
+            <div class="footer-block-title">
+              <h3>
+                <span>{{ section.settings.footer_column_2_3_heading }}</span>
+              </h3>
+            </div>
+            {%- endif -%}
+            {%- if section.settings.footer_middle_2_column_3 == 'custom_block' -%}
+            {%- if section.settings.column_content_2_3 == 'linkslist' -%}
+            <div class="custom-footer-content">
+              {%- assign list = linklists[section.settings.footer_column_2_linklist3] -%}
+              <ul class="footer-list">
+                {%- for link in list.links -%}
+                <li class="theme-color">
+                  <i class="icon-angle-right theme-color"></i>
+                  <a href="{{ link.url }}">{{ link.title }}</a>
+                </li>
+                {%- endfor -%}
+              </ul>
+            </div>
+            {%- endif -%}
+            {%- if section.settings.column_content_2_3 == 'static_block_id' -%}
+            <div class="block_content"> 
+              {% include 'shortcode' load: section.settings.footer_middle_2_column_3_custom %}
+            </div>
+            {%- endif -%}
+            {%- endif -%}
+            {%- if section.settings.footer_middle_2_column_3 == 'facebook_widget' -%}
+            {% include 'facebook_feeds' %}
+            {%- endif -%}
+            {%- if section.settings.footer_middle_2_column_3 == 'twitter_widget' -%}
+            {% include 'twitter_feeds' %}
+            {%- endif -%}
+            {%- if section.settings.footer_middle_2_column_3 == 'newsletter_subscribe' -%}
+            {% include 'footer_newsletter_subscribe' %}
+            {%- endif -%}
+          </div>
+        </div>
+        {%- endif -%}
+        {%- if section.settings.footer_middle_2_column_4 != 'do_not_show' -%}
+        <div class="col-lg-{{ section.settings.footer_middle_column_4_size }} info-footer">
+          <div class="widget-wrapper">
+            {%- if section.settings.footer_column_2_4_heading != '' -%}
+            <div class="footer-block-title">
+              <h3>
+                <span>{{ section.settings.footer_column_2_4_heading }}</span>
+              </h3>
+            </div>
+            {%- endif -%}
+            {%- if section.settings.footer_middle_2_column_4 == 'custom_block' -%}
+            {%- if section.settings.column_content_2_4 == 'linkslist' -%}
+            <div class="custom-footer-content">
+              {%- assign list = linklists[section.settings.footer_column_2_linklist4] -%}
+              <ul class="footer-list">
+                {%- for link in list.links -%}
+                <li class="theme-color">
+                  <i class="icon-angle-right theme-color"></i>
+                  <a href="{{ link.url }}">{{ link.title }}</a>
+                </li>
+                {%- endfor -%}
+              </ul>
+            </div>
+            {%- endif -%}
+            {%- if section.settings.column_content_2_4 == 'static_block_id' -%}
+            <div class="block_content"> 
+              {% include 'shortcode' load: section.settings.footer_middle_2_column_4_custom %}
+            </div>
+            {%- endif -%}
+            {%- endif -%}
+            {%- if section.settings.footer_middle_2_column_4 == 'facebook_widget' -%}
+            {% include 'facebook_feeds' %}
+            {%- endif -%}
+            {%- if section.settings.footer_middle_2_column_4 == 'twitter_widget' -%}
+            {% include 'twitter_feed' %}
+            {%- endif -%}
+            {%- if section.settings.footer_middle_2_column_4 == 'newsletter_subscribe' -%}
+            {% include 'footer_newsletter_subscribe' %}
+            {%- endif -%}
+          </div>
+        </div>
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+  {%- endif -%}
+  {%- if section.settings.footer_bottom_enabled == 'yes' -%}
+  <div class="footer-bottom">
+    <div class="container">
+      {%- if section.settings.show_logo_bottom -%}
+      {%- if section.settings.footer_logo != blank -%}
+      {%- assign logo = section.settings.footer_logo | img_url: '68x' -%}
+      {%- else -%}
+      {%- assign logo = 'logo-footer.png' | asset_url -%}
+      {%- endif -%}
+      <a class="footer-bottom-logo" href="/">
+        <img data-src="{{ logo }}"/>
+      </a>
+      {%- endif -%}
+      {%- if section.settings.footer_bottom_socialicons == 'yes' -%}
+      <div class="social-icons"> 
+        {{ section.settings.socialicons_content }} 
+      </div>
+      {%- endif -%}
+      {%- if section.settings.footer_bottom_custom_block == 'yes' -%}
+      <div class="custom-block custom-block-1"> 
+        {{ section.settings.footer_bottom_custom_block_id }} 
+      </div>
+      {%- endif -%}
+      {%- if section.settings.footer_bottom_custom_block_2 == 'yes' -%}
+      <div class="custom-block order-lg-last ml-lg-auto"> 
+        {{ section.settings.footer_bottom_custom_block_id_2 }} 
+      </div>
+      {%- endif -%}
+      {%- if section.settings.copyrights != '' -%}
+      <address> 
+        {{ section.settings.copyrights }} 
+      </address>
+      {%- endif -%}
+    </div>
+  </div>
+  {%- endif -%}
+  {%- if settings.scroll_top_use != blank -%}
+  <div id="back-top" class="hidden-phone">
+    <a href="#top">
+      <div class="sticker-wrapper">
+        <div class="sticker">
+          <i class="icon-up-open"></i>
+        </div>
+      </div>
+    </a>
+  </div>
+  {%- endif -%}
+</footer>
+{% schema %}
+{
+  "name": "t:sections.footer.name",
+  "settings": [
+    {
+      "type": "select",
+      "id": "fixed_position_footer_enabled",
+      "label": "t:sections.footer.settings.fixed_position_footer_enabled.label",
+      "options": [
+        {"value": "yes", "label": "t:sections.footer.settings.fixed_position_footer_enabled.options__1.label"},
+        {"value": "no", "label": "t:sections.footer.settings.fixed_position_footer_enabled.options__2.label"}
+      ],
+      "info":"t:sections.footer.settings.fixed_position_footer_enabled.info",
+      "default": "yes"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.footer.settings.header__1.content"
+    },
+    {
+      "type": "select",
+      "id": "footer_top_enabled",
+      "label": "t:sections.footer.settings.footer_top_enabled.label",
+      "options": [
+        {"value": "yes", "label": "t:sections.footer.settings.footer_top_enabled.options__1.label"},
+        {"value": "no", "label": "t:sections.footer.settings.footer_top_enabled.options__2.label"}
+      ],
+      "default": "yes"
+    },  
+    {
+      "type": "html",
+      "id": "footer_top_custom_3",
+      "label": "t:sections.footer.settings.footer_top_custom_3.label"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.footer.settings.header__2.content"
+    },
+    {
+      "type": "select",
+      "id": "footer_middle_enabled",
+      "label": "t:sections.footer.settings.footer_middle_enabled.label",
+      "options": [
+        {"value": "yes", "label": "t:sections.footer.settings.footer_middle_enabled.options__1.label"},
+        {"value": "no", "label": "t:sections.footer.settings.footer_middle_enabled.options__2.label"}
+      ],
+      "default": "yes"
+    },
+    {
+      "type": "select",
+      "id": "footer_ribbon_enabled",
+      "label": "t:sections.footer.settings.footer_ribbon_enabled.label",
+      "options": [
+        {"value": "yes", "label": "t:sections.footer.settings.footer_ribbon_enabled.options__1.label"},
+        {"value": "no", "label": "t:sections.footer.settings.footer_ribbon_enabled.options__2.label"}
+      ],
+      "default": "yes"
+    },
+    {
+      "type": "text",
+      "id": "footer_ribbon_text",
+      "label": "t:sections.footer.settings.footer_ribbon_text.label",
+      "default": "Ribbon Text"
+    },
+    {
+      "type": "select",
+      "id": "footer_middle_column_1",
+      "label": "t:sections.footer.settings.footer_middle_column_1.label",
+      "options": [
+        {"value": "do_not_show", "label": "t:sections.footer.settings.footer_middle_column_1.label"},
+        {"value": "custom_block", "label": "t:sections.footer.settings.footer_middle_column_2.label"},
+        {"value": "newsletter_subscribe", "label": "t:sections.footer.settings.footer_middle_column_3.label"},
+        {"value": "facebook_widget", "label": "t:sections.footer.settings.footer_middle_column_4.label"},
+        {"value": "twitter_widget", "label": "t:sections.footer.settings.footer_middle_column_5.label"}
+      ],
+      "default": "do_not_show"
+    },
+    {
+      "type": "text",
+      "id": "footer_column_1_heading",
+      "label": "t:sections.footer.settings.footer_column_1_heading.label"
+    },
+    {
+      "type": "select",
+      "id": "column_content_1",
+      "label": "t:sections.footer.settings.column_content_1.label",
+      "options": [
+        {"value": "linkslist", "label": "t:sections.footer.settings.column_content_1.options__1.label"},
+        {"value": "static_block_id", "label": "t:sections.footer.settings.column_content_1.options__2.label"},
+        {"value": "collection_product", "label": "t:sections.footer.settings.column_content_1.options__3.label"}
+      ],
+      "default": "linkslist"
+    },
+    {
+      "type": "link_list",
+      "id": "footer_column_linklist1",
+      "label": "t:sections.footer.settings.footer_column_linklist1.label"
+    },
+    {
+      "type": "html",
+      "id": "footer_middle_column_1_custom",
+      "label": "t:sections.footer.settings.footer_middle_column_1_custom.label"
+    },
+    {
+      "type": "collection",
+      "id": "collection_product_linklist1",
+      "label": "t:sections.footer.settings.collection_product_linklist1.label"
+    },
+    {
+      "type": "select",
+      "id": "footer_middle_column_1_size",
+      "label": "t:sections.footer.settings.footer_middle_column_1_size.label",
+      "options": [
+        {"value": "1", "label": "1/12"},
+        {"value": "2", "label": "2/12"},
+        {"value": "3", "label": "3/12"},
+        {"value": "4", "label": "4/12"},
+        {"value": "5", "label": "5/12"},
+        {"value": "6", "label": "6/12"},
+        {"value": "7", "label": "7/12"},
+        {"value": "8", "label": "8/12"},
+        {"value": "9", "label": "9/12"},
+        {"value": "10", "label": "10/12"},
+        {"value": "11", "label": "11/12"},
+        {"value": "12", "label": "12/12"}
+      ],
+      "default": "3"
+    },
+    {
+      "type": "select",
+      "id": "footer_middle_column_2",
+      "label": "t:sections.footer.settings.footer_middle_column_2.label",
+      "options": [
+        {"value": "do_not_show", "label": "t:sections.footer.settings.footer_middle_column_2.options__1.label"},
+        {"value": "custom_block", "label": "t:sections.footer.settings.footer_middle_column_2.options__2.label"},
+        {"value": "newsletter_subscribe", "label": "t:sections.footer.settings.footer_middle_column_2.options__3.label"},
+        {"value": "facebook_widget", "label": "t:sections.footer.settings.footer_middle_column_2.options__4.label"},
+        {"value": "twitter_widget", "label": "t:sections.footer.settings.footer_middle_column_2.options__5.label"}
+      ],
+      "default": "do_not_show"
+    },
+    {
+      "type": "text",
+      "id": "footer_column_2_heading",
+      "label": "t:sections.footer.settings.footer_column_2_heading.label"
+    },
+    {
+      "type": "select",
+      "id": "column_content_2",
+      "label": "t:sections.footer.settings.column_content_2.label",
+      "options": [
+        {"value": "linkslist", "label": "t:sections.footer.settings.column_content_2.options__1.label"},
+        {"value": "static_block_id", "label": "t:sections.footer.settings.column_content_2.options__2.label"},
+        {"value": "collection_product", "label": "t:sections.footer.settings.column_content_2.options__3.label"}
+      ],
+      "default": "linkslist"
+    },
+    {
+      "type": "link_list",
+      "id": "footer_column_linklist2",
+      "label": "t:sections.footer.settings.footer_column_linklist2.label"
+    },
+    {
+      "type": "html",
+      "id": "footer_middle_column_2_custom",
+      "label": "t:sections.footer.settings.footer_middle_column_2_custom.label"
+    },
+    {
+      "type": "collection",
+      "id": "collection_product_linklist2",
+      "label": "t:sections.footer.settings.collection_product_linklist2.label"
+    },
+    {
+      "type": "select",
+      "id": "footer_middle_column_2_size",
+      "label": "t:sections.footer.settings.footer_middle_column_2_size.label",
+      "options": [
+        {"value": "1", "label": "1/12"},
+        {"value": "2", "label": "2/12"},
+        {"value": "3", "label": "3/12"},
+        {"value": "4", "label": "4/12"},
+        {"value": "5", "label": "5/12"},
+        {"value": "6", "label": "6/12"},
+        {"value": "7", "label": "7/12"},
+        {"value": "8", "label": "8/12"},
+        {"value": "9", "label": "9/12"},
+        {"value": "10", "label": "10/12"},
+        {"value": "11", "label": "11/12"},
+        {"value": "12", "label": "12/12"}
+      ],
+      "default": "3"
+    },
+    {
+      "type": "select",
+      "id": "footer_middle_column_3",
+      "label": "t:sections.footer.settings.footer_middle_column_3.label",
+      "options": [
+        {"value": "do_not_show", "label": "t:sections.footer.settings.footer_middle_column_3.options__1.label"},
+        {"value": "custom_block", "label": "t:sections.footer.settings.footer_middle_column_3.options__2.label"},
+        {"value": "newsletter_subscribe", "label": "t:sections.footer.settings.footer_middle_column_3.options__3.label"},
+        {"value": "facebook_widget", "label": "t:sections.footer.settings.footer_middle_column_3.options__4.label"},
+        {"value": "twitter_widget", "label": "t:sections.footer.settings.footer_middle_column_3.options__5.label"}
+      ],
+      "default": "do_not_show"
+    },
+    {
+      "type": "text",
+      "id": "footer_column_3_heading",
+      "label": "t:sections.footer.settings.footer_column_3_heading.label"
+    },
+    {
+      "type": "select",
+      "id": "column_content_3",
+      "label": "t:sections.footer.settings.column_content_3.label",
+      "options": [
+        {"value": "linkslist", "label": "t:sections.footer.settings.column_content_3.options__1.label"},
+        {"value": "static_block_id", "label": "t:sections.footer.settings.column_content_3.options__2.label"},
+        {"value": "collection_product", "label": "t:sections.footer.settings.column_content_3.options__3.label"}
+      ],
+      "default": "linkslist"
+    },
+    {
+      "type": "link_list",
+      "id": "footer_column_linklist3",
+      "label": "t:sections.footer.settings.footer_column_linklist3.label"
+    },
+    {
+      "type": "textarea",
+      "id": "footer_middle_column_3_custom",
+      "label": "t:sections.footer.settings.footer_middle_column_3_custom.label"
+    },
+    {
+      "type": "collection",
+      "id": "collection_product_linklist3",
+      "label": "t:sections.footer.settings.collection_product_linklist3.label"
+    },
+    {
+      "type": "select",
+      "id": "footer_middle_column_3_size",
+      "label": "t:sections.footer.settings.footer_middle_column_3_size.label",
+      "options": [
+        {"value": "1", "label": "1/12"},
+        {"value": "2", "label": "2/12"},
+        {"value": "3", "label": "3/12"},
+        {"value": "4", "label": "4/12"},
+        {"value": "5", "label": "5/12"},
+        {"value": "6", "label": "6/12"},
+        {"value": "7", "label": "7/12"},
+        {"value": "8", "label": "8/12"},
+        {"value": "9", "label": "9/12"},
+        {"value": "10", "label": "10/12"},
+        {"value": "11", "label": "11/12"},
+        {"value": "12", "label": "12/12"}
+      ],
+      "default": "3"
+    },
+    {
+      "type": "select",
+      "id": "footer_middle_column_4",
+      "label": "t:sections.footer.settings.footer_middle_column_4.label",
+      "options": [
+        {"value": "do_not_show", "label": "t:sections.footer.settings.footer_middle_column_4.options__1.label"},
+        {"value": "custom_block", "label": "t:sections.footer.settings.footer_middle_column_4.options__2.label"},
+        {"value": "newsletter_subscribe", "label": "t:sections.footer.settings.footer_middle_column_4.options__3.label"},
+        {"value": "facebook_widget", "label": "t:sections.footer.settings.footer_middle_column_4.options__4.label"},
+        {"value": "twitter_widget", "label": "t:sections.footer.settings.footer_middle_column_4.options__5.label"}
+      ],
+      "default": "do_not_show"
+    },
+    {
+      "type": "text",
+      "id": "footer_column_4_heading",
+      "label": "t:sections.footer.settings.footer_column_4_heading.label"
+    },
+    {
+      "type": "select",
+      "id": "column_content_4",
+      "label": "t:sections.footer.settings.column_content_4.label",
+      "options": [
+        {"value": "linkslist", "label": "t:sections.footer.settings.column_content_4.options__1.label"},
+        {"value": "static_block_id", "label": "t:sections.footer.settings.column_content_4.options__2.label"},
+        {"value": "collection_product", "label": "t:sections.footer.settings.column_content_4.options__3.label"}
+      ],
+      "default": "linkslist"
+    },
+    {
+      "type": "link_list",
+      "id": "footer_column_linklist4",
+      "label": "t:sections.footer.settings.footer_column_linklist4.label"
+    },
+    {
+      "type": "html",
+      "id": "footer_middle_column_4_custom",
+      "label": "t:sections.footer.settings.footer_middle_column_4_custom.label"
+    },
+    {
+      "type": "collection",
+      "id": "collection_product_linklist4",
+      "label": "t:sections.footer.settings.collection_product_linklist4.label"
+    },
+    {
+      "type": "select",
+      "id": "footer_middle_column_4_size",
+      "label": "t:sections.footer.settings.footer_middle_column_4_size.label",
+      "options": [
+        {"value": "1", "label": "1/12"},
+        {"value": "2", "label": "2/12"},
+        {"value": "3", "label": "3/12"},
+        {"value": "4", "label": "4/12"},
+        {"value": "5", "label": "5/12"},
+        {"value": "6", "label": "6/12"},
+        {"value": "7", "label": "7/12"},
+        {"value": "8", "label": "8/12"},
+        {"value": "9", "label": "9/12"},
+        {"value": "10", "label": "10/12"},
+        {"value": "11", "label": "11/12"},
+        {"value": "12", "label": "12/12"}
+      ],
+      "default": "3"
+    },
+    {
+      "type": "select",
+      "id": "footer_middle_column_5",
+      "label": "t:sections.footer.settings.footer_middle_column_5.label",
+      "options": [
+        {"value": "do_not_show", "label": "t:sections.footer.settings.footer_middle_column_5.options__1.label"},
+        {"value": "custom_block", "label": "t:sections.footer.settings.footer_middle_column_5.options__2.label"},
+        {"value": "newsletter_subscribe", "label": "t:sections.footer.settings.footer_middle_column_5.options__3.label"},
+        {"value": "facebook_widget", "label": "t:sections.footer.settings.footer_middle_column_5.options__4.label"},
+        {"value": "twitter_widget", "label": "t:sections.footer.settings.footer_middle_column_5.options__5.label"}
+      ],
+      "default": "do_not_show"
+    },
+    {
+      "type": "text",
+      "id": "footer_column_5_heading",
+      "label": "t:sections.footer.settings.footer_column_5_heading.label"
+    },
+    {
+      "type": "select",
+      "id": "column_content_5",
+      "label": "t:sections.footer.settings.column_content_5.label",
+      "options": [
+        {"value": "linkslist", "label": "t:sections.footer.settings.column_content_5.options__1.label"},
+        {"value": "static_block_id", "label": "t:sections.footer.settings.column_content_5.options__2.label"},
+        {"value": "collection_product", "label": "t:sections.footer.settings.column_content_5.options__3.label"}
+      ],
+      "default": "linkslist"
+    },
+    {
+      "type": "link_list",
+      "id": "footer_column_linklist5",
+      "label": "t:sections.footer.settings.footer_column_linklist5.label"
+    },
+    {
+      "type": "html",
+      "id": "footer_middle_column_5_custom",
+      "label": "t:sections.footer.settings.footer_middle_column_5_custom.label"
+    },
+    {
+      "type": "collection",
+      "id": "collection_product_linklist5",
+      "label": "t:sections.footer.settings.collection_product_linklist5.label"
+    },
+    {
+      "type": "select",
+      "id": "footer_middle_column_5_size",
+      "label": "t:sections.footer.settings.footer_middle_column_5_size.label",
+      "options": [
+        {"value": "1", "label": "1/12"},
+        {"value": "2", "label": "2/12"},
+        {"value": "3", "label": "3/12"},
+        {"value": "4", "label": "4/12"},
+        {"value": "5", "label": "5/12"},
+        {"value": "6", "label": "6/12"},
+        {"value": "7", "label": "7/12"},
+        {"value": "8", "label": "8/12"},
+        {"value": "9", "label": "9/12"},
+        {"value": "10", "label": "10/12"},
+        {"value": "11", "label": "11/12"},
+        {"value": "12", "label": "12/12"}
+      ],
+      "default": "3"
+    },
+    {
+      "type": "select",
+      "id": "footer_middle_column_6",
+      "label": "t:sections.footer.settings.footer_middle_column_6.label",
+      "options": [
+        {"value": "do_not_show", "label": "t:sections.footer.settings.footer_middle_column_6.options__1.label"},
+        {"value": "custom_block", "label": "t:sections.footer.settings.footer_middle_column_6.options__2.label"},
+        {"value": "newsletter_subscribe", "label": "t:sections.footer.settings.footer_middle_column_6.options__3.label"},
+        {"value": "facebook_widget", "label": "t:sections.footer.settings.footer_middle_column_6.options__4.label"},
+        {"value": "twitter_widget", "label": "t:sections.footer.settings.footer_middle_column_6.options__5.label"}
+      ],
+      "default": "do_not_show"
+    },
+    {
+      "type": "text",
+      "id": "footer_column_6_heading",
+      "label": "t:sections.footer.settings.footer_column_6_heading.label"
+    },
+    {
+      "type": "select",
+      "id": "column_content_6",
+      "label": "t:sections.footer.settings.column_content_6.label",
+      "options": [
+        {"value": "linkslist", "label": "t:sections.footer.settings.column_content_6.options__1.label"},
+        {"value": "static_block_id", "label": "t:sections.footer.settings.column_content_6.options__2.label"},
+        {"value": "collection_product", "label": "t:sections.footer.settings.column_content_6.options__3.label"}
+      ],
+      "default": "linkslist"
+    },
+    {
+      "type": "link_list",
+      "id": "footer_column_linklist6",
+      "label": "t:sections.footer.settings.footer_column_linklist6.label"
+    },
+    {
+      "type": "html",
+      "id": "footer_middle_column_6_custom",
+      "label": "t:sections.footer.settings.footer_middle_column_6_custom.label"
+    },
+    {
+      "type": "collection",
+      "id": "collection_product_linklist6",
+      "label": "t:sections.footer.settings.collection_product_linklist6.label"
+    },
+    {
+      "type": "select",
+      "id": "footer_middle_column_6_size",
+      "label": "t:sections.footer.settings.footer_middle_column_6_size.label",
+      "options": [
+        {"value": "1", "label": "1/12"},
+        {"value": "2", "label": "2/12"},
+        {"value": "3", "label": "3/12"},
+        {"value": "4", "label": "4/12"},
+        {"value": "5", "label": "5/12"},
+        {"value": "6", "label": "6/12"},
+        {"value": "7", "label": "7/12"},
+        {"value": "8", "label": "8/12"},
+        {"value": "9", "label": "9/12"},
+        {"value": "10", "label": "10/12"},
+        {"value": "11", "label": "11/12"},
+        {"value": "12", "label": "12/12"}
+      ],
+      "default": "3"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.footer.settings.header__3.content"
+    },
+    {
+      "type": "select",
+      "id": "footer_middle_2_enabled",
+      "label": "t:sections.footer.settings.footer_middle_2_enabled.label",
+      "options": [
+        {"value": "yes", "label": "t:sections.footer.settings.footer_middle_2_enabled.options__1.label"},
+        {"value": "no", "label": "t:sections.footer.settings.footer_middle_2_enabled.options__2.label"}
+      ],
+      "default": "yes"
+    },
+    {
+      "type": "select",
+      "id": "footer_middle_2_column_1",
+      "label": "t:sections.footer.settings.footer_middle_2_column_1.label",
+      "options": [
+        {"value": "do_not_show", "label": "t:sections.footer.settings.footer_middle_2_column_1.options__1.label"},
+        {"value": "custom_block", "label": "t:sections.footer.settings.footer_middle_2_column_1.options__2.label"},
+        {"value": "newsletter_subscribe", "label": "t:sections.footer.settings.footer_middle_2_column_1.options__3.label"},
+        {"value": "facebook_widget", "label": "t:sections.footer.settings.footer_middle_2_column_1.options__4.label"},
+        {"value": "twitter_widget", "label": "t:sections.footer.settings.footer_middle_2_column_1.options__5.label"}
+      ],
+      "default": "do_not_show"
+    },
+    {
+      "type": "text",
+      "id": "footer_column_2_1_heading",
+      "label": "t:sections.footer.settings.footer_column_2_1_heading.label"
+    },
+    {
+      "type": "select",
+      "id": "column_content_2_1",
+      "label": "t:sections.footer.settings.column_content_2_1.label",
+      "options": [
+        {"value": "linkslist", "label": "t:sections.footer.settings.column_content_2_1.options__1.label"},
+        {"value": "static_block_id", "label": "t:sections.footer.settings.column_content_2_1.options__2.label"}
+      ],
+      "default": "linkslist"
+    },
+    {
+      "type": "link_list",
+      "id": "footer_column_2_linklist1",
+      "label": "t:sections.footer.settings.footer_column_2_linklist1.label"
+    },
+    {
+      "type": "html",
+      "id": "footer_middle_2_column_1_custom",
+      "label": "t:sections.footer.settings.footer_middle_2_column_1_custom.label"
+    },
+    {
+      "type": "select",
+      "id": "footer_middle_2_column_1_size",
+      "label": "t:sections.footer.settings.footer_middle_2_column_1_size.label",
+      "options": [
+        {"value": "1", "label": "1/12"},
+        {"value": "2", "label": "2/12"},
+        {"value": "3", "label": "3/12"},
+        {"value": "4", "label": "4/12"},
+        {"value": "5", "label": "5/12"},
+        {"value": "6", "label": "6/12"},
+        {"value": "7", "label": "7/12"},
+        {"value": "8", "label": "8/12"},
+        {"value": "9", "label": "9/12"},
+        {"value": "10", "label": "10/12"},
+        {"value": "11", "label": "11/12"},
+        {"value": "12", "label": "12/12"}
+      ],
+      "default": "3"
+    },
+    {
+      "type": "select",
+      "id": "footer_middle_2_column_2",
+      "label": "t:sections.footer.settings.footer_middle_2_column_2.label",
+      "options": [
+        {"value": "do_not_show", "label": "t:sections.footer.settings.footer_middle_2_column_2.options__1.label"},
+        {"value": "custom_block", "label": "t:sections.footer.settings.footer_middle_2_column_2.options__2.label"},
+        {"value": "newsletter_subscribe", "label": "t:sections.footer.settings.footer_middle_2_column_2.options__3.label"},
+        {"value": "facebook_widget", "label": "t:sections.footer.settings.footer_middle_2_column_2.options__4.label"},
+        {"value": "twitter_widget", "label": "t:sections.footer.settings.footer_middle_2_column_2.options__5.label"}
+      ],
+      "default": "do_not_show"
+    },
+    {
+      "type": "text",
+      "id": "footer_column_2_2_heading",
+      "label": "t:sections.footer.settings.footer_column_2_2_heading.label"
+    },
+    {
+      "type": "select",
+      "id": "column_content_2_2",
+      "label": "t:sections.footer.settings.column_content_2_2.label",
+      "options": [
+        {"value": "linkslist", "label": "t:sections.footer.settings.column_content_2_2.options__1.label"},
+        {"value": "static_block_id", "label": "t:sections.footer.settings.column_content_2_2.options__2.label"}
+      ],
+      "default": "linkslist"
+    },
+    {
+      "type": "link_list",
+      "id": "footer_column_2_linklist2",
+      "label": "t:sections.footer.settings.footer_column_2_linklist2.label"
+    },
+    {
+      "type": "html",
+      "id": "footer_middle_2_column_2_custom",
+      "label": "t:sections.footer.settings.footer_middle_2_column_2_custom.label"
+    },
+    {
+      "type": "select",
+      "id": "footer_middle_2_column_2_size",
+      "label": "t:sections.footer.settings.footer_middle_2_column_2_size.label",
+      "options": [
+        {"value": "1", "label": "1/12"},
+        {"value": "2", "label": "2/12"},
+        {"value": "3", "label": "3/12"},
+        {"value": "4", "label": "4/12"},
+        {"value": "5", "label": "5/12"},
+        {"value": "6", "label": "6/12"},
+        {"value": "7", "label": "7/12"},
+        {"value": "8", "label": "8/12"},
+        {"value": "9", "label": "9/12"},
+        {"value": "10", "label": "10/12"},
+        {"value": "11", "label": "11/12"},
+        {"value": "12", "label": "12/12"}
+      ],
+      "default": "3"
+    },
+    {
+      "type": "select",
+      "id": "footer_middle_2_column_3",
+      "label": "t:sections.footer.settings.footer_middle_2_column_3.label",
+      "options": [
+        {"value": "do_not_show", "label": "t:sections.footer.settings.footer_middle_2_column_3.options__1.label"},
+        {"value": "custom_block", "label": "t:sections.footer.settings.footer_middle_2_column_3.options__2.label"},
+        {"value": "newsletter_subscribe", "label": "t:sections.footer.settings.footer_middle_2_column_3.options__3.label"},
+        {"value": "facebook_widget", "label": "t:sections.footer.settings.footer_middle_2_column_3.options__4.label"},
+        {"value": "twitter_widget", "label": "t:sections.footer.settings.footer_middle_2_column_3.options__5.label"}
+      ],
+      "default": "do_not_show"
+    },
+    {
+      "type": "text",
+      "id": "footer_column_2_3_heading",
+      "label": "t:sections.footer.settings.footer_column_2_3_heading.label"
+    },
+    {
+      "type": "select",
+      "id": "column_content_2_3",
+      "label": "t:sections.footer.settings.column_content_2_3.label",
+      "options": [
+        {"value": "linkslist", "label": "t:sections.footer.settings.column_content_2_3.options__1.label"},
+        {"value": "static_block_id", "label": "t:sections.footer.settings.column_content_2_3.options__2.label"}
+      ],
+      "default": "linkslist"
+    },
+    {
+      "type": "link_list",
+      "id": "footer_column_2_linklist3",
+      "label": "t:sections.footer.settings.footer_column_2_linklist3.label"
+    },
+    {
+      "type": "html",
+      "id": "footer_middle_2_column_3_custom",
+      "label": "t:sections.footer.settings.footer_middle_2_column_3_custom.label"
+    },
+    {
+      "type": "select",
+      "id": "footer_middle_2_column_3_size",
+      "label": "t:sections.footer.settings.footer_middle_2_column_3_size.label",
+      "options": [
+        {"value": "1", "label": "1/12"},
+        {"value": "2", "label": "2/12"},
+        {"value": "3", "label": "3/12"},
+        {"value": "4", "label": "4/12"},
+        {"value": "5", "label": "5/12"},
+        {"value": "6", "label": "6/12"},
+        {"value": "7", "label": "7/12"},
+        {"value": "8", "label": "8/12"},
+        {"value": "9", "label": "9/12"},
+        {"value": "10", "label": "10/12"},
+        {"value": "11", "label": "11/12"},
+        {"value": "12", "label": "12/12"}
+      ],
+      "default": "3"
+    },
+    {
+      "type": "select",
+      "id": "footer_middle_2_column_4",
+      "label": "t:sections.footer.settings.footer_middle_2_column_4.label",
+      "options": [
+        {"value": "do_not_show", "label": "t:sections.footer.settings.footer_middle_2_column_4.options__1.label"},
+        {"value": "custom_block", "label": "t:sections.footer.settings.footer_middle_2_column_4.options__2.label"},
+        {"value": "newsletter_subscribe", "label": "t:sections.footer.settings.footer_middle_2_column_4.options__3.label"},
+        {"value": "facebook_widget", "label": "t:sections.footer.settings.footer_middle_2_column_4.options__4.label"},
+        {"value": "twitter_widget", "label": "t:sections.footer.settings.footer_middle_2_column_4.options__5.label"}
+      ],
+      "default": "do_not_show"
+    },
+    {
+      "type": "text",
+      "id": "footer_column_2_4_heading",
+      "label": "t:sections.footer.settings.footer_column_2_4_heading.label"
+    },
+    {
+      "type": "select",
+      "id": "column_content_2_4",
+      "label": "t:sections.footer.settings.column_content_2_4.label",
+      "options": [
+        {"value": "linkslist", "label": "t:sections.footer.settings.column_content_2_4.options__1.label"},
+        {"value": "static_block_id", "label": "t:sections.footer.settings.column_content_2_4.options__2.label"}
+      ],
+      "default": "linkslist"
+    },
+    {
+      "type": "link_list",
+      "id": "footer_column_2_linklist4",
+      "label": "t:sections.footer.settings.footer_column_2_linklist4.label"
+    },
+    {
+      "type": "html",
+      "id": "footer_middle_2_column_4_custom",
+      "label": "t:sections.footer.settings.footer_middle_2_column_4_custom.label"
+    },
+    {
+      "type": "select",
+      "id": "footer_middle_2_column_4_size",
+      "label": "t:sections.footer.settings.footer_middle_2_column_4_size.label",
+      "options": [
+        {"value": "1", "label": "1/12"},
+        {"value": "2", "label": "2/12"},
+        {"value": "3", "label": "3/12"},
+        {"value": "4", "label": "4/12"},
+        {"value": "5", "label": "5/12"},
+        {"value": "6", "label": "6/12"},
+        {"value": "7", "label": "7/12"},
+        {"value": "8", "label": "8/12"},
+        {"value": "9", "label": "9/12"},
+        {"value": "10", "label": "10/12"},
+        {"value": "11", "label": "11/12"},
+        {"value": "12", "label": "12/12"}
+      ],
+      "default": "3"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.footer.settings.header__4.content"
+    },
+    {
+      "type": "select",
+      "id": "footer_bottom_enabled",
+      "label": "t:sections.footer.settings.footer_bottom_enabled.label",
+      "options": [
+        {"value": "yes", "label": "t:sections.footer.settings.footer_bottom_enabled.options__1.label"},
+        {"value": "no", "label": "t:sections.footer.settings.footer_bottom_enabled.options__2.label"}
+      ],
+      "default": "yes"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_logo_bottom",
+      "label": "t:sections.footer.settings.show_logo_bottom.label",
+      "default": false
+    },
+    {
+      "type": "image_picker",
+      "id": "footer_logo",
+      "label": "t:sections.footer.settings.footer_logo.label"
+    },
+    {
+      "type": "select",
+      "id": "footer_bottom_socialicons",
+      "label": "t:sections.footer.settings.footer_bottom_socialicons.label",
+      "options": [
+        {"value": "yes", "label": "t:sections.footer.settings.footer_bottom_socialicons.options__1.label"},
+        {"value": "no", "label": "t:sections.footer.settings.footer_bottom_socialicons.options__2.label"}
+      ],
+      "default": "yes"
+    },
+    {
+      "type": "html",
+      "id": "socialicons_content",
+      "label": "t:sections.footer.settings.socialicons_content.label"
+    },
+    {
+      "type": "text",
+      "id": "copyrights",
+      "label": "t:sections.footer.settings.copyrights.label",
+      "default": "&copy;Copyright 2019 by Porto. All Rights Reserved."
+    },
+    {
+      "type": "select",
+      "id": "footer_bottom_custom_block",
+      "label": "t:sections.footer.settings.footer_bottom_custom_block.label",
+      "options": [
+        {"value": "yes", "label": "t:sections.footer.settings.footer_bottom_custom_block.options__1.label"},
+        {"value": "no", "label": "t:sections.footer.settings.footer_bottom_custom_block.options__2.label"}
+      ],
+      "default": "yes"
+    },
+    {
+      "type": "html",
+      "id": "footer_bottom_custom_block_id",
+      "label": "t:sections.footer.settings.footer_bottom_custom_block_id.label"
+    },
+    {
+      "type": "select",
+      "id": "footer_bottom_custom_block_2",
+      "label": "t:sections.footer.settings.footer_bottom_custom_block_2.label",
+      "options": [
+        {"value": "yes", "label": "t:sections.footer.settings.footer_bottom_custom_block_2.options__1.label"},
+        {"value": "no", "label": "t:sections.footer.settings.footer_bottom_custom_block_2.options__2.label"}
+      ],
+      "default": "yes"
+    },
+    {
+      "type": "html",
+      "id": "footer_bottom_custom_block_id_2",
+      "label": "t:sections.footer.settings.footer_bottom_custom_block_id_2.label"
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

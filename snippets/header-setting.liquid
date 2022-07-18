@@ -1,0 +1,50 @@
+{%- if shop.enabled_currencies.size > 1 and settings.currency_enable -%}
+<div class="currency-wrapper top-select">
+  <a href="javascript:void(0);" class="title">
+    <span class="current-currency">{{ cart.currency.iso_code }}</span>
+    <i class="icon-angle-down"></i>
+  </a>
+  {%- form 'currency', id: 'currency_form', class: 'currency-selector' -%}
+  <div class="setting-currency"> 
+    {%- for currency in shop.enabled_currencies -%}
+    <button type="submit" name="currency" class="item" data-action="select-currency" value="{{ currency.iso_code }}">{{ currency.iso_code }}</button>
+    {%- endfor -%}
+  </div> 
+  {%- endform -%}
+</div> 
+{%- endif -%}
+{%- if settings.language_enable -%}
+<span class="split"></span>
+<div class="language-wrapper top-select">
+  <a href="javascript:void(0);" class="title">
+    <span class="current-language">
+      {% if settings.flag_user_icon %}
+        {% capture flag %}
+        {{localization.language.iso_code}}.png
+      {% endcapture%}
+      <img alt="" src="{{ flag | asset_url }}">
+      {% endif %}
+      {{ localization.language.endonym_name | capitalize }}
+    </span>
+    <i class="icon-angle-down"></i>
+  </a> 
+  {%- form 'localization', id: 'LanguageForm', class: 'localization-form' -%} 
+  <div class="select-language clearfix">
+    {%- for language in localization.available_languages -%}
+    <button type="submit" name="locale_code" class="item" data-action="select-language" value="{{ language.iso_code }}">
+      {% capture flag %}
+      {{language.iso_code}}.png
+      {% endcapture%}
+      {% if settings.flag_user_icon != blank %}<img src="{{ flag | asset_url }}"> {{ language.endonym_name | capitalize }}{% else %} {{ language.endonym_name | capitalize }}{% endif %}
+    </button> 
+    {%- endfor -%}
+  </div> 
+  {%- endform -%}
+</div> 
+{%- endif -%}
+{%- if settings.header_compare_enable != blank and settings.header_design != 'type17' and settings.header_design != 'type16' -%}
+<span class="split"></span>
+<div class="compare-link">
+  <a id='header-compare' href="javascript:;" ><span>{{'header.settings.compare' | t}}</span> <span class='compareCount'>(0)</span> <i class="icon-compare-link"></i></a>
+</div>
+{%- endif -%}

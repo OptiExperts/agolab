@@ -1,0 +1,36 @@
+.instagrams-grid{display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-wrap:wrap;-ms-flex-wrap:wrap;flex-wrap:wrap;}
+.enable-effect .insta-item .content{position:absolute;top:0;right:0;bottom:0;left:0;transition:all .3s;background-color:rgba(255, 0, 0, 0.5);color:#fff;font-size:35px;text-align:center;opacity:0;visibility:hidden;z-index:1;}
+.enable-effect .insta-item:hover .content{opacity:1;visibility:visible;}
+.insta-item .content i{display:none;position:absolute;top:50%;transform:translate(-50%, -50%);-webkit-transform:translate(-50%, -50%);}
+.enable-effect .insta-item .content i{display:inline-block;}
+.instagram-section.type2 .container{max-width:100%;padding:0;}
+.instagram-section.type2 .container .row{margin-right:0;margin-left:0;}
+.main-container .instagram-section .title-widget{margin-bottom:16px;font-family:'Oswald';font-size:18px;font-weight:400;background:none;color:#282d3b;letter-spacing:.05em;text-align:center;}
+.insta-follow{position:absolute;top:0;left:50%;transform:translateX(-50%);color:#fff;text-align:center;text-transform:uppercase;z-index:2;}
+.insta-follow.insta-content-style1{top:50%;transform:translate(-50%, -50%);}
+.insta-follow > div{height:100%;}
+.insta-follow h3{font-family:'Oswald';line-height:1;}
+.insta-follow span{display:block;letter-spacing:.05em;}
+.insta-follow a{border-radius:2px;font-family:'Oswald';font-size:14px;letter-spacing:.05em;text-transform:uppercase;box-shadow:none;}
+.insta-content-style1{padding:30px 40px;}
+.insta-content-style1 .d-flex{-ms-flex-direction:column;flex-direction:column;}
+.insta-content-style1 h3{padding-top:15px;font-size:48px;font-weight:300;}
+.insta-content-style1 span{margin-bottom:28px;font-size:15px;}
+.insta-content-style1 a{margin-bottom:5px;padding:9px 28px;border:solid 2px #2c2c2c;font-weight:400;}
+.insta-content-style1 i{font-size:24px;}
+.insta-content-style2{width:33.4%;min-width:420px;height:100%;padding:20px 10px;}
+.insta-content-style2 .description{text-align:right;}
+.insta-content-style2 h3{margin-bottom:0;font-size:32px;font-weight:700;}
+.insta-content-style2 span{color:#777;font-size:10px;}
+.insta-content-style2 i{-ms-flex-order:2;order:2;margin:0 4%;font-size:50px;}
+.insta-content-style2 i::before{margin:-2px 0 0;}
+.insta-content-style2 .description{-ms-flex-order:1;order:1;}
+.insta-content-style2 a{-ms-flex-order:3;order:3;padding:.8em 3em;font-weight:300;}
+.insta-content-style2 .d-flex{height:100%;-ms-flex-pack:center;justify-content:center;}
+.insta-content-style2 .d-flex a{border-radius:3px !important;}
+.blog-instagrams .col-xl-2{padding-right:10px;padding-left:10px;}
+.blog-instagrams .col-xl-2 a{display:block;position:relative;margin:10px 0;}
+.blog-instagrams .col-xl-2 a img{width:100%;}
+.intagram-shop .content{padding:10px 0 40px;}
+.intagram-shop .content h2{font-size:40px;font-weight:600;line-height:45px;text-align:center;text-transform:uppercase;}
+.intagram-shop .content p{margin:0;font-size:20px;line-height:30px;text-align:center;}

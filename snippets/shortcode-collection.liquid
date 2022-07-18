@@ -1,0 +1,154 @@
+{% capture block_title %}{% include 'shortcode-render' render:'title' %}{% endcapture %}
+{% capture border_style %}{% include 'shortcode-render' render:'border_style' %}{% endcapture %}
+{% capture collection_type %}{% include 'shortcode-render' render:'collection_type' default: 'simple' %}{% endcapture %}
+{% capture use_icon %}{% include 'shortcode-render' render:'use_icon' %}{% endcapture %}
+{% capture box_shadow %}{% include 'shortcode-render' render:'box_shadow' %}{% endcapture %}
+{% capture content_position %}{% include 'shortcode-render' render:'content_pos' default: 'outside' %}{% endcapture %}
+{% capture content_text_align %}{% include 'shortcode-render' render:'text_align' default: 'left' %}{% endcapture %}
+{% capture content_color %}{% include 'shortcode-render' render:'content_color' default: 'dark' %}{% endcapture %}
+{% capture content_hover_color %}{% include 'shortcode-render' render:'content_hover_color' default: 'primary' %}{% endcapture %}
+{% capture product_count %}{% include 'shortcode-render' render:'product_count' default: 'static' %}{% endcapture %}
+{% capture overlay_bg %}{% include 'shortcode-render' render:'overlay_bg' default: '15' %}{% endcapture %}
+{% capture hover_bg %}{% include 'shortcode-render' render:'overlay_hover_bg' default: '30' %}{% endcapture %}
+{% capture column %}{% include 'shortcode-render' render:'cols' default: '4' %}{% endcapture %} 
+{% capture item_margin %}{% include 'shortcode-render' render:'space' %}{% endcapture %} 
+
+{% capture autoplay %}{% include 'shortcode-render' render:'autoplay' %}{% endcapture %}
+{% capture arrows %}{% include 'shortcode-render' render:'arrows' %}{% endcapture %}
+{% capture arrows_side %}{% include 'shortcode-render' render:'arrows_side' %}{% endcapture %}
+{% capture arrows_type %}{% include 'shortcode-render' render:'arrows_type' %}{% endcapture %}
+{% capture arrows_onhover %}{% include 'shortcode-render' render:'arrows_onhover' %}{% endcapture %}
+{% capture position_nav %}{% include 'shortcode-render' render:'positionArr' %}{% endcapture %}
+{% capture pagenav %}{% include 'shortcode-render' render:'dots' %}{% endcapture %}
+{% capture position_pag %}{% include 'shortcode-render' render:'positionPag' %}{% endcapture %}
+{% capture total %}{% include 'shortcode-render' render:'total' default: '8' %}{% endcapture %}
+{% assign total_collection = total | plus: 0 %} 
+{% assign autoplay_index = autoplay | plus: 0 %}
+{% assign item_margin_index = item_margin | plus: 0 %}
+{% assign overlay_bg_opacity = overlay_bg | plus: 0 %}
+{% assign overlay_hover_bg = hover_bg | plus: 0 %} 
+{%- assign use_icon_list = false -%}
+{%- assign use_box_shadow = false -%}
+{%- if use_icon == 'true' -%}{%- assign use_icon_list = true -%}{%- endif -%} 
+{%- if box_shadow == 'true' -%}{%- assign use_box_shadow = true -%}{%- endif -%} 
+
+{%- assign paginate_index = limit | plus: 0  -%}
+{%- assign column_index = column | plus: 0  -%} 
+{%- assign autoplay_index = autoplay | plus: 0  -%}
+{%- assign use_arrows = false  -%}
+{%- assign use_pagenav = false  -%}  
+{%- assign use_arrows_onhover = false -%}
+{%- if arrows == 'true' -%}{%- assign use_arrows = true -%}{%- endif -%}
+{%- if pagenav == 'true' -%}{%- assign use_pagenav = true -%}{%- endif -%}
+{%- if arrows_onhover == 'true' -%}{%- assign use_arrows_onhover = true -%}{%- endif -%}
+
+<div class="short-collection-list"> 
+  {%- if block_title !='' -%} 
+  <div class="align-left heading{% if border_style == 'border-bottom' %} heading-border heading-bottom-border{%endif%}">
+    <h2 class="section-title">  
+      {{ block_title | split: '|' | first }} 
+    </h2>
+  </div>
+  {%- endif -%}
+  <div class="list">
+    <div class="collection-slide porto-products short-collection-list show-count-on-{{product_count}} category-pos-{{content_position}}{% if collection_type == 'carousel' %} collection-spacing-{{item_margin_index}}{% endif %} category-text-{{content_text_align}} category-color-{{content_color}} overlay-bg-{{overlay_bg_opacity}}">
+      {%- if collection_type == 'carousel' -%}
+      <div class="data-carousel"
+         data-auto="{{ autoplay_index }}"
+         data-items="{{ column_index }}"
+         data-1200="{{ column_index }}"
+         data-992="4"
+         data-768="3"
+         data-640="2"
+         data-480="2"
+         data-320="1"
+         data-nav="{{ use_arrows }}" 
+         data-paging="{{ use_pagenav }}"
+         data-margin='0' style="display: none;"></div>
+      <div class="carousel-init owl-carousel {{position_nav}}{% if position_nav != 'show-nav-title' %} {{arrows_side}} {{arrows_type}}{% endif %} {{position_pag}} {% if use_arrows_onhover %}show-nav-hover{% endif %}">
+        {%- endif -%}
+        {%- if collection_type != 'carousel' -%}
+        <div class="row{% if collection_type == 'masonry' %} masonry-init masonry-grid{% endif %} collection-spacing-{{item_margin_index}}">
+          {%- endif -%}
+          {%- if collection_type == 'masonry' -%}<div class="grid-sizer"></div>{%- endif -%}
+          {%- for index_collection in (1..total_collection)  -%}
+          {%- assign col_width_current = 'col_width' | append: index_collection -%}
+          {%- assign col_height_current = 'col_height' | append: index_collection -%}
+          {%- assign url_current = 'url' | append: index_collection -%}
+          {%- assign src_current = 'src' | append: index_collection -%}
+          {%- assign class_current = 'icon_class' | append: index_collection -%}
+          {%- assign alt_current = 'alt' | append: index_collection -%}
+          {%- assign collection_current = 'handle_collection' | append: index_collection -%}
+
+          {%- capture url %}{%- include 'shortcode-render' render:url_current -%}{%- endcapture -%}
+          {%- capture img_src %}{%- include 'shortcode-render' render:src_current -%}{%- endcapture -%}
+          {%- capture icon_class %}{%- include 'shortcode-render' render:class_current -%}{%- endcapture -%}
+          {%- capture alt %}{%- include 'shortcode-render' render:alt_current -%}{%- endcapture -%} 
+          {%- capture collection_name %}{%- include 'shortcode-render' render:collection_current -%}{%- endcapture -%}
+          {%- capture col_width %}{%- include 'shortcode-render' render:col_width_current default: '4' -%}{%- endcapture -%} 
+          {%- capture col_height %}{%- include 'shortcode-render' render:col_height_current default: '600' -%}{%- endcapture -%} 
+          {%- assign col_numb = col_width | plus: 0 -%}
+
+          {%- assign current_collection = collections[collection_name] -%}
+          {%- if current_collection != blank -%} 
+          {%- capture collection_title -%}{{ current_collection.title | escape }}{%- endcapture -%}
+          {%- if collection_type != 'carousel' -%}
+          <div class="item-space {% if collection_type == 'masonry' %}masonry-grid-item grid-creative {% endif %}col-md-{{ col_numb }}">
+            {%- endif -%}
+            <div class="item{% if use_icon_list and icon_class != '' %} cat-has-icon{% endif %}{% if use_box_shadow %} shadow{% endif %}"{% if collection_type == 'masonry' %} style="height: {{col_height | remove: 'px' | append: 'px'}}"{% endif %}>
+              <a href="{{ current_collection.url }}" title="{{ collection_title }}"> 
+                <span class="thumb-info align-center"> 
+                  {%- if use_icon_list != blank and icon_class != '' -%}
+                    <i class="{{icon_class}}"></i>
+                  {%- else -%}
+                    <span class="thumb-info-wrapper tf-none"> 
+                      {%- if img_src -%}
+                      {%- assign img_url = img_src -%}
+                      {%- else -%}
+                      {%- assign img_url = 'img270x350.png' | asset_url -%}
+                      {%- endif -%} 
+                      <img {% if collection_type == 'masonry' %}src="{{ img_url }}"{% else %}data-src="{{ img_url }}"{% endif %} alt=" {{ alt }}"/>
+                    </span> 
+                  {%- endif -%} 
+                  <span class="thumb-info-wrap"> 
+                    <span class="thumb-info-title">
+                      <h3 class="sub-title thumb-info-inner">  
+                        {{ current_collection.title }} 
+                      </h3> 
+                      {%- if current_collection.all_products_count > 0 -%}
+                      <span class="thumb-info-type"> 
+                        <mark class="count"><span>{{ 'collections.general.items_with_count' | t: count: current_collection.all_products_count }}</span></mark>
+                      </span> 
+                      {%- endif -%}
+                    </span> 
+                  </span> 
+                </span> 
+              </a> 
+            </div>
+          {%- if collection_type != 'carousel' -%}
+          </div>
+          {%- endif -%}
+          {%- endif -%}
+          {%- endfor -%} 
+      </div>
+    </div> 
+    <style> 
+      .short-collection-list.overlay-bg-{{overlay_bg_opacity}} .item .thumb-info-wrapper:after {
+        background-color: rgba(27, 27, 23, {{overlay_bg_opacity | times: 1.0 | divided_by: 100}});
+      }
+      .short-collection-list.overlay-bg-{{overlay_bg_opacity}} .item:hover .thumb-info-wrapper:after {
+        background-color: rgba(27, 27, 23, {{overlay_hover_bg | times: 1.0 | divided_by: 100}});
+      }
+      {%- assign _color_hover = settings.theme_color -%}
+      {%- case content_hover_color -%}
+      {%- when 'light' -%}
+      {%- assign _color_hover = '#fff' -%}
+      {%- when 'dark' -%}
+      {%- assign _color_hover = '#1d2127' -%} 
+      {%- endcase-%}
+      .short-collection-list .item.cat-has-icon:hover a,.short-collection-list .item.cat-has-icon:hover .thumb-info-title {
+        color: {{_color_hover}};
+      }
+    </style>
+  </div> 
+</div> 

@@ -1,0 +1,104 @@
+<div data-section-id="{{ section.id }}" data-section-type="brands-slider-section"> 
+  <div class="brands-slider">
+    <h3>Code:</h3>
+    <code>
+      <!-- Shortcode brands --> 
+      [brands autoplay="{{section.settings.autoplay}}" columns="{{ section.settings.columns }}" show_nav="{{section.settings.navigation}}" show_paging="{{section.settings.paging}}" item_margin="{{section.settings.margin}}" total="{{section.blocks.size}}"{% for block in section.blocks %} url{{forloop.index}}="{{ block.settings.link }}" src{{forloop.index}}="{{block.settings.image | img_url: 'master'}}" alt{{forloop.index}}="{{block.settings.image.alt}}"{% endfor %} ] 
+      <!-- / Shortcode brands -->
+    </code>
+    <div class="data-carousel"
+         data-auto="{{ section.settings.autoplay }}"
+         data-items="{{ section.settings.columns }}"
+         data-1200="{{ section.settings.columns }}"
+         data-992="5"
+         data-768="3"
+         data-640="3"
+         data-480="2"
+         data-paging="{{ section.settings.paging }}"
+         data-nav="{{ section.settings.navigation }}"
+         data-margin="{{ section.settings.margin }}"
+         data-prev=''
+         data-next='' style="display: none;"></div> 
+    <div class="owl-carousel carousel-init dots-style-1 owl-carousel-lazy">
+      {%- for block in section.blocks -%}
+      <div class="item">
+        {%- if block.settings.image != blank -%}
+        {%- assign img_url = block.settings.image | img_url: '180x79' -%}
+        {%- assign ar = block.settings.image.aspect_ratio -%}
+        {%- else -%}
+        {%- assign img_url = 'img160x70.png' | asset_url -%}
+        {%- assign ar = 2.285714285714286 -%}
+        {%- endif -%}
+        {%- assign pt = 100 | divided_by: ar | append: '%' -%}
+        <a href="{{ block.settings.link }}">
+          <img data-src="{{ img_url }}" alt="{{ section.settings.image.alt }}" style="padding-top: {{pt}};"/>
+        </a>
+      </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div> 
+{% schema %}
+{
+  "name": "t:sections.shortcode-brands.name",
+  "settings": [ 
+    {
+      "type": "header",
+      "content": "t:sections.shortcode-brands.settings.header.content"
+    }, 
+	{
+      "type": "text",
+      "id": "autoplay",
+      "label": "t:sections.shortcode-brands.settings.autoplay.label",
+      "info": "t:sections.shortcode-brands.settings.autoplay.info",
+      "default": "5000"
+    },
+    {
+      "type": "text",
+      "id": "columns",
+      "label": "t:sections.shortcode-brands.settings.columns.label",
+      "default" : "7"
+    },
+    {
+      "type": "text",
+      "id": "margin",
+      "label": "t:sections.shortcode-brands.settings.margin.label",
+      "default": "20"
+    },
+    {
+      "type": "checkbox",
+      "id": "paging",
+      "label": "t:sections.shortcode-brands.settings.paging.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "navigation",
+      "label": "t:sections.shortcode-brands.settings.navigation.label"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "t:sections.shortcode-brands.blocks.image.name",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.shortcode-brands.blocks.image.settings.image.label"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "t:sections.shortcode-brands.blocks.image.settings.link.label"
+        }
+      ]
+    }
+  ] 
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

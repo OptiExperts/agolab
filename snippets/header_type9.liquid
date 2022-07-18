@@ -1,0 +1,74 @@
+<div class="header-top top-links-container topbar-text-{{settings.topbar_text_color}}">
+  <div class="header-row container">
+    <div class="header-left">
+      {% if settings.topbar_custom_text2 != '' %}
+      <div class="custom-block"> 
+        {{ settings.topbar_custom_text2 }} 
+      </div>
+      {% endif %} 
+    </div>
+    <div class="header-right"> 
+      <div class="main-nav wrapper-top-menu hidden-sm"> 
+        <div id="main-top-nav" class="main-top-nav">
+          {% include 'header-logo-sticky' %}
+          <!-- Main Menu -->
+          {% include 'main-menu' %}
+          <!-- End Main Menu --> 
+        </div>
+      </div>
+      {% include 'header-setting' %}
+    </div>
+  </div>
+</div>
+<div class="header-main">
+  <div class="header header-row container">
+    <div class="header-left"> 
+      <div class="menu-icon">
+        <span class="split"></span>
+        <a href="javascript:void(0)" title="Menu"><i class="fa fa-bars"></i></a>
+      </div>  
+      {% include 'header-logo' %} 
+    </div> 
+    <div class="header-right">
+      <div class="search-area show-icon-tablet show-right">
+        <a href="javascript:void(0);" class="search-icon"> 
+          <i class="icon-magnifier"></i> 
+        </a>
+        {% include 'header-search' %}
+      </div> 
+      <div class="account-html ml-lg-4 mr-1"> 
+        <ul class="view-account porto-view-account popup-menu show-arrow">
+          <li class="menu-item has-sub narrow sub-ready">
+            <a href="javascript:;" class="my-account" title="My Account"><i class="icon-user-2"></i></a>
+            <div class="popup">
+              <div class="inner">
+                <ul class="sub-menu">
+                  <li class="menu-item"> 
+                    <a href="/account/">{{ 'header.settings.my_account' | t }}</a>
+                  </li>
+                  <li class="menu-item"> 
+                    {%- if customer -%}
+                    <a href="/account/logout">{{ 'header.settings.logout' | t }}</a>
+                    {%- else -%}
+                    <a href="/account/login">{{ 'header.settings.login' | t }}</a>
+                    {%- endif -%}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </li> 
+        </ul>
+      </div>  
+      <span class="separator hidden-sm"></span>
+      <div class="wishlist-html mr-1">
+        <a href="javascript:;" class="wishlist-popup" title="Wishlist"><i class="icon-wishlist-2"></i></a>
+      </div>
+      <span class="separator hidden-sm"></span>
+      <div class="cart-area">
+        <div class="mini-cart">
+          {% include 'header-cart' %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

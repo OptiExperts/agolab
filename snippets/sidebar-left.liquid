@@ -1,0 +1,78 @@
+<div class="mobile-canvas-overlay close-left"></div>
+<!-- end config style -->
+<div class="block-main-canvas canvas-left">
+  <div class="canvas-icon sicon-left d-block d-lg-none"><a href="javascript:void(0)"><i class="fa fa-sliders"></i></a></div>
+  <div class="canvas-inner sidebar-style-{{ sidebar_style }}" data-has-collapse>
+    {%- if section.blocks.size > 0 -%}
+      {%- for block in section.blocks -%}
+      {%- case block.type -%}
+      {%- when 'html' -%}
+        <div class="block html-sidebar"> 
+          {{ block.settings.html }} 
+        </div> 
+      {%- when 'products' -%}
+        <div class="block bestseller sidebar-cate-toogle">
+          <div class="block-title">
+            <h3> 
+              {{ block.settings.title }} 
+            </h3>
+          </div>
+          <div class="sidebar-content block-content">
+            {% render 'bestseller-product', sb_collection: block.settings.collection, sb_limit: block.settings.limit %}
+          </div>
+        </div>  
+      {%- when 'filter' -%} 
+    	{%- if template == 'collection' or template == 'search' -%}
+        <div class="block block-layered-nav">
+          <div class="block-content">
+            {% if filters_enable != blank %} 
+            {% render 'layer-nav', results: collection %}
+            {% endif %} 
+          </div>
+        </div>
+    	{%- endif -%} 
+      {%- when 'menu_collection' -%}
+        <div class="block block-nav sidebar-cate-toogle">
+          <div class="block-title">
+            <h3><span>{{ 'collections.sidebar.categories' | t }}</span></h3>
+            <span class="collapse">
+              <i class="icon-up-dir"></i>
+              <i class="icon-down-dir"></i>
+            </span>
+          </div>
+          <div class="sidebar-content block-content">
+            {% include 'menu-category', menu_collection: block.settings.menu_collection, show_count: block.settings.show_count %}
+          </div>
+        </div>  
+      {%- when 'menu' -%}
+    	<div class="main-sidebar-menu category-menu-style-default_new">
+        {%- include 'sidebar-sidemenu', sb_menu: block.settings.menu -%}
+    	</div>
+      {%- endcase -%}
+      {%- endfor -%}
+    {%- endif -%} 
+  </div>
+</div>
+<script type="text/javascript">
+  jQuery(function($) {
+    $('.canvas-icon.sicon-left, .close-left').click(function(event) {
+      if(!$('body').hasClass('canvas-left')) {
+        $('body').addClass('mobile-canvas-shown');
+        $('body').addClass('canvas-left', function() {
+          setTimeout(function(){
+            $(document).one("click",function(e) {
+              var target = e.target;
+              if (!$(target).is('.canvas-left .block') && !$(target).parents().is('.canvas-left .canvas-inner')) {
+                $('body').removeClass('canvas-left');
+                $('body').removeClass('mobile-canvas-shown');
+              }
+            });
+          }, 111);
+        });
+      } else{
+        $('body').removeClass('canvas-left');
+        $('body').removeClass('mobile-canvas-shown');
+      }
+    });
+  });
+</script>

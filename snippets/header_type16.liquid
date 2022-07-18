@@ -1,0 +1,50 @@
+<div class="header header-row container">
+  <div class="header-left hidden-sm"> 
+    {% include 'header-setting' %}
+  </div>
+  <div class="header-left visible-sm">
+    <div class="menu-icon"><a href="javascript:void(0)" title="Menu"><i class="fa fa-bars"></i></a></div> 
+    {% include 'header-logo' %}  
+  </div>
+  <div class="header-center hidden-sm"> 
+    {% include 'header-logo' %}  
+  </div>
+  <div class="header-right"> 
+    <div class="cart-area">
+      {% if settings.header_custom_text != '' %}
+      <div class="custom-block"> 
+        {{ settings.header_custom_text }} 
+      </div>
+      {% endif %}
+      <div class="mini-cart">
+        {% include 'header-cart' %}
+      </div>
+      <div class="search-area show-icon visible-sm">
+        <a href="javascript:void(0);" class="search-icon"><span><i class="icon-search"></i><span>{{ 'general.search.submit' | t }}</span></span></a>
+        {% include 'header-search' %}
+      </div>
+    </div> 
+  </div> 
+</div>
+<div class="header-wrapper">
+  <div class="main-nav wrapper-top-menu">
+    <div class="container header-row">
+      <div class="header-left">    
+        {% include 'shortcode' load: settings.header_menu_custom %} 
+      </div>
+      <div class="header-center"> 
+        <div id="main-top-nav" class="main-top-nav"> 
+          <!-- Main Menu -->
+          {% include 'main-menu' %}
+          <!-- End Main Menu --> 
+        </div>
+      </div>
+      <div class="header-right"> 
+        <div class="search-area show-icon">
+          <a href="javascript:void(0);" class="search-icon"><span><i class="icon-search"></i><span>{{ 'general.search.submit' | t }}</span></span></a>
+          {% include 'header-search' %}
+        </div>
+      </div> 
+    </div>
+  </div>
+</div>

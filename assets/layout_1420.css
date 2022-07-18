@@ -1,0 +1,22 @@
+@media (min-width: 1220px){
+  .container {
+    max-width: 1200px;
+  }
+}
+@media (min-width: 1280px) {
+  .fullwidth-row {
+    width: 100vw;
+    margin-left: calc(590px - 50vw);
+  }
+  .layout-1024 .fullwidth-row {margin-left: calc(498px - 50vw);}
+  .container {max-width: 1200px;}
+}
+@media (min-width: 1440px) {
+  .container {
+    max-width: 1420px;
+  }
+  .fullwidth-row {
+    width: 100vw;
+    margin-left: calc(695px - 50vw);
+  } 
+} 

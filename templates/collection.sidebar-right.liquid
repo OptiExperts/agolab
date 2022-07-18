@@ -1,0 +1,6 @@
+<!-- /templates/collection.liquid -->
+{%- assign limit = settings.collection_products_count | plus:0 -%}
+{%- assign columns = settings.collection_columns | plus: 0 -%}
+{%- assign sidebar-left = false -%}
+{%- assign sidebar-right = true -%}
+{%- include 'collection_grid' -%}

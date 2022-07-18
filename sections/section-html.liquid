@@ -1,0 +1,37 @@
+<div class="html-code" data-section-id="{{ section.id }}" data-section-type="html-section">
+  <div class="html-code-wrapper">   
+    {% include 'shortcode' load: section.settings.html %} 
+  </div>
+</div>
+{% schema %}
+{
+  "name": "t:sections.section-html.name", 
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.section-html.settings.header.content"
+    }, 
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:sections.section-html.settings.title.label"
+    }, 
+    {
+      "type": "html",
+      "id": "html",
+      "label": "t:sections.section-html.settings.html.label",
+	  "info": "t:sections.section-html.settings.html.info"
+    } 
+  ], 
+  "presets": [{
+    "name": "t:sections.section-html.presets.name",
+    "category": "Shortcode Section" 
+  }]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

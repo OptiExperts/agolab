@@ -1,0 +1,118 @@
+{%- if section.blocks.size > 0 -%}
+<div class="product-tabs vertical">
+  <ul class="nav level0">
+    {%- for block in section.blocks -%}
+    {%- case block.type -%}
+    {%- when 'description' -%}
+    <li class="description_tab level0 nav-item">
+      <a class="level0 nav-link {% if forloop.first %}active{% endif %}" href="#product_tabs_description" role="tab" data-toggle="tab" aria-selected="true" aria-control="product_tabs_description">
+        {{ block.settings.title }} 
+      </a>
+    </li>
+    {%- when 'review' -%}
+    <li class="reviews_tab level0 nav-item">
+      <a class="level0 nav-link {% if forloop.first %}active{% endif %}" href="#product_tabs_tabreviews" role="tab" data-toggle="tab" aria-selected="false" aria-control="product_tabs_tabreviews">
+        {{ block.settings.title }} 
+        {%- if block.settings.use_count_reviews -%} 
+        <script type="text/javascript">
+          $(function(){
+            if($('meta[itemprop=reviewCount]').length > 0) {
+              var revcount = '('+ $('meta[itemprop=reviewCount]').attr("content")+')';
+            }else {
+              var revcount = '(0)';
+            } 
+            $('.reviews_tab > a').append(revcount);
+          });
+        </script>
+        {%- endif -%}
+      </a>
+    </li>
+    {%- when 'additional' -%}
+    {%- if product.description contains '[additional]' -%}
+    <li class="additional_tab level0 nav-item">
+      <a class="level0 nav-link {% if forloop.first %}active{% endif %}" href="#product_tabs_additional" role="tab" data-toggle="tab" aria-selected="false" aria-control="product_tabs_additional">
+        {{ block.settings.title }} 
+      </a>
+    </li>
+    {%- endif -%}
+    {%- when 'size_chart' -%}
+    {%- if block.settings.size_chart_image != blank or block.settings.code != '' -%}
+    <li class="size_chart_tab level0 nav-item">
+      <a class="level0 nav-link {% if forloop.first %}active{% endif %}" href="#product_tabs_size_chart" role="tab" data-toggle="tab" aria-selected="false" aria-control="product_tabs_size_chart">
+        {{ block.settings.title }} 
+      </a>
+    </li>
+    {%- endif -%}
+    {%- when 'html' -%}
+    {%- if block.settings.code != '' -%}
+    <li class="html_tab level0 nav-item">
+      <a class="level0 nav-link {% if forloop.first %}active{% endif %}" href="#tab{{block.id}}" role="tab" data-toggle="tab" aria-selected="false" aria-control="tab{{block.id}}">
+        {{ block.settings.title }} 
+      </a>
+    </li>
+    {%- endif -%}
+    {%- endcase -%}
+    {%- endfor -%}
+  </ul>
+  <div class="product-tab-content tab-content">
+    {%- for block in section.blocks -%}
+    {%- case block.type -%}
+    {%- when 'description' -%}
+    <div class="tab-pane fade {% if forloop.first %}show active{% endif %} collapse" id="product_tabs_description">
+      <div class="product-tabs-content-inner clearfix">
+        {%- assign description = product.description -%}
+        {%- if description contains '[countdown]' -%}
+        {%- assign description = description | split:'[/countdown]' | last -%}
+        {%- endif -%}
+        {%- if product.description contains '[shortdesc]' -%}
+        {%- assign description = description | split:'[/shortdesc]' | last -%}
+        {%- endif -%}
+        {%- if product.description contains '[additional]' -%}
+        {%- assign description = description | split:'[/additional]' | last -%}
+        {%- endif -%} 
+        {{ description }} 
+      </div>
+    </div>
+    {%- when 'review' -%}
+    <div class="tab-pane fade {% if forloop.first %}show active{% endif %} collapse" id="product_tabs_tabreviews">
+      <div class="product-tabs-content-inner clearfix">
+        <div id="shopify-product-reviews" data-id="{{product.id}}">{{ product.metafields.spr.reviews }}</div>
+      </div>
+    </div>
+    {%- when 'additional' -%}
+    {%- if product.description contains '[additional]' -%}
+    <div class="tab-pane fade {% if forloop.first %}show active{% endif %} collapse" id="product_tabs_additional" aria-selected="false" aria-control="product_tabs_additional">
+      <div class="product-tabs-content-inner clearfix">
+        {%- if product.description contains '[additional]' -%}
+        {%- assign get = product.description | split:'[/additional]' | first -%}
+        {%- assign additional = get | split:'[additional]' | last -%} 
+        {{ additional }} 
+        {%- endif -%}
+      </div>
+    </div>
+    {%- endif -%}
+    {%- when 'size_chart' -%}
+    {%- if block.settings.size_chart_image != blank or block.settings.code != '' -%}
+    <div class="tab-pane fade {% if forloop.first %}show active{% endif %} collapse" id="product_tabs_size_chart">
+      <div class="product-tabs-content-inner clearfix">
+        {%- if block.settings.size_chart_image != blank -%}
+        <img data-src="{{ block.settings.size_chart_image | img_url: 'master' }}" class="img-responsive" />
+        {%- else -%} 
+        {{ block.settings.code }} 
+        {%- endif -%}
+      </div>
+    </div>
+    {%- endif -%}
+    {%- when 'html' -%}
+    {%- if block.settings.code != '' -%}
+    <div class="tab-pane fade {% if forloop.first %}show active{% endif %} collapse" id="tab{{block.id}}">
+      <div class="product-tabs-content-inner clearfix"> 
+        {{ block.settings.code }} 
+      </div>
+    </div>
+    {%- endif -%}
+    {%- endcase -%}
+    {%- endfor -%}
+  </div>
+</div>
+{%- endif -%} 

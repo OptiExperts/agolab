@@ -1,0 +1,325 @@
+<div data-section-id="{{ section.id }}" data-section-type="testimonials-section">
+  {{ 'section-testimonials.css' | asset_url | stylesheet_tag }}
+  <div id="testimonials-section-{{ section.id }}" class="article-section">  
+    <div style="position:relative;">
+      <h3>Code:</h3>
+      <code>
+        <!-- Shortcode product --> 
+        [testimonial title="{{section.settings.title}}" title_align="{{section.settings.title_align}}" title_style="{{section.settings.title_border_style}}" design="{{section.settings.design}}" autoplay="{{section.settings.autoplay}}" show_nav="{{section.settings.show_nav}}" nav_side="{{section.settings.nav_side}}" nav_position="{{section.settings.nav_position}}" nav_type="{{section.settings.nav_type}}" nav_onhover="{{section.settings.show_nav_hover}}" show_paging="{{section.settings.show_paging}}" item_margin="{{section.settings.item_margin}}" desktop="{{section.settings.item_desktop}}" tablet="{{section.settings.item_tablet}}" mobile="{{section.settings.item_mobile}}" total="{{section.blocks.size}}" {% for block in section.blocks %} src{{forloop.index}}="{{block.settings.image | img_url: '150x150'}}" content{{forloop.index}}="{{block.settings.content}}" name{{forloop.index}}="{{block.settings.name_author}}" desc{{forloop.index}}="{{block.settings.desc_author}}"{% endfor %} ] 
+        <!-- / Shortcode product -->
+      </code>
+      <div class="porto-testimonial title-{{section.settings.title_border_style}}"> 
+        <h2 class="section-title{% if section.settings.view_mode == 'products-slider' %} slider-title{% endif %} text-{{section.settings.title_align}}">
+          {%- if section.settings.title_border_style == 'border-middle' and section.settings.title_align != 'left' -%}
+          <span class="line-l"></span>
+          {%- endif -%}
+          <span class="inline-title"> 
+            {{ section.settings.title }} 
+          </span>
+          {%- if section.settings.title_border_style == 'border-middle' and section.settings.title_align != 'right' -%}
+          <span class="line-r"></span>
+          {%- endif -%}
+        </h2>  
+        <div class="testimonial-items">
+          <div class="data-carousel"
+               data-auto="{{ section.settings.autoplay }}"
+               data-items="{{ section.settings.item_desktop }}"
+               data-1200="{{ section.settings.item_desktop }}"
+               data-992="{{ section.settings.item_tablet }}"
+               data-768="{{ section.settings.item_tablet }}"
+               data-640="{{ section.settings.item_mobile }}"
+               data-480="{{ section.settings.item_mobile }}"
+               data-320="{{ section.settings.item_mobile }}"
+               data-paging="{{ section.settings.show_paging }}"
+               data-nav="{{ section.settings.show_nav }}"
+               data-margin="{{ section.settings.item_margin }}"
+               data-prev='' 
+               data-next='' style="display: none;"></div>
+          <div class="testimonial-carousel owl-carousel dots-style-1 carousel-init owl-carousel-lazy {{section.settings.nav_position}} {{section.settings.nav_side}} {{section.settings.nav_type}} {% if section.settings.show_nav_hover %}show-nav-hover{% endif %}">
+            {%- for block in section.blocks -%} 
+            <div class="item"> 
+              <div class="testimonial testimonial-style-{{section.settings.design}}">
+                <div class="testimonial-author clearfix">
+                  <div class="testimonial-author-thumbnail">
+                    {%- if block.settings.image != blank -%}
+                    {%- assign img_url = block.settings.image | img_url: 'master' -%}
+                    {%- else -%}
+                    {%- assign img_url = 'img60x60.png' | asset_url -%}
+                    {%- endif -%}
+                    <img class="img-responsive img-circle" data-src="{{ img_url }}" alt="">
+                  </div>
+                  <p><strong style="color: #222529;">{{ block.settings.name_author | split: '|' | first }}</strong><span>{{ block.settings.desc_author | split: '|' | first }}</span></p>
+                </div>
+                <div class="testimonial-arrow-down"></div>
+                <blockquote> 
+                  {{ block.settings.content }} 
+                </blockquote>
+              </div> 
+            </div>  
+            {%- endfor -%}
+          </div>
+        </div> 
+      </div> 
+    </div> 
+  </div>
+</div>
+{% schema %}
+{
+  "name": "t:sections.shortcode-testimonials.name",
+  "settings": [ 
+    {
+      "type": "header",
+      "content": "t:sections.shortcode-testimonials.settings.header__1.content"
+    },   
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:sections.shortcode-testimonials.settings.title.label",
+      "default": "Shortcode Title"
+    },
+    {
+      "type": "select",
+      "id": "title_border_style",
+      "label": "t:sections.shortcode-testimonials.settings.title_border_style.label",
+      "options": [
+        {
+          "value": "",
+          "label": "t:sections.shortcode-testimonials.settings.title_border_style.options__1.label"
+        },
+        {
+          "value": "border-bottom",
+          "label": "t:sections.shortcode-testimonials.settings.title_border_style.options__2.label"
+        },
+        {
+          "value": "border-middle",
+          "label": "t:sections.shortcode-testimonials.settings.title_border_style.options__3.label"
+        }
+      ],
+      "default": "border-bottom"
+    }, 
+    {
+      "type": "select",
+      "id": "title_align",
+      "label": "t:sections.shortcode-testimonials.settings.title_align.label",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.shortcode-testimonials.settings.title_align.options__1.label"
+        },
+        {
+          "value": "right",
+          "label": "t:sections.shortcode-testimonials.settings.title_align.options__2.label"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.shortcode-testimonials.settings.title_align.options__3.label"
+        } 
+      ],
+      "default": "left"
+    },  
+    {
+      "type": "select",
+      "id": "design",
+      "label": "t:sections.shortcode-testimonials.settings.design.label",
+      "options": [
+        {
+          "value": "1",
+          "label": "t:sections.shortcode-testimonials.settings.design.options__1.label"
+        },
+        {
+          "value": "2",
+          "label": "t:sections.shortcode-testimonials.settings.design.options__2.label"
+        },
+        {
+          "value": "3",
+          "label": "t:sections.shortcode-testimonials.settings.design.options__3.label"
+        },
+        {
+          "value": "4",
+          "label": "t:sections.shortcode-testimonials.settings.design.options__4.label"
+        },
+        {
+          "value": "5",
+          "label": "t:sections.shortcode-testimonials.settings.design.options__5.label"
+        },
+        {
+          "value": "6",
+          "label": "t:sections.shortcode-testimonials.settings.design.options__6.label"
+        },
+        {
+          "value": "7",
+          "label": "t:sections.shortcode-testimonials.settings.design.options__7.label"
+        }
+      ],
+      "default": "4"
+    },
+    {
+      "type":"header",
+      "content": "t:sections.shortcode-testimonials.settings.header__2.content"
+    }, 
+    {
+      "type": "text",
+      "id": "autoplay",
+      "label": "t:sections.shortcode-testimonials.settings.autoplay.label",
+      "default": "5000"
+    }, 
+    {
+      "type": "text",
+      "id": "item_desktop",
+      "label": "t:sections.shortcode-testimonials.settings.item_desktop.label",
+      "default": "3"
+    }, 
+    {
+      "type": "text",
+      "id": "item_tablet",
+      "label": "t:sections.shortcode-testimonials.settings.item_tablet.label",
+      "default": "2"
+    },
+    {
+      "type": "text",
+      "id": "item_mobile",
+      "label": "t:sections.shortcode-testimonials.settings.item_mobile.label",
+      "default": "1"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_nav",
+      "label": "t:sections.shortcode-testimonials.settings.show_nav.label",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_paging",
+      "label": "t:sections.shortcode-testimonials.settings.show_paging.label"
+    },
+    {
+      "type": "select",
+      "id": "nav_position",
+      "label": "t:sections.shortcode-testimonials.settings.nav_position.label",
+      "options": [
+        {
+          "value": "middle",
+          "label": "t:sections.shortcode-testimonials.settings.nav_position.options__1.label"
+        },
+        {
+          "value": "nav-center-images-only",
+          "label": "t:sections.shortcode-testimonials.settings.nav_position.options__2.label"
+        },
+        {
+          "value": "show-nav-title",
+          "label": "t:sections.shortcode-testimonials.settings.nav_position.options__3.label"
+        },
+        {
+          "value": "nav-bottom",
+          "label": "t:sections.shortcode-testimonials.settings.nav_position.options__4.label"
+        }
+      ],
+      "default": "middle"
+    },
+    {
+      "type": "select",
+      "id": "nav_side",
+      "label": "t:sections.shortcode-testimonials.settings.nav_side.label",
+      "options": [
+        {
+          "value": "",
+          "label": "t:sections.shortcode-testimonials.settings.nav_side.options__1.label"
+        },
+        {
+          "value": "nav-pos-inside",
+          "label": "t:sections.shortcode-testimonials.settings.nav_side.options__2.label"
+        },
+        {
+          "value": "nav-pos-outside",
+          "label": "t:sections.shortcode-testimonials.settings.nav_side.options__3.label"
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "id": "nav_type",
+      "label": "t:sections.shortcode-testimonials.settings.nav_type.label",
+      "options": [
+        {
+          "value": "",
+          "label": "t:sections.shortcode-testimonials.settings.nav_type.options__1.label"
+        },
+        {
+          "value": "rounded-nav",
+          "label": "t:sections.shortcode-testimonials.settings.nav_type.options__2.label"
+        },
+        {
+          "value": "big-nav",
+          "label": "t:sections.shortcode-testimonials.settings.nav_type.options__3.label"
+        },
+        {
+          "value": "nav-style-1",
+          "label": "t:sections.shortcode-testimonials.settings.nav_type.options__4.label"
+        },
+        {
+          "value": "nav-style-2",
+          "label": "t:sections.shortcode-testimonials.settings.nav_type.options__5.label"
+        },
+        {
+          "value": "nav-style-4",
+          "label": "t:sections.shortcode-testimonials.settings.nav_type.options__6.label"
+        },
+        {
+          "value": "nav-style-3",
+          "label": "t:sections.shortcode-testimonials.settings.nav_type.options__7.label"
+        }
+      ],
+      "default": "nav-style-4"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_nav_hover",
+      "label": "t:sections.shortcode-testimonials.settings.show_nav_hover.label"
+    }, 
+    {
+      "type": "text",
+      "id": "item_margin",
+      "label": "t:sections.shortcode-testimonials.settings.item_margin.label",
+      "info": "t:sections.shortcode-testimonials.settings.item_margin.info",
+      "default": "10"
+    } 
+  ],
+  "blocks": [
+    {
+      "type": "item",
+      "name": "t:sections.shortcode-testimonials.blocks.item.name",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.shortcode-testimonials.blocks.item.settings.image.label"
+        },
+        {
+          "type": "textarea",
+          "id": "content",
+          "label": "t:sections.shortcode-testimonials.blocks.item.settings.content.label",
+          "default": "Hello, I want to thank you for creating a great template and for the excellent and quick support and help that you have been providing to me as I begin to work with it."
+        },
+        {
+          "type": "text",
+          "id": "name_author",
+          "label": "t:sections.shortcode-testimonials.blocks.item.settings.name_author.label",
+          "default": "John Smith"
+        },
+        {
+          "type": "text",
+          "id": "desc_author",
+          "label": "t:sections.shortcode-testimonials.blocks.item.settings.desc_author.label",
+          "default": "CEO & Founder - Okler"
+        }
+      ]
+    }
+  ] 
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,612 @@
+<div class="html-code" data-section-id="{{ section.id }}" data-section-type="html-section">
+  <div class="html-code-wrapper" style="background-color: {{section.settings.bg_color}}; margin-top: {{section.settings.margin_top | remove: 'px' | append: 'px' }};margin-bottom: {{section.settings.margin_bottom | remove: 'px' | append: 'px' }};padding: {{section.settings.section_padding}};"> 
+    {%- if section.blocks.size > 0 -%} 
+    <div class="container">
+      <div class="row" style="margin-left: -{{section.settings.space_sction}}px; margin-right: -{{section.settings.space_sction}}px;">
+        {%- for block in section.blocks -%}
+        {%- case block.type -%} 
+        {%- when 'banner_panel' -%}
+        <div class="porto-products title-{{block.settings.title_border_style}} {% if block.settings.item_hidden_tablet != blank %}hidden-table{% endif %}{% if block.settings.item_hidden_mobile != blank %} hidden-phone{% endif %} col-sm-{{block.settings.item_width_mobile}} col-lg-{{block.settings.item_width_desktop}} col-md-{{block.settings.item_width_tablet}}" style="padding-top: 14px;padding-left: {{section.settings.space_sction}}px;padding-right: {{section.settings.space_sction}}px;">
+          {%- if block.settings.title != '' -%}
+          <h2 class="section-title text-{{block.settings.title_align}}" style="font-weight:600;padding-bottom: 19px;font-size:18px;margin-bottom: 30px;border-color:rgba(0,0,0,0.03);">
+            {%- if block.settings.title_border_style == 'border-middle' and block.settings.title_align != 'left' -%}
+            <span class="line-l"></span>
+            {%- endif -%}
+            <span class="inline-title"> 
+              {{ block.settings.title }} 
+            </span>
+            {%- if block.settings.title_border_style == 'border-middle' and block.settings.title_align != 'right' -%}
+            <span class="line-r"></span>
+            {%- endif -%}
+          </h2>
+          {%- endif -%} 
+          <div class="banner-section">
+            <a href="{{block.settings.banner_url}}">
+              {%- if block.settings.banner != blank -%}
+              {%- assign banner_image = block.settings.banner | img_url: '450x257' -%}
+              {%- else -%}
+              {%- assign banner_image = '450x257.png' | asset_url -%}
+              {%- endif -%}
+              <img data-src="{{ banner_image }}"/>
+            </a>
+          </div>
+        </div>
+        {%- when 'tab_panel' -%}
+        <div class="{% if block.settings.item_hidden_tablet != blank %}hidden-table {% endif %}{% if block.settings.item_hidden_mobile != blank %}hidden-phone {% endif %}col-sm-{{block.settings.item_width_mobile}} col-lg-{{block.settings.item_width_desktop}} col-md-{{block.settings.item_width_tablet}}" style="padding-left: {{section.settings.space_sction}}px;padding-right: {{section.settings.space_sction}}px;">
+          <div class="tabs tabs-simple tabs-secondary">
+            <ul class="nav nav-tabs" role="tablist">
+              {%- assign numb = 0 -%}
+              {%- for block in section.blocks -%} 
+              {%- if block.type == 'tab_item' -%}
+              {%- assign numb = numb | plus: 1 -%}
+              <li class="nav-item{% if numb == 1%} first{% endif %}">
+                <a href="#tab-{{ block.id }}" class="nav-link{% if numb == 1 %} active{% endif %}" data-toggle="tab"> 
+                  {{ block.settings.title }} 
+                </a>
+              </li>
+              {%- endif -%}
+              {%- endfor -%}
+            </ul>
+            <div class="tab-content">
+              {%- assign numb2 = 0 -%}
+              {%- for block in section.blocks -%}
+              {%- if block.type == 'tab_item' -%}
+              {%- assign numb2 = numb2 | plus: 1 -%}
+              <div class="tab-pane {% if numb2 == 1%}active{% endif %}" id="tab-{{ block.id }}">  
+                {% include 'shortcode' load: block.settings.html %} 
+              </div>
+              {%- endif -%}
+              {%- endfor -%} 
+            </div>
+          </div>
+        </div>
+        {%- endcase -%}
+        {%- endfor -%}
+      </div>
+    </div>
+    {%- endif-%}
+  </div>
+</div>
+{% schema %}
+{
+  "name": "t:sections.section-html-tab.name", 
+  "settings": [ 
+    {
+      "type": "header",
+      "content": "t:sections.section-html-tab.settings.header.content"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:sections.section-html-tab.settings.title.label" 
+    },
+    {
+      "type": "text",
+      "id": "margin_top",
+      "label": "t:sections.section-html-tab.settings.margin_top.label",
+      "info": "40px"
+    },
+    {
+      "type": "text",
+      "id": "margin_bottom",
+      "label": "t:sections.section-html-tab.settings.margin_bottom.label",
+      "info": "40px"
+    },
+    {
+      "type": "text",
+      "id": "section_padding",
+      "label": "t:sections.section-html-tab.settings.section_padding.label",
+      "info": "t:sections.section-html-tab.settings.section_padding.info"
+    },
+    {
+      "type": "select",
+      "id": "space_sction",
+      "label": "t:sections.section-html-tab.settings.space_sction.label",
+      "options": [
+        {
+          "value": "10",
+          "label": "10"
+        },
+        {
+          "value": "15",
+          "label": "15"
+        } 
+      ],
+      "default": "15"
+    }, 
+    {
+      "type": "color",
+      "id": "bg_color",
+      "label": "t:sections.section-html-tab.settings.bg_color.label",
+      "default" : "#f4f4f4"
+    }
+  ],  
+  "blocks": [
+    {
+      "type": "tab_panel",
+      "name": "t:sections.section-html-tab.blocks.tab_panel.name",
+	  "limit": 1,
+      "settings": [ 
+        {
+          "type": "header", 
+          "content": "t:sections.section-html-tab.blocks.general.settings.header.content"
+        }, 
+        {
+          "type": "select",
+          "id": "item_width_desktop",
+          "label": "t:sections.section-html-tab.blocks.general.settings.item_width_desktop.label",
+          "options": [
+            {
+              "value": "1",
+              "label": "1/12"
+            },
+            {
+              "value": "2",
+              "label": "2/12"
+            },
+            {
+              "value": "3",
+              "label": "3/12"
+            },
+            {
+              "value": "4",
+              "label": "4/12"
+            },
+            {
+              "value": "5",
+              "label": "5/12"
+            },
+            {
+              "value": "6",
+              "label": "6/12"
+            },
+            {
+              "value": "7",
+              "label": "7/12"
+            },
+            {
+              "value": "8",
+              "label": "8/12"
+            },
+            {
+              "value": "9",
+              "label": "9/12"
+            },
+            {
+              "value": "10",
+              "label": "10/12"
+            },
+            {
+              "value": "11",
+              "label": "11/12"
+            },
+            {
+              "value": "12",
+              "label": "12/12"
+            }
+          ],
+          "default": "4"
+        }, 
+        {
+          "type": "select",
+          "id": "item_width_tablet",
+          "label": "t:sections.section-html-tab.blocks.general.settings.item_width_tablet.label",
+          "options": [
+            {
+              "value": "1",
+              "label": "1/12"
+            },
+            {
+              "value": "2",
+              "label": "2/12"
+            },
+            {
+              "value": "3",
+              "label": "3/12"
+            },
+            {
+              "value": "4",
+              "label": "4/12"
+            },
+            {
+              "value": "5",
+              "label": "5/12"
+            },
+            {
+              "value": "6",
+              "label": "6/12"
+            },
+            {
+              "value": "7",
+              "label": "7/12"
+            },
+            {
+              "value": "8",
+              "label": "8/12"
+            },
+            {
+              "value": "9",
+              "label": "9/12"
+            },
+            {
+              "value": "10",
+              "label": "10/12"
+            },
+            {
+              "value": "11",
+              "label": "11/12"
+            },
+            {
+              "value": "12",
+              "label": "12/12"
+            }
+          ],
+          "default": "6"
+        }, 
+        {
+          "type": "select",
+          "id": "item_width_mobile",
+          "label": "t:sections.section-html-tab.blocks.general.settings.item_width_mobile.label",
+          "options": [
+            {
+              "value": "1",
+              "label": "1/12"
+            },
+            {
+              "value": "2",
+              "label": "2/12"
+            },
+            {
+              "value": "3",
+              "label": "3/12"
+            },
+            {
+              "value": "4",
+              "label": "4/12"
+            },
+            {
+              "value": "5",
+              "label": "5/12"
+            },
+            {
+              "value": "6",
+              "label": "6/12"
+            },
+            {
+              "value": "7",
+              "label": "7/12"
+            },
+            {
+              "value": "8",
+              "label": "8/12"
+            },
+            {
+              "value": "9",
+              "label": "9/12"
+            },
+            {
+              "value": "10",
+              "label": "10/12"
+            },
+            {
+              "value": "11",
+              "label": "11/12"
+            },
+            {
+              "value": "12",
+              "label": "12/12"
+            }
+          ],
+          "default": "12"
+        },
+        {
+          "type": "checkbox",
+          "id": "item_hidden_tablet",
+          "label": "t:sections.section-html-tab.blocks.general.settings.item_hidden_tablet.label",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "item_hidden_mobile",
+          "label": "t:sections.section-html-tab.blocks.general.settings.item_hidden_mobile.label",
+          "default": false
+        } 
+      ]
+    },
+	{
+      "type": "banner_panel",
+      "name": "t:sections.section-html-tab.blocks.banner_panel.name",
+	  "limit": 2,
+      "settings": [ 
+        {
+          "type": "header", 
+          "content": "t:sections.section-html-tab.blocks.general.settings.header.content"
+        }, 
+        {
+          "type": "select",
+          "id": "item_width_desktop",
+          "label": "t:sections.section-html-tab.blocks.general.settings.item_width_desktop.label",
+          "options": [
+            {
+              "value": "1",
+              "label": "1/12"
+            },
+            {
+              "value": "2",
+              "label": "2/12"
+            },
+            {
+              "value": "3",
+              "label": "3/12"
+            },
+            {
+              "value": "4",
+              "label": "4/12"
+            },
+            {
+              "value": "5",
+              "label": "5/12"
+            },
+            {
+              "value": "6",
+              "label": "6/12"
+            },
+            {
+              "value": "7",
+              "label": "7/12"
+            },
+            {
+              "value": "8",
+              "label": "8/12"
+            },
+            {
+              "value": "9",
+              "label": "9/12"
+            },
+            {
+              "value": "10",
+              "label": "10/12"
+            },
+            {
+              "value": "11",
+              "label": "11/12"
+            },
+            {
+              "value": "12",
+              "label": "12/12"
+            }
+          ],
+          "default": "4"
+        }, 
+        {
+          "type": "select",
+          "id": "item_width_tablet",
+          "label": "t:sections.section-html-tab.blocks.general.settings.item_width_tablet.label",
+          "options": [
+            {
+              "value": "1",
+              "label": "1/12"
+            },
+            {
+              "value": "2",
+              "label": "2/12"
+            },
+            {
+              "value": "3",
+              "label": "3/12"
+            },
+            {
+              "value": "4",
+              "label": "4/12"
+            },
+            {
+              "value": "5",
+              "label": "5/12"
+            },
+            {
+              "value": "6",
+              "label": "6/12"
+            },
+            {
+              "value": "7",
+              "label": "7/12"
+            },
+            {
+              "value": "8",
+              "label": "8/12"
+            },
+            {
+              "value": "9",
+              "label": "9/12"
+            },
+            {
+              "value": "10",
+              "label": "10/12"
+            },
+            {
+              "value": "11",
+              "label": "11/12"
+            },
+            {
+              "value": "12",
+              "label": "12/12"
+            }
+          ],
+          "default": "6"
+        }, 
+        {
+          "type": "select",
+          "id": "item_width_mobile",
+          "label": "t:sections.section-html-tab.blocks.general.settings.item_width_mobile.label",
+          "options": [
+            {
+              "value": "1",
+              "label": "1/12"
+            },
+            {
+              "value": "2",
+              "label": "2/12"
+            },
+            {
+              "value": "3",
+              "label": "3/12"
+            },
+            {
+              "value": "4",
+              "label": "4/12"
+            },
+            {
+              "value": "5",
+              "label": "5/12"
+            },
+            {
+              "value": "6",
+              "label": "6/12"
+            },
+            {
+              "value": "7",
+              "label": "7/12"
+            },
+            {
+              "value": "8",
+              "label": "8/12"
+            },
+            {
+              "value": "9",
+              "label": "9/12"
+            },
+            {
+              "value": "10",
+              "label": "10/12"
+            },
+            {
+              "value": "11",
+              "label": "11/12"
+            },
+            {
+              "value": "12",
+              "label": "12/12"
+            }
+          ],
+          "default": "12"
+        },
+        {
+          "type": "checkbox",
+          "id": "item_hidden_tablet",
+          "label": "t:sections.section-html-tab.blocks.general.settings.item_hidden_tablet.label",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "item_hidden_mobile",
+          "label": "t:sections.section-html-tab.blocks.general.settings.item_hidden_mobile.label",
+          "default": false
+        },
+        {
+          "type": "header", 
+          "content": "t:sections.section-html-tab.blocks.banner_panel.settings.header__1.content"
+        }, 
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.section-html-tab.blocks.banner_panel.settings.title.label",
+          "default": "Banner Title"
+        },
+        {
+          "type": "select",
+          "id": "title_border_style",
+          "label": "t:sections.section-html-tab.blocks.banner_panel.settings.title_border_style.label",
+          "options": [
+            {
+              "value": "",
+              "label": "t:sections.section-html-tab.blocks.banner_panel.settings.title_border_style.options__1.label"
+            },
+            {
+              "value": "border-bottom",
+              "label": "t:sections.section-html-tab.blocks.banner_panel.settings.title_border_style.options__2.label"
+            },
+            {
+              "value": "border-middle",
+              "label": "t:sections.section-html-tab.blocks.banner_panel.settings.title_border_style.options__3.label"
+            }
+          ],
+          "default": "border-bottom"
+        }, 
+        {
+          "type": "select",
+          "id": "title_align",
+          "label": "t:sections.section-html-tab.blocks.banner_panel.settings.title_align.label",
+          "options": [
+            {
+              "value": "left",
+              "label": "t:sections.section-html-tab.blocks.banner_panel.settings.title_align.options__1.label"
+            },
+            {
+              "value": "right",
+              "label": "t:sections.section-html-tab.blocks.banner_panel.settings.title_align.options__2.label"
+            },
+            {
+              "value": "center",
+              "label": "t:sections.section-html-tab.blocks.banner_panel.settings.title_align.options__3.label"
+            } 
+          ],
+          "default": "left"
+        },
+        {
+          "type": "header", 
+          "content": "t:sections.section-html-tab.blocks.banner_panel.settings.header__2.content"
+        }, 
+        {
+          "type": "image_picker",
+          "id": "banner",
+          "label": "t:sections.section-html-tab.blocks.banner_panel.settings.banner.label"
+        },
+        {
+          "type": "url",
+          "id": "banner_url",
+          "label": "t:sections.section-html-tab.blocks.banner_panel.settings.banner_url.label"
+        }
+      ]
+    },
+	{
+      "type": "tab_item",
+      "name": "t:sections.section-html-tab.blocks.tab_item.name",
+      "settings": [ 
+        {
+          "type": "header", 
+          "content": "t:sections.section-html-tab.blocks.general.settings.header.content"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.section-html-tab.blocks.tab_item.settings.title.label"
+        },
+        {
+          "type": "html",
+          "id": "html",
+          "label": "t:sections.section-html-tab.blocks.tab_item.settings.html.label",
+          "info": "t:sections.section-html-tab.blocks.tab_item.settings.html.info"
+        } 
+      ]
+    }
+  ],
+  "presets": [{
+    "name": "t:sections.section-html-tab.presets.name",
+    "category": "Shortcode Section",
+	"blocks": [         
+      {
+        "type": "banner_panel"
+      },
+      {
+        "type": "tab_panel"
+      } 
+    ]
+  }]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

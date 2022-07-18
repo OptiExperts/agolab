@@ -1,0 +1,108 @@
+<div class="header-top top-links-container topbar-text-{{settings.topbar_text_color}}">
+  <div class="header-row container">
+    <div class="header-left">
+      {% if settings.topbar_custom_text2 != '' %}
+      <div class="custom-block"> 
+        {{ settings.topbar_custom_text2 }} 
+      </div>
+      {% endif %} 
+    </div>
+    <div class="header-right"> 
+      <div class="main-nav wrapper-top-menu hidden-sm"> 
+        <div id="main-top-nav" class="main-top-nav">
+          {% include 'header-logo-sticky' %}
+          <!-- Main Menu -->
+          {% include 'main-menu' %}
+          <!-- End Main Menu --> 
+        </div>
+      </div>
+      {% include 'header-setting' %}
+    </div>
+  </div>
+</div>
+<div class="header-main">
+  <div class="header header-row container">
+    <div class="header-left">  
+      {% include 'header-logo' %} 
+    </div> 
+    <div class="header-right"> 
+      <div class="porto-popup-menu">
+        <button class="hamburguer-btn">
+          <span class="hamburguer">
+            <span></span>
+            <span></span>
+            <span></span>
+          </span>
+          <span class="close">
+            <span></span>
+            <span></span>
+          </span>
+        </button>
+        {% include 'popup-menu' %}
+      </div> 
+      <span class="separator hidden-sm"></span>
+      <div class="search-area show-icon show-right">
+        <a href="javascript:void(0);" class="search-icon"> 
+          <i class="icon-magnifier"></i> 
+        </a>
+        {% include 'header-search' %}
+      </div> 
+      <span class="separator hidden-sm"></span>
+      <div class="account-html px-sm-1"> 
+        <ul class="view-account porto-view-account popup-menu show-arrow">
+          <li class="menu-item has-sub narrow sub-ready">
+            <a href="javascript:;" class="my-account" title="My Account"><i class="icon-user-2"></i></a>
+            <div class="popup">
+              <div class="inner">
+                <ul class="sub-menu">
+                  <li class="menu-item"> 
+                    <a href="/account/">{{ 'header.settings.my_account' | t }}</a>
+                  </li>
+                  <li class="menu-item"> 
+                    {%- if customer -%}
+                    <a href="/account/logout">{{ 'header.settings.logout' | t }}</a>
+                    {%- else -%}
+                    <a href="/account/login">{{ 'header.settings.login' | t }}</a>
+                    {%- endif -%}
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </li> 
+        </ul>
+      </div>  
+      <span class="separator hidden-sm"></span>
+      <div class="wishlist-html mr-1">
+        <a href="javascript:;" class="wishlist-popup" title="Wishlist"><i class="icon-wishlist-2"></i></a>
+      </div>
+      <span class="separator hidden-sm"></span>
+      <div class="cart-area">
+        <div class="mini-cart">
+          {% include 'header-cart' %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+  if ($('.porto-popup-menu').length) {
+    $('.porto-popup-menu .hamburguer-btn').on('click', function(e) {
+      e.preventDefault();
+      var $this = $(this);
+      if ($('.porto-popup-menu-spacer').length) {
+        $('.porto-popup-menu-spacer').remove();
+      } else {
+        $('<div class="porto-popup-menu-spacer"></div>').insertBefore($this.parent());
+        $('.porto-popup-menu-spacer').width($this.parent().width());
+      }
+      $this.parent().toggleClass('opened'); 
+      $this.toggleClass('active');
+    });
+    //$('.porto-popup-menu .main-menu').scrollbar();
+    $('.porto-popup-menu li.menu-item-has-children > a').on('click', function(e) {
+      e.preventDefault();
+      $(this).parent().siblings('li.menu-item-has-children.opened').removeClass('opened');
+      $(this).parent().toggleClass('opened');
+    });
+  }
+</script> 

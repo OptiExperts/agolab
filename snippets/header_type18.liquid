@@ -1,0 +1,50 @@
+{% include 'header-top-bar' %}
+<div class="header container">
+  <div class="header-col header-left">
+    <div class="menu-icon"><a href="javascript:void(0)" title="Menu"><i class="fa fa-bars"></i></a></div>
+    {% include 'header-logo' %}
+    <div class="main-nav wrapper-top-menu">
+      <div class="container">
+        <div id="main-top-nav" class="main-top-nav"> 
+          <!-- Main Menu -->
+          {% include 'main-menu' %}
+          <!-- End Main Menu --> 
+        </div>
+      </div>
+    </div>
+    {%- if settings.header_menu_custom != '' -%}
+    <span class="separator"></span>
+    <div class="menu-custom-block">  
+      {% include 'shortcode' load: settings.header_menu_custom %} 
+    </div>
+    {%- endif -%}
+    <span class="separator"></span>
+  </div> 
+  <div class="header-col header-right">
+    <div class="search-area show-icon-tablet">
+      <a href="javascript:void(0);" class="search-icon"><span><i class="icon-search"></i></span></a>
+      {% include 'header-search' %}
+    </div>
+    <span class="separator"></span>
+    {% if settings.header_custom_text != '' %}
+    <div class="custom-html">
+      <div class="custom-block"> 
+        {{ settings.header_custom_text }} 
+      </div>
+    </div>
+    {% endif %} 
+    <div class="wishlist">
+      <a class="wishlist-popup" href="javascript:void(0)"><i class="Simple-Line-Icons-heart"></i></a>
+    </div> 
+    <div class="cart-area">   
+      <div class="mini-cart">
+        {% include 'header-cart' %}
+      </div>
+    </div> 
+  </div> 
+</div>
+{%- if settings.custom_header_bottom != blank -%}
+<div class="header-bottom"> 
+  {{ settings.custom_header_bottom }} 
+</div>
+{%- endif -%}

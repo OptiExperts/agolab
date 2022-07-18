@@ -1,0 +1,63 @@
+<div class="breadcrumbs-wrap text-center">
+  <ul class="breadcrumb">
+    <li class="home">
+      <a href="/" title="{{ 'general.breadcrumbs.home_link_title' | t }}">{{ 'general.breadcrumbs.home' | t }}</a>
+      <i class="icon-angle-right"></i>
+    </li>
+    <li> 
+      <span class="breadcrumbs-split"><i class="icon-angle-right"></i></span>
+      <span>{{ page.title }}</span>
+    </li>
+  </ul>
+</div>
+<div class="text-center">
+  <h1 class="page-title">{{ section.settings.title }}</h1>
+</div>  
+<style>
+  {% if section.settings.faq_heading_image != blank %}
+  .main-container .page-top{ 
+    background-image:url({{section.settings.faq_heading_image | img_url: 'master'}});
+    background-position:center;
+    background-repeat:no-repeat;background-size:cover;
+  }
+  {% endif %}
+  .main-container .page-top .breadcrumbs-wrap a {
+    color: {{section.settings.link-color}};
+  }
+  .main-container .page-top .breadcrumbs-wrap,.main-container .page-top .page-title {
+    color: {{section.settings.text-color}};
+  }
+</style>  
+{% schema %}
+  {
+    "name": "t:sections.faqpage-heading.name",
+    "settings": [
+      {
+        "type": "header",
+        "content": "t:sections.faqpage-heading.settings.header__1.content"
+      },
+      {
+        "type": "image_picker",
+        "id": "faq_heading_image",
+        "label": "t:sections.faqpage-heading.settings.faq_heading_image.label",
+        "info": "t:sections.faqpage-heading.settings.faq_heading_image.info."
+      },
+      {
+        "type": "text",
+        "id": "title",
+        "label": "t:sections.faqpage-heading.settings.title.label",
+        "default": "Questions & Answers"
+      },
+      {
+        "type": "color",
+        "id": "link-color",
+        "label": "t:sections.faqpage-heading.settings.link-color.label" 
+      },
+      {
+        "type": "color",
+        "id": "text-color",
+        "label": "t:sections.faqpage-heading.settings.text-color.label" 
+      }
+	]
+  }
+{% endschema %}

@@ -1,0 +1,118 @@
+<!-- /snippets/breadcrumb.liquid -->
+{% comment %}
+Documentation - http://docs.shopify.com/support/your-website/navigation/creating-a-breadcrumb-navigation
+{% endcomment %}
+{% unless template == 'index' %}
+{%- if settings.sidebar_move == blank -%} 
+<div class="top-container">
+  <div class="category-banner"></div>
+</div> 
+<nav class="main-breadcrumbs" role="navigation" aria-label="breadcrumbs">
+  <div class="container">
+    <div class="breadcrumbs">
+      <div class="breadcrumbs-inner">
+        <ul>
+          <li class="home">
+            <a href="/" title="{{ 'general.breadcrumbs.home_link_title' | t }}">{{ 'general.breadcrumbs.home' | t }}</a>
+          </li>
+          {% if template contains 'product' %}
+          {% if collection %}
+          <li>
+            <span class="breadcrumbs-split"><i class="icon-angle-right"></i></span>
+            {% if collection.handle %}
+            {% capture url %}/collections/{{ collection.handle }}{% endcapture %}
+            <span> 
+            {{ collection.title | link_to: url }} 
+            </span>
+            {% endif %}
+          </li>
+          {% endif %}
+          <li>
+            <span class="breadcrumbs-split"><i class="icon-angle-right"></i></span>
+            <span> 
+              {{ product.title }} 
+            </span>
+          </li>
+          {% elsif template contains 'collection' and collection.handle %}
+          {% if current_tags %}
+          <li>
+            <span class="breadcrumbs-split"><i class="icon-angle-right"></i></span>
+            {% capture url %}/collections/{{ collection.handle }}{% endcapture %}
+            <span> 
+            {{ collection.title | link_to: url }} 
+            </span>
+            <span class="breadcrumbs-split"><i class="icon-angle-right"></i></span>
+            <span>{{ current_tags | join: " + " }}</span>
+          </li>
+          {% else %}
+          <li>
+            <span class="breadcrumbs-split"><i class="icon-angle-right"></i></span>
+            <span> 
+              {{ collection.title }} 
+            </span>
+          </li>
+          {% endif %}
+          {% elsif template == 'blog' %}
+          {% if current_tags %}
+          <li>
+            <span class="breadcrumbs-split"><i class="icon-angle-right"></i></span>
+            <span> 
+            {{ blog.title | link_to: blog.url }} 
+            </span>
+            <span class="breadcrumbs-split"><i class="icon-angle-right"></i></span>
+            <span>{{ current_tags | join: " + " }}</span>
+          </li>
+          {% else %}
+          <li>
+            <span class="breadcrumbs-split"><i class="icon-angle-right"></i></span>
+            <span> 
+              {{ blog.title }} 
+            </span>
+          </li>
+          {% endif %}
+          {% elsif template == 'article' %}
+          <li>
+            <span class="breadcrumbs-split"><i class="icon-angle-right"></i></span> 
+            {{ blog.title | link_to: blog.url }} 
+          </li>
+          <li>
+            <span class="breadcrumbs-split"><i class="icon-angle-right"></i></span>
+            <span> 
+              {{ article.title }} 
+            </span>
+          </li>
+          {% elsif template contains 'page' %}
+          <li>
+            <span class="breadcrumbs-split"><i class="icon-angle-right"></i></span>
+            <span> 
+              {{ page.title }} 
+            </span>
+          </li>
+          {% else %}
+          <li>
+            <span class="breadcrumbs-split"><i class="icon-angle-right"></i></span>
+            <span> 
+              {{ page_title }} 
+            </span>
+          </li>
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>
+{% endif; %}
+{% endunless %}
+
+{% schema %}
+  {
+    "name": "Breadcrumb",
+    "settings": []
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

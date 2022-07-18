@@ -1,0 +1,54 @@
+<div id="menu-settings"> 
+  {%- if shop.enabled_currencies.size > 1 and settings.currency_enable -%}
+  <div class="currency-wrapper">  
+    <a href="javascript:void(0);" class="level-top collapsed" data-toggle="collapse" data-target="#currency" aria-expanded="true" aria-controls="currency">
+      <span class="current-currency">{{ cart.currency.iso_code }}</span>
+      <i class="icon-angle-down"></i>
+    </a>
+    <div id="currency" class="collapse" aria-labelledby="currency" data-parent="#menu-settings">
+      <div class="level0 select-currency">
+      {%- form 'currency', id: 'menu_currency_form', class: 'currency-selector' -%} 
+        {%- for currency in shop.enabled_currencies -%}
+        <button type="submit" name="currency" class="item" data-action="select-currency" value="{{ currency.iso_code }}">{{ currency.iso_code }}</button>
+        {%- endfor -%}
+      {%- endform -%} 
+    </div> 
+    </div>
+  </div> 
+  {%- endif -%}
+  {%- if settings.language_enable -%}
+  <div class="language-wrapper">  
+    <a href="javascript:void(0);" class="level-top collapsed" data-toggle="collapse" data-target="#language" aria-expanded="true" aria-controls="language">
+      <span class="current-language">
+        {% if settings.flag_user_icon %}
+        {% capture flag %}
+        {{localization.language.iso_code}}.png
+        {% endcapture%}
+        <img alt="" src="{{ flag | asset_url }}">
+        {% endif %}
+        {{ localization.language.endonym_name | capitalize }}
+      </span>
+      <i class="icon-angle-down"></i>
+    </a>
+    <div id="language" class="collapse" aria-labelledby="language" data-parent="#menu-settings"> 
+      {%- form 'localization', id: 'MenuLanguageForm', class: 'localization-form' -%} 
+      <div class="select-language level0">
+        {%- for language in localization.available_languages -%}
+        <button type="submit" name="locale_code" class="item" data-action="select-language" value="{{ language.iso_code }}">
+          {% capture flag %}
+          {{language.iso_code}}.png
+          {% endcapture%}
+          {% if settings.flag_user_icon != blank %}<img src="{{ flag | asset_url }}"> {{ language.endonym_name | capitalize }}{% else %} {{ language.endonym_name | capitalize }}{% endif %}
+        </button> 
+        {%- endfor -%}
+      </div> 
+      {%- endform -%}
+    </div>
+  </div>  
+  {%- endif -%}
+</div> 
+{%- if settings.header_compare_enable != blank and settings.header_design != 'type17' and settings.header_design != 'type16' -%} 
+<div class="compare-link">
+  <a id='header-compare' href="javascript:;" ><i class="icon-compare-link"></i><span>{{'header.settings.compare' | t}}</span> <span class='compareCount'>(0)</span></a>
+</div>
+{%- endif -%}

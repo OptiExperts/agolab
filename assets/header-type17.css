@@ -1,0 +1,29 @@
+.header-container.type17{border-top-width:0;}
+.header-container.type17 .header{padding-top:25px;padding-bottom:25px;min-height:101px;}
+.header-container.type17 .main-nav{padding:0;position:static !important;}
+.header-container.type17 .custom-block{border:none;font-size:24px;padding:0;margin-right:15px;}
+@media (max-width:991px){.header-container.type17 .custom-block{display:none;}}
+.header-container.type17 .wishlist{border:none;font-size:24px;padding:0;margin-right:14px;}
+.header-container.type17 .wishlist i{text-shadow:0 1px;}
+.header-container.type17 .search-area > a{font-size:21px;padding:0;margin-right:24px;}
+.header-container.type17 .search-area > a i:before{content:'\e884';font-weight:600;}
+.header-container.type17 .search-area.show-icon .search-extended{right:-24px;}
+@media (max-width:767px){.header-container.type17 .search-area.show-icon .search-extended{right:-93px;}
+ .header-container.type17 .search-area.show-icon .search-extended:before{right:115px;}
+}
+.header-container.type17 .mini-cart{position:relative;line-height:39px;}
+.header-container.type17 .mini-cart .cart-wrapper{right:-18px;}
+.header-container.type17 .mini-cart .icon-cart-header:after{display:none;}
+.header-container.type17 .mini-cart .cart-total{right:0;}
+@media (max-width:991px){.header-container.type17 .header-center{flex:1;justify-content:flex-end;}
+ .header-container.type17 .header-right{flex:0;}
+ .header-container.type17 .main-nav{display:none;}
+ .header-container.type17 .cart-area{margin-left:5px;}
+ .header-container.type17 .mini-cart .cart-wrapper{right:-14px;}
+}
+@media (max-width:767px){.header-container.type17 .header-center{display:none;}}
+.header-container.type17.sticky-header{position:fixed;width:100%;z-index:29;top:0;border-bottom:1px solid #e7e7e7;}
+.header-container.type17.sticky-header .header{min-height:auto;padding-top:13.3px;padding-bottom:13.3px;}
+.header-container.type17.sticky-header .header .site-logo img{max-width:77px !important;}
+.header-container.type17.sticky-header .header-wrapper{padding:2px 0;}
+.header-container.type17.sticky-header .mini-cart .cart-wrapper{right:0;}

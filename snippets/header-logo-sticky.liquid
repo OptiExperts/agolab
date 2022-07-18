@@ -1,0 +1,15 @@
+{%- if settings.show_logo_sticky != blank -%}
+<div class="site-sticky-logo logo_sticky">
+  <a href="{{ routes.root_url }}" rel="home">
+    {%- if settings.logo_sticky_svg != '' -%}
+    <img src="{{ settings.logo_sticky_svg | asset_url }}" style="max-width:{{settings.logo_sticky_width | remove: 'px' | append: 'px' }};" alt="{{ image.alt | default: shop.name }}"/>
+    {%- else -%}
+    {%- if settings.logo_sticky != blank -%}
+    <img src="{{ settings.logo_sticky | img_url: logo_sticky_size }}" alt="{{ image.alt | default: shop.name }}"/>
+    {%- else -%}
+    {{shop.name}}
+    {%- endif -%}
+    {%- endif -%}
+  </a>
+</div>
+{%- endif -%}

@@ -1,0 +1,70 @@
+<div data-section-id="{{ section.id }}" data-section-type="widget-products-section">
+  <div class="widget_list_{{section.id}}"> 
+    <div class="find-products-widget">
+      <h3>Code:</h3>
+      <code>
+        <!-- Shortcode product --> 
+        [find-products title="{{section.settings.title}}" ] 
+        <!-- / Shortcode product -->
+      </code>
+      <style>
+        code {
+          background-color: #d1d1d1;
+          padding: 3px 2px;
+          color: #777;
+          font-size: 14px;
+          line-height: 24px;
+        } 
+      </style>      
+      <div class="filter-box" style="max-width: 350px;">
+        {%- if section.settings.title != '' -%}
+        <h3 style="font-size: 1.125rem;line-height: 1;text-align: center;letter-spacing:-.01em" class="mb-3 text-uppercase"> 
+          {{ section.settings.title }} 
+        </h3>
+        {%- endif -%} 
+        <form action="/" class="porto_products_filter_form widget my-0">
+          <select class="filter-category">
+            <option selected>By Category</option>
+            {%- for collection in collections -%} 
+            <option value="{{collection.url}}">{{ collection.title }}</option> 
+            {%- endfor -%}
+          </select>
+          <select class="filter-tag">
+            <option selected>By Product Type</option>
+            {%- for product_type in shop.types -%}
+            {%- if product_type != blank -%}
+            <option value="{{ product_type | url_for_type }}">{{ product_type }}</option>
+            {%- else -%}
+            <option value="{{ product_type | url_for_type }}">All Products</option>
+            {%- endif -%}
+            {%- endfor -%}
+          </select>
+        </form>
+      </div>
+    </div> 
+  </div> 
+  <style>
+    .porto_products_filter_form select {
+      display: block;
+      width: 100%;
+      margin-bottom: .625rem;
+    }
+  </style>
+</div> 
+{% schema %}
+{
+  "name": "t:sections.shortcode-find-products.name",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.shortcode-find-products.settings.header.content"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "t:sections.shortcode-find-products.settings.title.label",
+      "default": "FIND A PRODUCT"
+    }
+  ] 
+}
+{% endschema %}

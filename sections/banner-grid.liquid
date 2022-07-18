@@ -1,0 +1,410 @@
+<div data-section-id="{{ section.id }}" data-section-type="image-lazyload-section">
+  <div class="banner-grid" style="margin-top: {{section.settings.margin_top | remove: 'px' | append: 'px' }};margin-bottom: {{section.settings.margin_bottom | remove: 'px' | append: 'px' }};padding: {{section.settings.section_padding}};background: {{section.settings.section_background_color}};">
+    <div class="container">
+      {% if section.settings.section_title != blank %}
+      <h2 class="title" style="margin-bottom: {{ section.settings.banner_space }};">{{ section.settings.section_title }}</h2>
+      {% endif %}
+      <div class="row {{section.settings.el_class}}" style="margin: 0 -{{section.settings.space_banner}}px;">
+        {%- if section.blocks.size > 0 -%}
+        {%- for block in section.blocks -%}
+        {%- if block.settings.banner_image != blank -%}
+          {%- assign banner_image = block.settings.banner_image | img_url: 'master' -%}
+          {%- assign pt = 100 | divided_by: block.settings.banner_image.aspect_ratio | append: '%' -%}
+        {%- else -%}
+          {%- assign banner_image = 'img270x200.png' | asset_url -%}
+          {%- assign pt = 100 | divided_by: 1.35 | append: '%' -%}
+        {%- endif -%}
+        <div class="col-lg-{{block.settings.column_width_desktop}} col-md-{{block.settings.column_width_tablet}} col-sm-{{block.settings.column_width_tablet}} col-xs-{{block.settings.column_width_mobile}}{% if block.settings.column_hidden_tablet != blank %} hidden-md{% endif %}{% if block.settings.column_hidden_mobile != blank %} hidden-xs{% endif%}" style="padding-left:{{section.settings.space_banner}}px;padding-right:{{section.settings.space_banner}}px;">
+          <div class="porto-ibanner {{block.settings.extra_class}}">
+            {% if block.settings.banner_link != blank %}
+            <a href="{{ block.settings.banner_link }}" class="image-link">
+              {%- endif -%}
+              <img data-src="{{ banner_image }}" style="padding-top: {{pt}};" alt="{{block.settings.banner_image.alt}}"/>
+              {% if block.settings.banner_link != blank %}
+            </a>
+            {%- endif -%}
+            {% if block.settings.img_content != blank %}
+            <div class="porto-ibanner-inner">  
+              <div class="porto-ibanner-desc{% if block.settings.el_class != '' %} {{block.settings.el_class}}{% endif %}{% if block.settings.content_position != '' %} img-content-{{ block.settings.content_position }}{% endif %}">{{ block.settings.img_content }}</div>
+            </div>
+            {%- endif -%}
+          </div>
+        </div>
+        {%- endfor -%}
+        {%- endif -%}
+      </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "t:sections.banner-grid.name",
+  "tag": "section",
+  "class": "spaced-section banner-grid", 
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.banner-grid.settings.header__1.content"
+    },
+    {
+      "type": "text",
+      "id": "margin_top",
+      "label": "t:sections.banner-grid.settings.margin_top.label",
+      "info": "40px"
+    },
+    {
+      "type": "text",
+      "id": "margin_bottom",
+      "label": "t:sections.banner-grid.settings.margin_bottom.label",
+      "info": "40px"
+    },
+    {
+      "type": "text",
+      "id": "section_padding",
+      "label": "t:sections.banner-grid.settings.section_padding.label",
+      "info": "t:sections.banner-grid.settings.section_padding.info"
+    },
+    {
+      "type": "color",
+      "id": "section_background_color",
+      "label": "t:sections.banner-grid.settings.section_background_color.label",
+      "info": "t:sections.banner-grid.settings.section_background_color.info"
+    },
+    {
+      "type": "text",
+      "id": "el_class",
+      "label": "t:sections.banner-grid.settings.el_class.label" 
+    },
+    {
+      "type": "header",
+      "content": "t:sections.banner-grid.settings.header__2.content"
+    },
+    {
+      "type": "text",
+      "id": "section_title",
+      "label": "t:sections.banner-grid.settings.section_title.label"
+    },
+    {
+      "type": "text",
+      "id": "banner_space",
+      "label": "t:sections.banner-grid.settings.banner_space.label",
+      "info": "t:sections.banner-grid.settings.banner_space.info",
+      "default": "30px"
+    },
+    {
+      "type": "select",
+      "id": "space_banner",
+      "label": "t:sections.banner-grid.settings.space_banner.label",
+      "options": [
+        {
+          "value": "30",
+          "label": "30"
+        },
+        {
+          "value": "25",
+          "label": "25"
+        },
+        {
+          "value": "20",
+          "label": "20"
+        },
+        {
+          "value": "15",
+          "label": "15"
+        },
+        {
+          "value": "10",
+          "label": "10"
+        },
+        {
+          "value": "8",
+          "label": "8"
+        },
+        {
+          "value": "7",
+          "label": "7"
+        },
+        {
+          "value": "6",
+          "label": "6"
+        },
+        {
+          "value": "2",
+          "label": "2"
+        },
+        {
+          "value": "0",
+          "label": "0"
+        }
+      ],
+      "default": "7"
+    }
+  ],
+  "blocks": [
+    {
+	  "type": "image",
+      "name": "t:sections.banner-grid.blocks.image.name", 
+      "settings": [
+		{
+          "type": "header", 
+          "content": "t:sections.banner-grid.blocks.image.settings.header__1.content"
+        },   
+        {
+          "type": "text",
+          "id": "extra_class",
+          "label": "t:sections.banner-grid.blocks.image.settings.extra_class.label"
+        },
+		{
+          "type": "header", 
+          "content": "t:sections.banner-grid.blocks.image.settings.header__2.content"
+        },
+        {
+          "type": "select",
+          "id": "column_width_desktop",
+          "label": "t:sections.banner-grid.blocks.image.settings.column_width_desktop.label",
+          "options": [
+            {
+              "value": "1",
+              "label": "1/12"
+            },
+            {
+              "value": "2",
+              "label": "2/12"
+            },
+            {
+              "value": "3",
+              "label": "3/12"
+            },
+            {
+              "value": "4",
+              "label": "4/12"
+            },
+            {
+              "value": "5",
+              "label": "5/12"
+            },
+            {
+              "value": "6",
+              "label": "6/12"
+            },
+            {
+              "value": "7",
+              "label": "7/12"
+            },
+            {
+              "value": "8",
+              "label": "8/12"
+            },
+            {
+              "value": "9",
+              "label": "9/12"
+            },
+            {
+              "value": "10",
+              "label": "10/12"
+            },
+            {
+              "value": "11",
+              "label": "11/12"
+            },
+            {
+              "value": "12",
+              "label": "12/12"
+            }
+          ],
+          "default": "4"
+        }, 
+        {
+          "type": "select",
+          "id": "column_width_tablet",
+          "label": "t:sections.banner-grid.blocks.image.settings.column_width_tablet.label",
+          "options": [
+            {
+              "value": "1",
+              "label": "1/12"
+            },
+            {
+              "value": "2",
+              "label": "2/12"
+            },
+            {
+              "value": "3",
+              "label": "3/12"
+            },
+            {
+              "value": "4",
+              "label": "4/12"
+            },
+            {
+              "value": "5",
+              "label": "5/12"
+            },
+            {
+              "value": "6",
+              "label": "6/12"
+            },
+            {
+              "value": "7",
+              "label": "7/12"
+            },
+            {
+              "value": "8",
+              "label": "8/12"
+            },
+            {
+              "value": "9",
+              "label": "9/12"
+            },
+            {
+              "value": "10",
+              "label": "10/12"
+            },
+            {
+              "value": "11",
+              "label": "11/12"
+            },
+            {
+              "value": "12",
+              "label": "12/12"
+            }
+          ],
+          "default": "6"
+        }, 
+        {
+          "type": "select",
+          "id": "column_width_mobile",
+          "label": "t:sections.banner-grid.blocks.image.settings.column_width_mobile.label",
+          "options": [
+            {
+              "value": "1",
+              "label": "1/12"
+            },
+            {
+              "value": "2",
+              "label": "2/12"
+            },
+            {
+              "value": "3",
+              "label": "3/12"
+            },
+            {
+              "value": "4",
+              "label": "4/12"
+            },
+            {
+              "value": "5",
+              "label": "5/12"
+            },
+            {
+              "value": "6",
+              "label": "6/12"
+            },
+            {
+              "value": "7",
+              "label": "7/12"
+            },
+            {
+              "value": "8",
+              "label": "8/12"
+            },
+            {
+              "value": "9",
+              "label": "9/12"
+            },
+            {
+              "value": "10",
+              "label": "10/12"
+            },
+            {
+              "value": "11",
+              "label": "11/12"
+            },
+            {
+              "value": "12",
+              "label": "12/12"
+            }
+          ],
+          "default": "12"
+        },
+        {
+          "type": "checkbox",
+          "id": "column_hidden_tablet",
+          "label": "t:sections.banner-grid.blocks.image.settings.column_hidden_tablet.label",
+          "default": false
+        },
+        {
+          "type": "checkbox",
+          "id": "column_hidden_mobile",
+          "label": "t:sections.banner-grid.blocks.image.settings.column_hidden_mobile.label",
+          "default": false
+        },
+		{
+          "type": "header", 
+          "content": "t:sections.banner-grid.blocks.image.settings.header__3.content"
+        },
+        {
+          "type": "image_picker",
+          "id": "banner_image",
+          "label": "t:sections.banner-grid.blocks.image.settings.banner_image.label"
+        },
+        {
+          "type": "url",
+          "id": "banner_link",
+          "label": "t:sections.banner-grid.blocks.image.settings.banner_link.label"
+        },
+        {
+          "type": "html", 
+          "id": "img_content",
+          "label": "t:sections.banner-grid.blocks.image.settings.img_content.label"
+        },
+        {
+          "type": "select",
+          "id": "content_position",
+          "label": "t:sections.banner-grid.blocks.image.settings.content_position.label",
+          "options": [
+            {
+              "value": "",
+              "label": "t:sections.banner-grid.blocks.image.settings.content_position.options__1.label"
+            },
+            {
+              "value": "left",
+              "label": "t:sections.banner-grid.blocks.image.settings.content_position.options__2.label"
+            },
+            {
+              "value": "right",
+              "label": "t:sections.banner-grid.blocks.image.settings.content_position.options__3.label"
+            }
+          ],
+          "default": "left"
+        },
+        {
+          "type": "text",
+          "id": "el_class",
+          "label": "t:sections.banner-grid.blocks.image.settings.el_class.label" 
+        }
+      ]
+    }
+  ],
+  "presets": [{
+    "name": "t:sections.banner-grid.presets.name",
+    "category": "Banner",
+    "settings": {
+
+    },
+    "blocks": [
+      {
+        "type": "image"
+      },
+      {
+        "type": "image"
+      },
+      {
+        "type": "image"
+      },
+      {
+        "type": "image"
+      }
+    ]
+  }]
+}
+{% endschema %} 

@@ -1,0 +1,44 @@
+<div class="mobile-canvas-overlay close-left"></div>
+<!-- end config style -->
+<div class="block-main-canvas canvas-left">
+  <div class="canvas-icon sicon-left d-block d-lg-none"><a href="javascript:void(0)"><i class="fa fa-sliders"></i></a></div>
+  <div class="canvas-inner sidebar-style-{{ section.settings.sidebar_style }}">
+    {%- if section.blocks.size > 0 -%}
+      {%- for block in section.blocks -%}
+      {%- case block.type -%}
+      {%- when 'html' -%}
+        <div class="block html-sidebar"> 
+          {{ block.settings.html }} 
+        </div>  
+      {%- when 'menu' -%}
+    	<div class="main-sidebar-menu category-menu-style-default_new">
+        {%- include 'sidebar-sidemenu', sb_menu: block.settings.menu -%}
+    	</div>
+      {%- endcase -%}
+      {%- endfor -%}
+    {%- endif -%} 
+  </div>
+</div>
+<script type="text/javascript">
+  jQuery(function($) {
+    $('.canvas-icon.sicon-left, .close-left').click(function(event) {
+      if(!$('body').hasClass('canvas-left')) {
+        $('body').addClass('mobile-canvas-shown');
+        $('body').addClass('canvas-left', function() {
+          setTimeout(function(){
+            $(document).one("click",function(e) {
+              var target = e.target;
+              if (!$(target).is('.canvas-left .block') && !$(target).parents().is('.canvas-left .canvas-inner')) {
+                $('body').removeClass('canvas-left');
+                $('body').removeClass('mobile-canvas-shown');
+              }
+            });
+          }, 111);
+        });
+      } else{
+        $('body').removeClass('canvas-left');
+        $('body').removeClass('mobile-canvas-shown');
+      }
+    });
+  });
+</script>

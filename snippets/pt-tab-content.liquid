@@ -1,0 +1,98 @@
+{%- assign view_mode_class = view_mode -%}
+{%- case view_mode -%}
+{%- when 'divider' -%} 
+  {%- assign view_mode_class = 'grid divider-line' -%}  
+{%- else -%}
+  {%- assign view_mode_class = 'grid' -%} 
+{%- endcase -%} 
+{%- if columns >= 4 -%}
+  {%- capture class_grid %}item-1200-{{ columns }} item-992-4 item-768-3 item-640-2 item-320-1{%- endcapture -%}
+{%- endif -%}
+  {%- if columns == 3 -%}
+{%- capture class_grid %}item-1200-{{ columns }} item-640-2 item-320-1{%- endcapture -%} 
+{%- endif -%}
+{%- if columns <= 2 -%}
+  {%- capture class_grid %}item-1200-{{ columns }}{%- endcapture -%}  
+{%- endif -%}
+{%- assign layout_class = 'product-' | append:product_layout  -%}
+{%- assign pt_layout = product_layout  -%}
+{%- case product_layout -%}
+{%- when 'onhover' -%}
+{%- assign layout_class = 'product-default show-links-hover' -%} 
+{%- when 'outimage_aq_onimage' -%}
+{%- assign layout_class = 'product-outimage_aq_onimage' -%} 
+{%- when 'outimage_aq_onimage2' -%}
+{%- assign layout_class = 'product-outimage_aq_onimage with-padding' -%}  
+{%- when 'quantity' -%}
+{%- assign layout_class = 'product-wq_onimage' -%} 
+{%- endcase -%} 
+
+{%- if block.settings.collection == blank -%}
+  {%- if collections["frontpage"].products.size > 0 -%}
+    {%- assign collection = collections["frontpage"] -%}
+  {%- else -%}
+    {%- assign collection = collections["all"] -%}
+  {%- endif -%}
+{%- else -%}
+  {%- assign collection = collections[block.settings.collection] -%}
+{%- endif -%} 
+{%- case aspect_ratio -%}
+{%- when true -%}
+  {%- assign image_width = img_size | split: 'x' | first -%}
+  {%- assign image_height = '' -%}
+  {%- assign ar = 1 -%}
+{%- else -%}
+  {%- assign image_width = img_size | split: 'x' | first -%}
+  {%- assign image_height = img_size | split: 'x' | last -%}
+  {%- if image_width < image_height -%}
+    {%- assign ar = image_width | divided_by: 1 -%}
+  {%- else -%}
+    {%- assign ar = image_width | divided_by: image_height -%}
+  {%- endif -%}
+{%- endcase -%}
+{%- capture image_size -%}{{ image_width }}x{{ image_height }}{%- endcapture -%} 
+{%- assign pt = 100 | divided_by: ar | append: '%' -%}
+{%- assign paginate_index = limit | plus: 0 -%}
+{%- paginate collection.products by paginate_index -%} 
+<div class="porto-products-element">  
+  <div class="category-products products products-container {{view_mode_class}} products-spacing-{{space_product}}{% if view_mode == 'grid' or view_mode == 'divider' %} {{class_grid}}{% endif %}">
+    {%- if view_mode == 'products-slider' -%}
+    <div class="data-carousel"
+         data-auto="{{ autoplay }}"
+         data-items="{{ columns }}"
+         data-1200="{{ columns }}"
+         data-992="4"
+         data-768="3"
+         data-640="2"
+         data-480="2"
+         data-320="2"
+         data-nav="{{ show_nav }}" 
+         data-paging="{{ show_paging }}"
+         data-margin='0' style="display: none;"></div>
+    {%- endif -%}
+    {%- assign name_collection = block.settings.collection -%}
+    {%- if name_collection == blank -%}{%- assign name_collection = "all" -%}{%- endif -%}
+    {%- assign collection = collections[name_collection] -%}
+    {%- if collection.products.size == 0 -%}
+    <p style="text-align:center;color:#999;padding: 5px 10px;font-style:italic;">{{ 'products.general.no_more_product' | t }}</p>
+    {%- else -%}
+    <div class="{% if view_mode != 'products-slider' %}products-grid {% endif %}{% if view_mode == 'products-slider' %} owl-carousel carousel-init owl-carousel-lazy {{nav_position}} {{nav_side}} {{nav_type}} {% if show_nav_hover %}show-nav-hover{% endif %}{% else %} porto-products-holder columns{{columns}}{% endif %}" data-paged="{{paginate.current_page}}">
+      {%- for product in collection.products -%}
+        {% include 'pt-product-loop' %} 
+      {%- endfor -%}
+    </div>
+    {%- endif -%} 
+  </div>
+  {%- if paginate.pages > 1 and view_mode != 'products-slider' -%}
+  <div class="products-footer" data-status="{% if paginate.next.is_link %}have-posts{% else %}no-more-posts{% endif %}">
+    {%- if paginate.next.is_link -%} 
+    {%- assign next_url = paginate.next.url | split: '?' | last -%} 
+    <a href="{{collection.url}}?{{next_url}}&q=viewmode_{{view_mode}}+layout_{{product_layout}}+columns_{{columns}}+limit_{{paginate_index}}+space_{{space_product}}+ratio_{{aspect_ratio}}+imgsize_{{img_size}}+show_discount_{{show_discount}}+show_sale_{{show_sale}}+sale_label_text_{{sale_label_text}}+alternative_image_{{alternative_image}}+show_grid_quickview_{{show_grid_quickview}}+show_product_category_{{show_product_category}}+show_rating_star_{{show_rating_star}}+show_product_price_{{show_product_price}}+grid_swatch_type_{{grid_swatch_type}}+show_addtocart_{{show_addtocart}}+show_addtolinks_{{show_addtolinks}}&view=ajax_tab" class="btn porto-load-more porto-products-load-more load-on-click">
+      <span class="load-more-label" {% if settings.enable_multilang %}data-translate="collections.general.show_more"{% endif %}>{{ 'collections.general.show_more' | t}}</span>
+      <span class="load-more-loading" {% if settings.enable_multilang %}data-translate="collections.general.loading"{% endif %}>{{ 'collections.general.loading' | t}} ...</span>
+    </a> 
+    {%- endif -%}  
+  </div>
+  {%- endif -%}  
+</div> 
+{%- endpaginate -%}

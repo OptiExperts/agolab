@@ -1,0 +1,54 @@
+<div class="modal fade" id="wishlistModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div role="document" class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title"><span class="brackets">{{ 'wish_list.general.wishlist' | t }}</span><span id="wishlistCount"></span></h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+      </div>
+      <div class="modal-body">
+        <div id="wishlistAlert"></div>
+        <div id="wishlistTableList">
+          <table class="shop_table data-table cart-table wishlist-table" style="display:none;"> 
+            <thead>
+              <tr class="first last">
+                <th class="product-thumbnail" colspan="1">&nbsp;</th>
+                <th class="product-name" colspan="2"><span class="nobr"><span class="brackets">{{ 'wish_list.general.product' | t }}</span></span></th>
+                <th class="product-price" colspan="1"><span class="nobr"><span class="brackets">{{ 'wish_list.general.price' | t }}</span></span></th>
+                <th class="product-stock-status"><span class="brackets">{{ 'wish_list.general.quantity' | t }}</span></th>
+                <th class="product-add-to-cart"><span class="brackets">{{ 'wish_list.general.actions' | t }}</span></th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> 
+<div id="wishlistModalBody" hidden>
+  <div class="form_cart">
+    <table class="shop_table data-table cart-table wishlist-table">
+      <tbody>
+        <tr class="odd first last wishlist-option-item-0">
+          <td class="product-thumbnail">
+            <div class="position-relative">
+              <a><img class="lazyload" data-src="#image#"></a>
+              <a href="javascript:void(0)" class="remove remove-wishlist remove-product position-absolute" data-product-handle="#handle#" data-product-title="#title#" onclick="removeWishlist(event)">×</a>
+            </div>
+          </td>
+          <td class="product-name"><a href="#urlProduct#">#title#</a></td>
+          <td colspan="1" class="a-right product-unittax">
+            <div class="price">
+              <span class="special-price">#price#</span>
+              <span class="compare-price"><span class="compare_at_price"></span></span>
+            </div>
+          </td>
+          <td class="product-stock-status">
+            <span class="wishlist-in-stock text-dark">#stock#</span>
+          </td>
+          <td class="product-add-to-cart"></td> 
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

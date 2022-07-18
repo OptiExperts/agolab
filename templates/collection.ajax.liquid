@@ -1,0 +1,195 @@
+{%- layout none -%}
+{%- if canonical_url contains 'q=' -%}
+  {%- assign data_url = canonical_url | split: 'q=' | last -%}
+  {%- assign data_url = data_url | split: '+' -%}  
+  {%- assign view_mode = data_url[0] | remove:'viewmode_' -%}
+  {%- assign product_layout = data_url[1] | remove:'layout_' -%}
+  {%- assign _columns = data_url[2] | remove:'columns_' -%} 
+  {%- assign _limit = data_url[3] | remove:'limit_' -%} 
+  {%- assign space_product = data_url[4] | remove:'space_' -%}
+  {%- assign _aspect_ratio = data_url[5] | remove:'ratio_' -%}
+  {%- assign img_size = data_url[6] | remove:'imgsize_' -%} 
+  {%- assign creative_layout = data_url[7] | remove:'creative_' -%} 
+  {%- assign creative_layout_height = data_url[8] | remove:'creativeh_' -%} 
+  {%- assign _show_discount = data_url[9] | remove:'show_discount_' -%}
+  {%- assign _show_sale = data_url[10] | remove:'show_sale_' -%}
+  {%- assign _sale_label_text = data_url[11] | remove:'sale_label_text_' -%}
+  {%- assign _alternative_image = data_url[12] | remove:'alternative_image_' -%}
+  {%- assign _show_grid_quickview = data_url[13] | remove:'show_grid_quickview_' -%}
+  {%- assign _show_product_category = data_url[14] | remove:'show_product_category_' -%}
+  {%- assign _show_rating_star = data_url[15] | remove:'show_rating_star_' -%}
+  {%- assign _show_product_price = data_url[16] | remove:'show_product_price_' -%}
+  {%- assign _grid_swatch_type = data_url[17] | remove:'grid_swatch_type_' -%}
+  {%- assign _show_addtocart = data_url[18] | remove:'show_addtocart_' -%}
+  {%- assign _show_addtolinks = data_url[19] | remove:'show_addtolinks_' -%}
+{%- endif -%} 
+
+{%- assign show_discount = false -%}
+{%- if _show_discount == 'true' -%}{%- assign show_discount = true -%}{%- endif -%}
+{%- assign show_sale = false -%}
+{%- if _show_sale == 'true' -%}{%- assign show_sale = true -%}{%- endif -%}
+{%- assign sale_label_text = _sale_label_text -%}
+{%- assign alternative_image = false -%}
+{%- if _alternative_image == 'true' -%}{%- assign alternative_image = true -%}{%- endif -%}
+{%- assign show_grid_quickview = false -%}
+{%- if _show_grid_quickview == 'true' -%}{%- assign show_grid_quickview = true -%}{%- endif -%}
+{%- assign show_product_category = false -%}
+{%- if _show_product_category == 'true' -%}{%- assign show_product_category = true -%}{%- endif -%}
+{%- assign show_rating_star = false -%}
+{%- if _show_rating_star == 'true' -%}{%- assign show_rating_star = true -%}{%- endif -%}
+{%- assign show_product_price = false -%}
+{%- if _show_product_price == 'true' -%}{%- assign show_product_price = true -%}{%- endif -%}
+{%- assign grid_swatch_type = _grid_swatch_type -%} 
+{%- assign show_addtocart = false -%}
+{%- if _show_addtocart == 'true' -%}{%- assign show_addtocart = true -%}{%- endif -%}
+{%- assign show_addtolinks = false -%}
+{%- if _show_addtolinks == 'true' -%}{%- assign show_addtolinks = true -%}{%- endif -%}
+
+{%- assign aspect_ratio = false -%}
+{%- if _aspect_ratio == 'true' -%}
+  {%- assign aspect_ratio = true -%}
+{%- endif -%}
+{%- assign columns = _columns | plus:0 -%} 
+{%- assign limit = _limit | plus:0 -%} 
+{%- assign view_mode_class = view_mode -%}
+{%- case view_mode -%}
+{%- when 'divider' -%} 
+  {%- assign view_mode_class = 'grid divider-line' -%}
+{%- else -%}
+  {%- assign view_mode_class = 'grid' -%} 
+{%- endcase -%}    
+{%- if columns >= 4 -%}
+  {%- capture class_grid %}item-1200-{{ columns }} item-992-4 item-768-3 item-640-2 item-320-1{%- endcapture -%}
+{%- endif -%}
+  {%- if columns == 3 -%}
+{%- capture class_grid %}item-1200-{{ columns }} item-640-2 item-320-1{%- endcapture -%} 
+{%- endif -%}
+{%- if columns <= 2 -%}
+  {%- capture class_grid %}item-1200-{{ columns }}{%- endcapture -%}  
+{%- endif -%}
+
+{%- assign layout_class = 'product-' | append:product_layout  -%}
+{%- assign pt_layout = product_layout  -%}
+{%- case product_layout -%}
+  {%- when 'onhover' -%}
+    {%- assign layout_class = 'product-default show-links-hover' -%} 
+  {%- when 'outimage_aq_onimage' -%}
+    {%- assign layout_class = 'product-outimage_aq_onimage' -%} 
+  {%- when 'outimage_aq_onimage2' -%}
+    {%- assign layout_class = 'product-outimage_aq_onimage with-padding' -%}  
+  {%- when 'quantity' -%}
+    {%- assign layout_class = 'product-wq_onimage' -%} 
+{%- endcase -%} 
+{%- if view_mode == 'creative' -%}
+  {%- case product_layout -%}
+    {%- when 'default','onhover','outimage_aq_onimage','outimage_aq_onimage2','awq_onimage','outimage','quantity' -%}
+      {%- assign layout_class = 'product-onimage' -%}  
+      {%- assign pt_layout = 'onimage'  -%}
+  {%- endcase -%} 
+{%- endif -%}
+{%- paginate collection.products by limit -%}
+<div class="porto-products-element"> 
+  <div class="category-products products products-container {{view_mode_class}} products-spacing-{{space_product}}{% if view_mode == 'grid' or view_mode == 'divider' %} {{class_grid}}{% endif %}">
+    <div class="products-grid porto-products-holder{% if view_mode == 'creative' %} masonry-grid masonry-init{% endif %} columns{{columns}}" data-paged="{{paginate.current_page}}">
+      {%- if view_mode == 'creative' -%}
+        {%- case aspect_ratio -%}
+        {%- when true %}
+          {%- assign _img_size1 = creative_layout_height | times: 2 | append: 'x' -%}
+          {%- assign _img_size2 = creative_layout_height | append: 'x' -%}
+        {%- else -%}
+          {%- assign _img_w = creative_layout_height | remove: 'px' | plus: 0 -%}
+          {%- assign _img_h = creative_layout_height | remove: 'px' | plus: 0  -%}
+          {%- capture _img_size1 -%}{{_img_w | times: 2}}x{{_img_h | times: 2}}{%- endcapture -%}
+          {%- capture _img_size2 -%}{{_img_w}}x{{_img_h}}{%- endcapture -%}
+        {%- endcase -%} 
+        {%- assign _cr_hindex1 = creative_layout_height | remove: 'px' -%}
+        {%- assign _cr_hindex2 = creative_layout_height | remove: 'px' | divided_by: 2 -%}
+        {%- assign _cr_hindex3 = creative_layout_height | remove: 'px' | times: 2 | divided_by: 3 -%}
+        {%- assign _cr_hindex4 = creative_layout_height | remove: 'px' | divided_by: 3 -%}
+        {%- capture _cr_style1 -%}style="height:{{_cr_hindex1}}px;"{%- endcapture -%}
+        {%- capture _cr_style2 -%}style="height:{{_cr_hindex2}}px;"{%- endcapture -%}
+        {%- capture _cr_style3 -%}style="height:{{_cr_hindex3}}px;"{%- endcapture -%}
+        {%- capture _cr_style4 -%}style="height:{{_cr_hindex4}}px;"{%- endcapture -%} 
+      {%- endif -%}
+      {%- case aspect_ratio -%}
+      {%- when true -%}
+        {%- assign image_width = img_size | split: 'x' | first -%}
+        {%- assign image_height = '' -%}
+        {%- assign ar = 1 -%}
+      {%- else -%}
+        {%- assign image_width = img_size | split: 'x' | first -%}
+        {%- assign image_height = img_size | split: 'x' | last -%}
+        {%- if image_width < image_height -%}
+          {%- assign ar = image_width | divided_by: 1 -%}
+        {%- else -%}
+          {%- assign ar = image_width | divided_by: image_height -%}
+        {%- endif -%}
+      {%- endcase -%}  
+      {%- for product in collection.products -%} 
+      {%- if view_mode == 'creative' -%}
+        {%- case creative_layout -%} 
+          {%- when '2' -%}
+            {%- capture cr_class -%}
+                {%- cycle 'grid-col-1-2 grid-height-2-3', 'grid-col-1-4 grid-height-1-2', 'grid-col-1-4 grid-height-1', 'grid-col-1-2 grid-height-1-3', 'grid-col-1-4 grid-height-1-2' -%}
+            {%- endcapture -%}
+            {%- capture cr_img_size -%} 
+                {%- cycle _img_size1, _img_size2, _img_size1, _img_size1, _img_size2 -%}
+            {%- endcapture -%}
+            {%- capture cr_style -%}
+                {%- cycle _cr_style3, _cr_style2, _cr_style1, _cr_style4, _cr_style2 -%}
+            {%- endcapture -%} 
+          {%- when '3' -%}
+            {%- capture cr_class -%}
+                {%- cycle 'grid-col-1-2 grid-height-1', 'grid-col-1-4 grid-height-1', 'grid-col-1-4 grid-height-1-2', 'grid-col-1-4 grid-height-1-2' -%}
+            {%- endcapture -%}
+            {%- capture cr_img_size -%} 
+                {%- cycle _img_size1, _img_size1, _img_size2, _img_size2 -%}
+            {%- endcapture -%}
+            {%- capture cr_style -%}
+                {%- cycle _cr_style1, _cr_style1, _cr_style2, _cr_style2 -%}
+            {%- endcapture -%} 
+          {%- when '4' -%}
+            {%- capture cr_class -%}
+                {%- cycle 'grid-col-2-5 grid-col-md-1 grid-col-lg-2-3 grid-height-1', 'grid-col-1-5 grid-col-md-1-2 grid-col-lg-1-3 grid-height-1-2', 'grid-col-1-5 grid-col-md-1-2 grid-col-lg-1-3 grid-height-1-2', 'grid-col-1-5 grid-col-md-1-2 grid-col-lg-1-3 grid-height-1-2', 'grid-col-1-5 grid-col-md-1-2 grid-col-lg-1-3 grid-height-1-2', 'grid-col-1-5 grid-col-md-1-2 grid-col-lg-1-3 grid-height-1-2', 'grid-col-1-5 grid-col-md-1-2 grid-col-lg-1-3 grid-height-1-2', 'grid-col-1-5 grid-col-md-1-2 grid-col-lg-1-3 grid-height-1-2', 'grid-col-1-5 grid-col-md-1-2 grid-col-lg-1-3 grid-height-1-2', 'grid-col-1-5 grid-col-md-1-2 grid-col-lg-1-3 grid-height-1-2','grid-col-2-5 grid-col-md-1 grid-col-lg-2-3 grid-height-1', 'grid-col-1-5 grid-col-md-1-2 grid-col-lg-1-3 grid-height-1-2', 'grid-col-1-5 grid-col-md-1-2 grid-col-lg-1-3 grid-height-1-2', 'grid-col-1-5 grid-col-md-1-2 grid-col-lg-1-3 grid-height-1-2' -%}
+            {%- endcapture -%}
+            {%- capture cr_img_size -%} 
+                {%- cycle _img_size1, _img_size2, _img_size2, _img_size2, _img_size2, _img_size2, _img_size2, _img_size2, _img_size2, _img_size2, _img_size1, _img_size2, _img_size2, _img_size2 -%}
+            {%- endcapture -%}
+            {%- capture cr_style -%}
+                {%- cycle _cr_style1, _cr_style2, _cr_style2, _cr_style2, _cr_style2, _cr_style2, _cr_style2, _cr_style2, _cr_style2, _cr_style2, _cr_style1, _cr_style2, _cr_style2, _cr_style2 -%}
+            {%- endcapture -%} 
+          {%- else -%}
+            {%- capture cr_class -%}
+                {%- cycle 'grid-col-1-2 grid-height-1', 'grid-col-1-4 grid-height-1-2', 'grid-col-1-4 grid-height-1', 'grid-col-1-4 grid-height-1-2' -%}
+            {%- endcapture -%}
+            {%- capture cr_img_size -%} 
+                {%- cycle _img_size1, _img_size2, _img_size1, _img_size2 -%}
+            {%- endcapture -%}
+            {%- capture cr_style -%}
+                {%- cycle _cr_style1, _cr_style2, _cr_style1, _cr_style2 -%}
+            {%- endcapture -%}
+        {%- endcase -%}
+      {%- endif -%} 
+      {%- if view_mode == 'creative' -%}  
+        {%- assign image_size = cr_img_size -%} 
+      {%- else -%}
+        {%- capture image_size -%}{{ image_width }}x{{ image_height }}{%- endcapture -%} 
+        {%- assign pt = 100 | divided_by: ar | append: '%' -%}
+      {%- endif -%}
+      {% include 'pt-product-loop' %} 
+      {%- endfor -%}
+    </div>
+  </div>
+  {%- if paginate.pages > 1 -%}
+  <div class="products-footer" data-status="{% if paginate.next.is_link %}have-posts{% else %}no-more-posts{% endif %}">
+    {%- if paginate.next.is_link -%} 
+    {%- assign next_url = paginate.next.url | split: '?' | last -%} 
+    <a href="{{collection.url}}?{{next_url}}&q=viewmode_{{view_mode}}+layout_{{product_layout}}+columns_{{columns}}+limit_{{limit}}+space_{{space_product}}+ratio_{{aspect_ratio}}+imgsize_{{img_size}}+creative_{{creative_layout}}+creativeh_{{creative_layout_height}}+show_discount_{{show_discount}}+show_sale_{{show_sale}}+sale_label_text_{{sale_label_text}}+alternative_image_{{alternative_image}}+show_grid_quickview_{{show_grid_quickview}}+show_product_category_{{show_product_category}}+show_rating_star_{{show_rating_star}}+show_product_price_{{show_product_price}}+grid_swatch_type_{{grid_swatch_type}}+show_addtocart_{{show_addtocart}}+show_addtolinks_{{show_addtolinks}}&view=ajax" class="btn btn-borders btn-md btn-default porto-load-more porto-products-load-more load-on-click">
+      <span class="load-more-label" {% if settings.enable_multilang %}data-translate="collections.general.show_more"{% endif %}>{{ 'collections.general.show_more' | t}}</span>  
+      <span class="load-more-loading" {% if settings.enable_multilang %}data-translate="collections.general.loading"{% endif %}>{{ 'collections.general.loading' | t}} ...</span>
+    </a> 
+    {%- endif -%}  
+  </div>
+  {%- endif -%} 
+</div>
+{%- endpaginate -%}

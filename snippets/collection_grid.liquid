@@ -1,0 +1,111 @@
+{%- if template.suffix != blank -%}
+   {%- assign template_suffix = template.suffix -%}
+   {%- assign check_template_list = true -%} 
+{%- else -%}
+   {%- assign check_template_list = false -%} 
+{%- endif -%}   
+{%- capture collection_link_html -%}{{ 'link' | link_to_remove_tag: '' }}{%- endcapture -%}
+{%- assign collection_link = collection_link_html | split:'href="' | last | split:'"' | first -%}  
+{% paginate collection.products by limit %}
+ 
+<div id="product-main" class="product-main">
+  <div class="container collection"> 
+    <div class="row">  
+      {%- assign sidebar_class = 'col-lg-3' -%}
+      {%- if sidebar-left != blank -%}
+      {%- assign main_class = 'col-lg-9' -%}
+      {%- endif -%} 
+      {%- if sidebar-right != blank -%}
+      {%- assign main_class = 'col-lg-9' -%} 
+      {%- endif -%}
+      {%- if sidebar-left != blank and sidebar-right != blank -%}
+      {%- assign main_class = 'col-lg-6' -%} 
+      {%- endif -%}   
+      {%- if sidebar-left == blank and sidebar-right == blank -%}
+      {%- assign main_class = 'col-lg-12' -%} 
+      {%- endif -%}  
+      <div class="{{main_class}} main-content collection-content">
+        {%- if settings.sidebar_move != blank -%}
+        {% include 'breadcrumb' %}
+        {%- endif -%}
+        {% if collection.description != blank %}
+        <div class="collection-main-banner">   
+           {{ collection.description }} 
+        </div>
+        {% endif %}
+        <div id="collection-main">
+          <div class="collection"> 
+            <div class="loading-overlay"><div class="spinner"></div></div>
+            <div class="toolbar top_toolbar">
+              {% include 'collection-sorting' %}
+            </div> 
+            {%- assign view_mode_class = view_mode -%}
+            {%- case view_mode -%}
+              {%- when 'divider' -%} 
+                {%- assign view_mode_class = 'grid divider-line' -%}  
+            {%- when 'list' -%} 
+                {%- assign view_mode_class = 'grid' -%} 
+            {%- endcase -%} 
+            {%- assign layout_class = 'product-' | append: pt_layout  -%}  
+            {%- case pt_layout -%}
+            {%- when 'onhover' -%}
+            {%- assign layout_class = 'product-default show-links-hover' -%} 
+            {%- when 'outimage_aq_onimage' -%}
+            {%- assign layout_class = 'product-outimage_aq_onimage' -%} 
+            {%- when 'outimage_aq_onimage2' -%}
+            {%- assign layout_class = 'product-outimage_aq_onimage with-padding' -%}  
+            {%- when 'quantity' -%}
+            {%- assign layout_class = 'product-wq_onimage' -%} 
+            {%- endcase -%} 
+            {%- if view_mode == 'list' -%}
+            {%- assign layout_class = 'product-default' -%} 
+            {%- endif -%} 
+             
+            {%- capture image_size -%}{{ image_width }}x{{ image_height }}{%- endcapture -%}
+            {%- assign pt = 100 | divided_by: ar | append: '%' -%} 
+            
+            {%- if columns >= 4 -%}
+              {%- capture class_grid %}item-1200-{{ columns }} item-992-4 item-768-3 item-640-2 item-320-1{%- endcapture -%}
+            {%- endif -%}
+              {%- if columns == 3 -%}
+            {%- capture class_grid %}item-1200-{{ columns }} item-640-2 item-320-1{%- endcapture -%} 
+            {%- endif -%}
+            {%- if columns <= 2 -%}
+              {%- capture class_grid %}item-1200-{{ columns }}{%- endcapture -%}  
+            {%- endif -%}
+             
+            <div class="category-products products {{view_mode_class}} {% if view_mode != 'divider' %}products-spacing-{{space_product}}{% endif %} {{class_grid}}">
+              <div id="products-grid" class="collection products-grid columns{{columns}}" data-id="{{ section.id }}"> 
+                {% for product in collection.products %}
+                {% include 'pt-product-loop' %}
+                {% else %}
+                {% if collection.handle == 'all' and current_tags == '' %}
+                {% unless emptyState %}
+                {{ 'theme-onboarding.css' | global_asset_url | stylesheet_tag }}
+                {% assign emptyState = true %}
+                {% endunless %}
+                {% include 'onboarding-empty-collection' %}
+                {% else %}
+                <div class="col-sm-12"><p>{{ 'collections.general.no_matches' | t }}</p></div>
+                {% endif %}
+                {% endfor %}
+              </div>
+            </div>
+            {% include 'collection-sorting-bottom' %}
+          </div>
+        </div>
+      </div> 
+      {% if sidebar-left != blank %}
+      <div class="{{sidebar_class}} sidebar col-left">
+        {% include 'sidebar-left' %}
+      </div>
+      {% endif %}
+      {% if sidebar-right != blank %}
+      <div class="{{sidebar_class}} sidebar-right col-right">
+        {% include 'sidebar-right' %}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>
+{% endpaginate %}

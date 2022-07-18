@@ -1,0 +1,67 @@
+{%- layout none -%}
+<div class="cart-content">
+  {%- if settings.shopping_cart_widget_design == "3" -%}
+  <div class="total-count">
+    <span>{{ cart.item_count }} <span>{{ 'cart.header.total_numb' | t }}</span></span>
+    <a href="{{ routes.cart_url }}" class="btn-button view-cart bordered uppercase">
+      <span>{{ 'cart.header.view_cart' | t }}</span>
+    </a>
+  </div>
+  {%- endif -%} 
+  {%- if cart.items != empty -%}
+  <ul class="clearfix">
+    {%- for item in cart.items -%}
+    <li class="item-cart">
+      <a class="product-image" href="{{item.url }}">
+        <img class="lazyload" data-src="{{ item | img_url: 'small' }}" alt="{{ item.title | escape }}" />
+      </a>
+      <div class="product-details row-fluid show-grid">
+        <p class="product-name">
+          <a href="{{item.url }}">
+            <span>{{ item.product.title | split: '|' | first }}</span>
+            {% if item.product.variants.size > 1 %}
+            <span class="variant_title"> - {{ item.variant.title }}</span>
+            {% endif %}
+          </a>
+        </p>
+        <div class="items">
+          <span class="price">{{ item.quantity }} × <span class="amount"><span class="money">{{ item.price | money }}</span></span></span>
+        </div>
+        <div class="access">
+          <a href="/cart/change?line={{ forloop.index }}&amp;quantity=0" class="btn-remove btn-remove-cart" data-id="{{item.variant_id}}" title="{{ 'cart.header.remove_this_item' | t }}"><i class="icon-cancel"></i></a>
+        </div>
+      </div>
+      <div class="ajax-loading"></div>
+    </li>
+    {%- endfor -%}
+  </ul>
+  {%- else -%}
+  <p class="no-items-in-cart">{{ 'cart.header.no_item' | t }}</p>
+  {%- endif -%}
+</div>
+{%- if cart.items != empty -%}
+<div class="cart-checkout">
+  <div class="cart-info">
+    <p class="subtotal">
+      <span class="label">{{ 'cart.header.total' | t }}</span>
+      <span class="price"><span class="money">{{ cart.total_price | money }}</span></span>
+    </p>
+  </div>
+  {%- if settings.shopping_cart_widget_design == "3" -%}
+  <div class="actions">
+    <a href="{{ routes.root_url }}/checkout" class="btn-button bordered uppercase checkout-cart">
+      <span>{{ 'cart.header.checkout' | t }}</span>
+    </a>
+  </div>
+  {%- else -%}
+  <div class="actions">
+    <a href="{{ routes.cart_url }}" class="btn-button view-cart bordered uppercase">
+      <span>{{ 'cart.header.view_cart' | t }}</span>
+    </a>
+    <a href="{{ routes.root_url }}/checkout" class="btn-button bordered uppercase checkout-cart">
+      <span>{{ 'cart.header.checkout' | t }}</span>
+    </a>
+  </div>
+  {%- endif -%}
+</div>
+{%- endif -%}

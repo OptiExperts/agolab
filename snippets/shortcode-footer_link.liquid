@@ -1,0 +1,30 @@
+{%- capture link_list %}{% include 'shortcode-render' render:'handle_link' -%}{%- endcapture -%}  
+{%- capture title %}{% include 'shortcode-render' render:'title' -%}{%- endcapture -%}  
+{%- capture item_show %}{% include 'shortcode-render' render:'item_show' default: '5' -%}{%- endcapture -%}  
+{%- assign item_show_index = item_show | plus: 0 -%}
+{%- assign list = linklists[link_list] -%} 
+{%- if title != '' -%}
+<div class="footer-block-title">
+  <h3>
+    <span>{{ title }}</span>
+  </h3>
+</div>
+{%- endif -%}
+{%- if link_list != '' -%}
+<div class="custom-footer-content">
+  <ul class="footer-list row">
+    {%- assign _col = list.links.size | times: 1.0 | divided_by:item_show_index | ceil -%} 
+    {%- assign col = 12 | divided_by:_col -%}
+    {%- for link in list.links -%}
+    {%- assign row = forloop.index | modulo:item_show_index -%}  
+    {%- if row == 1 -%}<div class="item col-sm-{{col}}">{%- endif -%}  
+    <li class="theme-color"> 
+      <a href="{{ link.url }}">
+        {{ link.title }}
+      </a>
+    </li>
+    {%- if row == 0 or forloop.last -%}</div>{%- endif -%} 
+    {%- endfor -%}
+  </ul>
+</div>
+{%- endif -%}

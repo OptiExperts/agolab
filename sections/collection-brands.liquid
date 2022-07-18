@@ -1,0 +1,148 @@
+<div data-section-id="{{ section.id }}" data-section-type="brands-slider-section">
+  <div id="brands-slider-{{ section.id }}" class="box_feature_brand" style="margin-top: {{section.settings.margin_top | remove: 'px' | append: 'px' }};margin-bottom: {{section.settings.margin_bottom | remove: 'px' | append: 'px' }};padding: {{section.settings.section_padding}};">
+    <div class="container featured-brands">
+      <div class="box_brand"> 
+        <div class="brands-slider owl-no-narrow">
+          <div class="data-carousel"
+               data-auto="{{ section.settings.autoplay }}"
+               data-items="{{ section.settings.columns }}"
+               data-1200="{{ section.settings.columns }}"
+               data-992="5"
+               data-768="3"
+               data-640="3"
+               data-480="2"
+               data-paging="{{ section.settings.paging }}"
+               data-nav="{{ section.settings.navigation }}"
+               data-margin="{{ section.settings.margin }}"
+               data-prev=''
+               data-next='' style="display: none;"></div>
+        </div>
+        <div class="item-1200-{{section.settings.columns}} item-992-5 item-640-2 item-320-2 owl-carousel carousel-init owl-carousel-lazy">
+          {%- for block in section.blocks -%}
+          <div class="item">
+            {%- if block.settings.image != blank -%}
+            {%- assign img_url = block.settings.image | img_url: '180x79' -%}
+            {%- assign ar = block.settings.image.aspect_ratio -%}
+            {%- else -%}
+            {%- assign img_url = 'img160x70.png' | asset_url -%}
+            {%- assign ar = 2.285714285714286 -%}
+            {%- endif -%}
+            {%- assign pt = 100 | divided_by: ar | append: '%' -%}
+            <a href="{{ block.settings.link }}">
+              <img data-src="{{ img_url }}" alt="{{ section.settings.image.alt }}" style="padding-top: {{pt}};"/>
+            </a>
+          </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% schema %}
+{
+  "name": "t:sections.collection-brands.name", 
+  "tag": "section",
+  "class": "spaced-section brand-section", 
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.collection-brands.settings.header__1.content"
+    },
+    {
+      "type": "text",
+      "id": "margin_top",
+      "label": "t:sections.collection-brands.settings.margin_top.label",
+      "info": "40px"
+    },
+    {
+      "type": "text",
+      "id": "margin_bottom",
+      "label": "t:sections.collection-brands.settings.margin_bottom.label",
+      "info": "40px"
+    },
+    {
+      "type": "text",
+      "id": "section_padding",
+      "label": "t:sections.collection-brands.settings.section_padding.label",
+      "info": "t:sections.collection-brands.settings.section_padding.info"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.collection-brands.settings.header__2.content"
+    }, 
+    {
+      "type": "text",
+      "id": "autoplay",
+      "label": "t:sections.collection-brands.settings.autoplay.label",
+      "info": "t:sections.collection-brands.settings.autoplay.info",
+      "default": "5000"
+    },
+    {
+      "type": "text",
+      "id": "columns",
+      "label": "t:sections.collection-brands.settings.columns.label",
+      "default" : "7"
+    },
+    {
+      "type": "text",
+      "id": "margin",
+      "label": "t:sections.collection-brands.settings.margin.label",
+      "default": "20"
+    },
+    {
+      "type": "checkbox",
+      "id": "paging",
+      "label": "t:sections.collection-brands.settings.paging.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "navigation",
+      "label": "t:sections.collection-brands.settings.navigation.label"
+    } 
+  ],
+  "blocks": [
+    {
+      "type": "image",
+      "name": "t:sections.collection-brands.blocks.image.name",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "t:sections.collection-brands.blocks.image.settings.image.label"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "t:sections.collection-brands.blocks.image.settings.link.label"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "t:sections.collection-brands.presets.name",
+      "category": "Collection",
+      "settings": {
+        "autoplay": "5000",
+        "navigation": true
+      },
+      "blocks": [
+        {"type": "image"},
+        {"type": "image"},
+        {"type": "image"},
+        {"type": "image"},
+        {"type": "image"},
+        {"type": "image"},
+        {"type": "image"},
+        {"type": "image"}
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

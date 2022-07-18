@@ -1,0 +1,49 @@
+{%- if settings.header_topbar_disable == blank -%}
+<div class="header-top">
+  <div class="header-row container">
+    <div class="header-col header-left">
+      {% if settings.topbar_custom_text != '' %}
+      <div class="top-custom-block"> 
+        <div class="block-inner">{{ settings.topbar_custom_text }}</div> 
+      </div>
+      {% endif %}
+    </div>
+    <div class="header-col header-right">
+      <div class="top-links-area show-icon-tablet">
+        <div class="top-links-icon">
+          <a href="javascript:;">{{ 'header.settings.links' | t }}</a>
+        </div>
+        {% section 'header-toplink-menu' %}
+      </div>
+      {% include 'header-setting' %}
+    </div>
+  </div>
+</div>
+{%- endif -%}
+<div class="header-main">
+  <div class="header header-row container">
+    <div class="header-left">
+      <div class="menu-icon"><a href="javascript:void(0)" title="Menu"><i class="fa fa-bars"></i></a></div>
+      {% include 'header-logo' %} 
+    </div> 
+    <div class="header-right">
+      <div class="cart-area">
+        <div class="search-area show-icon">
+          <a href="javascript:void(0);" class="search-icon"><span><i class="icon-search"></i></span></a>
+          {% include 'header-search' %}
+        </div>
+        {% if settings.header_custom_text != '' %}
+        <div class="custom-block"> 
+          {{ settings.header_custom_text }} 
+        </div>
+        {% endif %} 
+        <div class="wishlist">
+          <a class="wishlist-popup" href="javascript:void(0)"><i class="Simple-Line-Icons-heart"></i></a>
+        </div>
+        <div class="mini-cart">
+          {% include 'header-cart' %}
+        </div>
+      </div> 
+    </div> 
+  </div>
+</div>  

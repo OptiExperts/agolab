@@ -1,0 +1,66 @@
+<div class="category-products">
+  {% assign limit = sb_limit %}
+  {% assign collectionBestseller = collections[sb_collection] %}
+  {%- assign name_collection = sb_collection -%}
+  {%- if name_collection == blank -%}{%- assign name_collection = "all" -%}{%- endif -%}
+  {%- assign sbcollection = collections[name_collection] -%}
+  {% if sbcollection.products.size == 0 %}
+    <p style="text-align:center;color:#999;padding: 5px 10px;font-style:italic;">{{ 'products.general.no_more_product' | t }}</p>
+  {% else %}
+  <div class="data-carousel"
+         data-items="1"
+         data-auto="5000"
+         data-414="1"
+         data-768="1"
+         data-992="1"
+         data-paging="false"
+         data-nav="true"
+         data-loop="true"
+         data-prev='<i class="icon-left-open"></i>'
+         data-next='<i class="icon-right-open"></i>' style="display: none;"></div>
+    <ul class="product_list_widget owl-carousel carousel-init owl-list owl-carousel-lazy show-nav-title">
+      {% for product in sbcollection.products limit: limit %}
+      {% assign on_sale = false %}
+      {% if product.compare_at_price_min > product.price_min %}
+      {% assign on_sale = true %}
+      {% endif %}
+      {%- assign imgsrc = 'img600x600.png' | asset_img_url: '150x' -%}
+      {%- assign pt = '100%' -%}
+      {% if product.featured_image %}
+        {%- assign pt = 100 | divided_by: product.featured_image.aspect_ratio | append: '%' -%}
+        {% assign imgsrc = product.featured_image.src | img_url: '150x150', crop: 'center' %}
+      {% endif %}
+    {% assign row = forloop.index | modulo:3 %}
+      {% if row == 1 %}
+      <div class="item">
+      {% endif %}
+        <li>
+          <a class="product-image" href="{{ product.url | within: sbcollection }}">
+            <div class="inner">
+              <img data-src="{{ imgsrc }}" alt="{{ product.featured_image.alt | escape }}" class="img-responsive main lazyload" style="padding-top: {{pt}};"/>
+            </div> 
+          </a>
+          <div class="product-details">  
+            <a href="{{ product.url | within: sbcollection }}" title="{{ product.title }}">
+              <span class="product-title"> 
+                {{ product.title }} 
+              </span>
+            </a>
+            <div class="star-rating">
+              <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+            </div>  
+            {%- if on_sale -%} 
+            <del><span class="shopify-Price-amount amount"><span class="money">{{ product.compare_at_price | money }}</span></span></del> 
+            <ins><span class="shopify-Price-amount amount"><span class="money">{{ product.price | money }}</span></span></ins>
+            {%- else -%}
+            <span class="shopify-Price-amount amount"><span class="money">{{ product.price | money }}</span></span>
+            {%- endif -%}  
+          </div>
+        </li>
+      {% if row == 0 or forloop.last %}
+      </div>
+      {% endif %}
+    {% endfor %}
+  </ul>
+  {% endif %}
+</div>

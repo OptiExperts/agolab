@@ -1,0 +1,52 @@
+{%- if settings.header_topbar_disable == blank -%}
+<div class="header-top">
+  <div class="header-row container">
+    <div class="header-col header-left">
+      {% if settings.topbar_custom_text != '' %}
+      <div class="top-custom-block"> 
+        <div class="block-inner">{{ settings.topbar_custom_text }}</div> 
+      </div>
+      {% endif %}
+    </div>
+    <div class="header-col header-right">
+      {% include 'header-setting' %}
+    </div>
+  </div>
+</div>
+{%- endif -%}
+<div class="header-main">
+  <div class="header container">
+    <div class="header-left">
+      <div class="menu-icon"><a href="javascript:void(0)" title="Menu"><i class="fa fa-bars"></i></a></div>
+      {% include 'header-logo' %}
+      <div class="main-nav wrapper-top-menu">
+        <div class="container">
+          <div id="main-top-nav" class="main-top-nav"> 
+            <!-- Main Menu -->
+            {% include 'main-menu' %}
+            <!-- End Main Menu --> 
+          </div>
+        </div>
+      </div>
+    </div> 
+    <div class="header-right">
+      <div class="cart-area">
+        {% if settings.header_custom_text != '' %}
+        <div class="custom-block"> 
+          {{ settings.header_custom_text }} 
+        </div>
+        {% endif %} 
+        <div class="search-area show-icon">
+          <a href="javascript:void(0);" class="search-icon"><span><i class="icon-search"></i></span></a>
+          {% include 'header-search' %}
+        </div>
+        <div class="wishlist">
+          <a class="wishlist-popup" href="javascript:void(0)"><i class="Simple-Line-Icons-heart"></i></a>
+        </div>
+        <div class="mini-cart">
+          {% include 'header-cart' %}
+        </div>
+      </div> 
+    </div> 
+  </div>
+</div> 

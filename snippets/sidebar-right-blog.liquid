@@ -1,0 +1,92 @@
+<div class="mobile-canvas-overlay close-right"></div>
+<div class="block-main-canvas canvas-right">
+  <div class="canvas-icon sicon-right d-block d-lg-none"><a href="javascript:void(0)"><i class="fa fa-sliders"></i></a></div>
+  <div class="canvas-inner">
+    {%- if section.blocks.size > 0 -%}
+      {%- for block in section.blocks -%}
+      {%- case block.type -%}
+      {%- when 'recent_article' -%}  
+        <div class="block">
+          <div class="block-title">
+            <h3 class="mt-0">{{ 'blogs.sidebar.recent_articles' | t }}</h3>
+          </div>
+          <div class="block-content blogs-items">
+            <ul>
+              {%- for article in blogs[blog.handle].articles limit:6 -%}
+              <li>
+                <div class="post-image" style="background-image: url({{article.image | img_url: '120x120' }})"></div>
+                <a href="{{ article.url }}"> 
+                  {{ article.title }} 
+                </a>
+                <div class="post-time">
+                  {%- capture date -%}<time datetime='{{ article.published_at | date: '%Y-%m-%d' }}'>{{ article.published_at | date: format: 'month_day_year' }}</time>{%- endcapture -%}
+                  <span class="blog_author">
+                    {{ 'blogs.article.author_on_date_html' | t: date: date, author: author }}
+                  </span>
+                  <div class="clear"></div>
+                </div>
+              </li>
+              {% endfor %}
+            </ul>
+          </div>
+        </div>
+      {%- when 'tags' -%}
+        <div class="block">
+          <div class="block-title">
+            <h3>{{ 'blogs.sidebar.tags' | t }}</h3>
+          </div>
+          {%- if blog.all_tags.size > 0 -%}
+          <div class="block-content">
+            <ul class="no-bullets blog-tags clearfix">
+              {%- for tag in blog.all_tags -%}
+              {%- if current_tags contains tag -%}
+              <li><a href="#" class="active">{{ tag }}</a></li>
+              {%- else -%}
+              <li>{{ tag | link_to_tag: tag }}</li>
+              {%- endif -%}
+              {%- endfor -%}
+            </ul>
+          </div>
+          {%- endif -%}
+        </div>
+      {%- when 'html2' -%} 
+        <div class="custom-block custom-block-1"> 
+          {{ block.settings.html }} 
+        </div> 
+      {%- when 'products' -%} 
+        <div class="block bestseller">
+          <div class="block-title"> 
+            {{ block.settings.title }} 
+          </div>
+          <div class="sidebar-content block-content">
+            {% include 'bestseller-product', sb_collection: block.settings.collection, sb_limit: block.settings.limit %}
+          </div>
+        </div> 
+      {%- endcase -%}
+      {%- endfor -%}
+    {%- endif -%} 
+  </div>
+</div>
+<script type="text/javascript">
+  jQuery(function($) {
+    $('.canvas-icon.sicon-right, .close-right').click(function(event) {
+      if(!$('body').hasClass('canvas-right')) {
+        $('body').addClass('mobile-canvas-shown');
+        $('body').addClass('canvas-right', function() {
+          setTimeout(function(){
+            $(document).one("click",function(e) {
+              var target = e.target;
+              if (!$(target).is('.canvas-right .block') && !$(target).parents().is('.canvas-right .canvas-inner')) {
+                $('body').removeClass('canvas-right'); 
+        		$('body').removeClass('mobile-canvas-shown');
+              }
+            });
+          }, 111);
+        });
+      } else{
+        $('body').removeClass('canvas-right'); 
+        $('body').removeClass('mobile-canvas-shown');
+      }
+    });
+  });
+</script>

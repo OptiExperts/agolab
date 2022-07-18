@@ -1,0 +1,64 @@
+<div class="add-links-wrap">
+  <div class="add-links clearfix"> 
+    {%- if show_addtocart != blank -%}
+    {%- if product.available -%}
+    {%- if product.variants.size > 1 -%}
+    <a href="{{ product.url | within: collection }}" class="button product_type_variable add_to_cart_button"><span>{{ 'products.product.add_to_cart' | t }}</span></a>
+    {%- else -%} 
+    <form action="/cart/add" method="post" enctype="multipart/form-data">
+      <select class="d-none" name="id">
+        {%- for variant in product.variants -%}
+        <option value="{{ variant.id }}">{{ variant.title | escape }} - {{ variant.price | money }}</option>
+        {%- endfor -%}
+      </select> 
+      {%- if pt_layout == 'quantity' -%}
+      <div class="quantity buttons_added">
+        <button type="button" value="-" class="qtyminus minus">-</button>  
+        <input type="text" class="input-text qty text" name="quantity" value="1">
+        <button type="button" value="+" class="qtyplus plus">+</button>
+      </div>
+      {%- else -%}
+      <input type="hidden" name="quantity" value="1" />
+      {%- endif -%}  
+      <button type="submit" class="button product_type_simple add_to_cart_button add-to-cart ajax_add_to_cart">
+        <span>{{ 'products.product.add_to_cart' | t }}</span>
+      </button>
+    </form> 
+    {%- endif -%}
+    {%- else -%}
+    <a href="{{ product.url | within: collection }}" class="viewcart-style-2 button product_type_variable add_to_cart_button"><span>{{ 'products.product.sold_out' | t }}</span></a>
+    {%- endif -%} 
+    {%- endif -%} 
+    {%- if show_addtolinks != blank -%}
+    <div class="yith-wcwl-add-to-wishlist">
+      <div class="yith-wcwl-add-button show">  
+        <div class="product-wishlist wishlist-{{product.id}}">
+          <a href="javascript:;" data-product-handle="{{product.handle}}" data-product-title="{{product.title}}" class="add_to_wishlist link-wishlist" title="{{'wish_list.general.add_to_wishlist' | t}}"><span>{{ 'wish_list.general.add_to_wishlist' | t }}</span></a>
+        </div>
+      </div> 
+    </div> 
+    {%- endif -%}
+    <div class="clear"></div>   
+    {%- if pt_layout == 'default' or pt_layout == 'onhover' or pt_layout == 'outimage' or pt_layout == 'awq_onimage' or pt_layout == 'outimage_aq_onimage' or pt_layout == 'outimage_aq_onimage2' or pt_layout == 'onimage' or pt_layout == 'onimage2' or pt_layout == 'onimage3' or pt_layout == 'quantity' -%}
+      {%- if show_addtolinks != blank -%} 
+      <a href="javascript:;" data-product-handle="{{product.handle}}" data-product-title="{{product.title}}" class="link-compare"> 
+        <span>{{ 'compare_list.general.add_to_compare' | t }}</span>
+      </a>
+      {%- endif -%}
+    {%- endif -%}
+    {%- if pt_layout == 'awq_onimage' or pt_layout == 'onimage' or pt_layout == 'onimage3' or pt_layout == 'outimage_aq_onimage' or pt_layout == 'outimage_aq_onimage2' or pt_layout == 'quantity' -%}
+    {%- if show_grid_quickview != blank -%} 
+    <a href="{{product.url | split: '?' | first }}?view=quickview" class="action-list quickview-icon quickview"> 
+      <span>{{ 'collections.general.quickview' | t }}</span>
+    </a> 
+    {%- endif -%}
+    {%- endif -%}  
+  </div>
+  {%- if pt_layout == 'onimage2' -%}
+  {%- if show_grid_quickview != blank -%} 
+  <a href="{{ product.url | split: '?' | first }}?view=quickview" class="action-list quickview-icon quickview"> 
+    <span>{{ 'collections.general.quickview' | t }}</span>
+  </a> 
+  {%- endif -%} 
+  {%- endif -%}
+</div>

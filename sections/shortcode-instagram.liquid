@@ -1,0 +1,119 @@
+<div data-section-id="{{ section.id }}" data-section-type="instagram-section">
+  <div id="instagram-section-{{ section.id }}" class="instagram-section">  
+    <div style="position:relative;">
+      <h3>Code:</h3>
+      <code>
+        <!-- Shortcode product --> 
+        [instagram token="{{section.settings.instagram_accesstoken}}" limit="{{section.settings.instagram_limit}}" autoplay="{{section.settings.autoplay}}" desktop_large="{{section.settings.item_desktop_large}}" desktop="{{section.settings.item_desktop}}" tablet="{{section.settings.item_tablet}}" mobile="{{section.settings.item_mobile}}" margin="{{section.settings.margin}}" ] 
+        <!-- / Shortcode product -->
+      </code>
+      <div class="block-instafeed blog-wrap">
+        <div class="blog-items blog-grid-items"> 
+          <div class="blog-instagrams owl-carousel instagram-feed-carousel owl-lazy-container owl-loaded owl-drag" data-count="{{ section.settings.instagram_limit }}" data-token="{{ section.settings.instagram_accesstoken }}" data-itemclass="col-md-ic-1" data-autoplay="{{ section.settings.autoplay }}" data-desktop="{{ section.settings.item_desktop }}" data-desktop-large="{{ section.settings.item_desktop_large }}" data-tablet="{{ section.settings.item_tablet }}" data-mobile="{{ section.settings.item_mobile }}" data-nav="false" data-page="false" data-margin="{{section.settings.margin}}"></div>
+        </div>
+      </div>
+      <style> 
+        .enable-effect .insta-item .content {
+          position: absolute;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          transition: all .3s;
+          background-color: rgba(255, 0, 0, .5);
+          color: #fff;
+          font-size: 35px;
+          text-align: center;
+          opacity: 0;
+          visibility: hidden;
+          z-index: 1;
+        }
+
+        .enable-effect .insta-item:hover .content {
+          opacity: 1;
+          visibility: visible;
+        }
+
+        .insta-item .content i {
+          display: none;
+          position: absolute;
+          top: 50%;
+          transform: translate(-50%, -50%);
+          -webkit-transform: translate(-50%, -50%);
+
+          .enable-effect & {display: inline-block;}
+        }
+      </style>
+    </div> 
+  </div>
+</div>
+{% schema %}
+{
+  "name": "t:sections.shortcode-instagram.name",
+  "settings": [ 
+    {
+      "type": "header",
+      "content": "t:sections.shortcode-instagram.settings.header__1.content"
+    }, 
+    {
+      "type": "text",
+      "id": "instagram_accesstoken",
+      "label": "t:sections.shortcode-instagram.settings.instagram_accesstoken.label",
+	  "info": "t:sections.shortcode-instagram.settings.instagram_accesstoken.info",
+      "default": "IGQVJYTkh6ODd5U2xfeGM4UWxiRTR3bHhDY2l2anR1WTBFRUhscXB5UFFMMDJUNjVrWW5ieWg4LTBIckpqY1hOT0p1Ql82eG55NW9NQTBkV3ZATbTZAmQWxBVDYyOVhBTWNWeWtrNjVlX3JqS1E1RXdoNwZDZD"
+    }, 
+    {
+      "type": "text",
+      "id": "instagram_limit",
+      "label": "t:sections.shortcode-instagram.settings.instagram_limit.label",
+      "default": "12"
+    },
+    {
+      "type":"header",
+      "content": "t:sections.shortcode-instagram.settings.header__2.content"
+    }, 
+    {
+      "type": "text",
+      "id": "autoplay",
+      "label": "t:sections.shortcode-instagram.settings.autoplay.label",
+      "default": "5000"
+    }, 
+    {
+      "type": "text",
+      "id": "item_desktop_large",
+      "label": "t:sections.shortcode-instagram.settings.item_desktop_large.label",
+      "default": "9"
+    }, 
+    {
+      "type": "text",
+      "id": "item_desktop",
+      "label": "t:sections.shortcode-instagram.settings.item_desktop.label",
+      "default": "7"
+    }, 
+    {
+      "type": "text",
+      "id": "item_tablet",
+      "label": "t:sections.shortcode-instagram.settings.item_tablet.label",
+      "default": "4"
+    },
+    {
+      "type": "text",
+      "id": "item_mobile",
+      "label": "t:sections.shortcode-instagram.settings.item_mobile.label",
+      "default": "2"
+    },
+    {
+      "type": "text",
+      "id": "margin",
+      "label": "t:sections.shortcode-instagram.settings.margin.label",
+      "default": "20"
+    } 
+  ] 
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

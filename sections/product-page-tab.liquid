@@ -1,0 +1,221 @@
+{%- if section.blocks.size > 0 -%}
+<div class="product-tabs horizontal">
+  <ul class="nav level0">
+    {%- for block in section.blocks -%}
+    {%- case block.type -%}
+    {%- when 'description' -%}
+    <li class="description_tab level0">
+      <a class="level0 nav-link {% if forloop.first %}active{% endif %}" href="#product_tabs_description" role="tab" data-toggle="tab" aria-selected="true" aria-control="product_tabs_description">
+        {{ block.settings.title }}
+      </a>
+    </li>
+    {%- when 'review' -%}
+    <li class="reviews_tab level0">
+      <a class="level0 nav-link {% if forloop.first %}active{% endif %}" href="#product_tabs_tabreviews" role="tab" data-toggle="tab" aria-selected="false" aria-control="product_tabs_tabreviews">
+        {{ block.settings.title }} 
+        {%- if block.settings.use_count_reviews -%} 
+        <script type="text/javascript">
+          $(function(){
+            if($('meta[itemprop=reviewCount]').length > 0) {
+              var revcount = '('+ $('meta[itemprop=reviewCount]').attr("content")+')';
+            }else {
+              var revcount = '(0)';
+            } 
+            $('.reviews_tab > a').append(revcount);
+          });
+        </script>
+        {%- endif -%} 
+      </a>
+    </li>
+    {%- when 'additional' -%}
+    {%- if product.description contains '[additional]' -%}
+    <li class="additional_tab level0">
+      <a class="level0 nav-link {% if forloop.first %}active{% endif %}" href="#product_tabs_additional" role="tab" data-toggle="tab" aria-selected="false" aria-control="product_tabs_additional">
+        {{ block.settings.title }} 
+      </a>
+    </li>
+    {%- endif -%}
+    {%- when 'size_chart' -%}
+    {%- if block.settings.size_chart_image != blank or block.settings.code != '' -%}
+    <li class="size_chart_tab level0">
+      <a class="level0 nav-link {% if forloop.first %}active{% endif %}" href="#product_tabs_size_chart" role="tab" data-toggle="tab" aria-selected="false" aria-control="product_tabs_size_chart">
+        {{ block.settings.title }} 
+      </a>
+    </li>
+    {%- endif -%}
+    {%- when 'html' -%}
+    {%- if block.settings.code != '' -%}
+    <li class="html_tab level0">
+      <a class="level0 nav-link {% if forloop.first %}active{% endif %}" href="#tab{{block.id}}" role="tab" data-toggle="tab" aria-selected="false" aria-control="tab{{block.id}}">
+        {{ block.settings.title }} 
+      </a>
+    </li>
+    {%- endif -%}
+    {%- endcase -%}
+    {%- endfor -%}
+  </ul>
+  {%- for block in section.blocks -%}
+  {%- case block.type -%}
+  {%- when 'description' -%}
+  <div class="tab-content fade{% if forloop.first %} show active{% endif %}{% if settings.product_tab_style != 'sticky' %} collapse{% endif %}" id="product_tabs_description">
+    <div class="product-tabs-content-inner clearfix">
+      {%- assign description = product.description -%}
+      {%- if description contains '[countdown]' -%}
+      {%- assign description = description | split:'[/countdown]' | last -%}
+      {%- endif -%}
+      {%- if product.description contains '[shortdesc]' -%}
+      {%- assign description = description | split:'[/shortdesc]' | last -%}
+      {%- endif -%}
+      {%- if product.description contains '[additional]' -%}
+      {%- assign description = description | split:'[/additional]' | last -%}
+      {%- endif -%} 
+      {{ description }} 
+    </div>
+  </div>
+  {%- when 'review' -%}
+  <div class="tab-content{% if forloop.first %} show active{% endif %}{% if settings.product_tab_style != 'sticky' %} fade collapse{% endif %}" id="product_tabs_tabreviews">
+    <div class="product-tabs-content-inner clearfix">
+      <div id="shopify-product-reviews" data-id="{{product.id}}">{{ product.metafields.spr.reviews }}</div>
+    </div>
+  </div>
+  {%- when 'additional' -%}
+  {%- if product.description contains '[additional]' -%}
+  <div class="tab-content fade{% if forloop.first %} show active{% endif %}{% if settings.product_tab_style != 'sticky' %} fade collapse{% endif %}" id="product_tabs_additional">
+    <div class="product-tabs-content-inner clearfix">
+      {%- if product.description contains '[additional]' -%}
+        {%- assign get = product.description | split:'[/additional]' | first -%}
+        {%- assign additional = get | split:'[additional]' | last -%} 
+        {{ additional }} 
+      {%- endif -%}
+    </div>
+  </div>
+  {%- endif -%}
+  {%- when 'size_chart' -%}
+  {%- if block.settings.size_chart_image != blank or block.settings.code != '' -%}
+  <div class="tab-content fade{% if forloop.first %} show active{% endif %}{% if settings.product_tab_style != 'sticky' %} fade collapse{% endif %}" id="product_tabs_size_chart">
+    <div class="product-tabs-content-inner clearfix">
+      {%- if block.settings.size_chart_image != blank -%}
+        <img data-src="{{ block.settings.size_chart_image | img_url: 'master' }}" class="img-responsive" />
+      {%- else -%} 
+        {{ block.settings.code }} 
+      {%- endif -%}
+    </div>
+  </div>
+  {%- endif -%}
+  {%- when 'html' -%}
+  {%- if block.settings.code != '' -%}
+  <div class="tab-content fade{% if forloop.first %} show active{% endif %}{% if settings.product_tab_style != 'sticky' %} fade collapse{% endif %}" id="tab{{block.id}}">
+    <div class="product-tabs-content-inner clearfix"> 
+      {{ block.settings.code }} 
+    </div>
+  </div>
+  {%- endif -%}
+  {%- endcase -%}
+  {%- endfor -%}
+</div>
+{%- endif -%}
+{% schema %}
+{
+  "name": "t:sections.product-page-tab.name",
+  "settings": [
+    {
+      "type": "paragraph",
+      "content": "t:sections.product-page-tab.settings.paragraph.content"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "description",
+      "name": "t:sections.product-page-tab.blocks.description.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.product-page-tab.blocks.general.settings.title.label",
+          "default": "Description"
+        }
+      ]
+    },
+    {
+      "type": "review",
+      "name": "t:sections.product-page-tab.blocks.review.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.product-page-tab.blocks.general.settings.title.label",
+          "default": "Reviews"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_count_reviews",
+          "label": "t:sections.product-page-tab.blocks.review.settings.use_count_reviews.label",
+          "default": false
+        }
+      ]
+    },
+    {
+      "type": "additional",
+      "name": "t:sections.product-page-tab.blocks.additional.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.product-page-tab.blocks.general.settings.title.label",
+          "default": "Additional Information"
+        }
+      ]
+    },
+    {
+      "type": "size_chart",
+      "name": "t:sections.product-page-tab.blocks.size_chart.name",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.product-page-tab.blocks.general.settings.title.label",
+          "default": "Size Chart"
+        },
+        {
+          "type": "image_picker",
+          "id": "size_chart_image",
+          "label": "t:sections.product-page-tab.blocks.size_chart.settings.size_chart_image.label"
+        },
+        {
+          "type": "html",
+          "id": "code",
+          "label": "t:sections.product-page-tab.blocks.general.settings.code.label",
+          "default": "<div class=\"row\"><div class=\"col-lg-4 text-center\"><img data-src=\"\\cdn.shopify.com/s/files/1/1632/5913/files/size_guide.png\"></div><div class=\"col-lg-8\"><table class=\"sizes-table\"><thead><tr><th>size</th><th>chest(in.)</th><th>waist(in.)</th><th>hips(in.)</th></tr></thead><tbody><tr><th>XS</th><td>34-36</td><td>27-29</td><td>34.5-36.5</td></tr><tr><th>S</th><td>36-38</td><td>29-31</td><td>36.5-38.5</td></tr><tr><th>M</th><td>38-40</td><td>31-33</td><td>38.5-40.5</td></tr><tr><th>L</th><td>40-42</td><td>33-36</td><td>40.5-43.5</td></tr><tr><th>XL</th><td>42-45</td><td>36-40</td><td>43.5-47.5</td></tr><tr><th>XXL</th><td>45-48</td><td>40-44</td><td>47.5-51.5</td></tr></tbody></table></div></div>"
+        }
+      ]
+    },
+    {
+      "type": "html",
+      "name": "t:sections.product-page-tab.blocks.html.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.product-page-tab.blocks.general.settings.title.label",
+          "default": "Shipping & Delivery"
+        },
+        {
+          "type": "html",
+          "id": "code",
+          "label": "t:sections.product-page-tab.blocks.general.settings.code.label"
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

@@ -1,0 +1,252 @@
+<style>
+  @media(min-width:992px){
+    .nav_footer{
+    	display:none;
+    }
+  }
+  @media(max-width:991px){
+   .nav_footer {
+      display:block;
+      text-align: center;
+      margin: 10px auto;
+	}
+    .nav_footer p{
+    	font-size:15px;
+      	margin-top:5px;
+    }
+  #navbar-toggle{
+  	display: flex;
+    flex-direction: column-reverse;
+  }
+  .mobile-nav ul:not(li.level0.level-top.parent) li.level0.level-top:before{
+      background-size: 20px;
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      background-repeat: no-repeat;
+      content: "";
+  }
+  .mobile-nav ul li a{
+  	  padding:0px;
+  }
+  li.level0.level-top {
+    padding-left: 10px;
+}
+    li.level0.level-top:not(li.level0.level-top.parent) {
+    display: flex;
+    gap: 5px;
+    align-items:baseline;
+  }
+  .mobile-nav__item--sub li{
+  	display:block;
+  }
+    li.level0.level-top.parent{
+    	display:block;
+    }
+  
+  .mobile-nav #mobile-menu li.level0.level-top:nth-child(1):before{
+    background-image: url(https://cdn.shopify.com/s/files/1/0256/2444/5014/files/home-removebg-preview.png?v=1656794557);
+  }
+  .mobile-nav #mobile-menu li.level0.level-top:nth-child(2):before{
+    background-image: url(https://cdn.shopify.com/s/files/1/0256/2444/5014/files/team-removebg-preview.png?v=1656794556);
+  }
+  
+  
+  .mobile-nav #mobile-menu li.level0.level-top:nth-child(3):before{
+    background-image: url(https://cdn.shopify.com/s/files/1/0256/2444/5014/files/prodotti-removebg-preview.png?v=1656794556);
+  	float: left;
+    display: inline-block;
+    margin-top: 8px !important;
+  }
+  
+  .mobile-nav #mobile-menu li.level0.level-top:nth-child(4):before{
+    background-image: url(https://cdn.shopify.com/s/files/1/0256/2444/5014/files/test-removebg-preview.png?v=1656794556);
+  }
+  
+  .mobile-nav #mobile-menu li.level0.level-top:nth-child(5):before{
+    background-image: url(https://cdn.shopify.com/s/files/1/0256/2444/5014/files/pack-removebg-preview.png?v=1656794556);
+  }
+  
+  .mobile-nav #mobile-menu li.level0.level-top:nth-child(6):before{
+    background-image: url(https://cdn.shopify.com/s/files/1/0256/2444/5014/files/punti_20fedelta-removebg-preview.png?v=1656794556);
+  }
+  
+  .mobile-nav #mobile-menu li.level0.level-top:nth-child(7):before{
+    background-image: url(https://cdn.shopify.com/s/files/1/0256/2444/5014/files/guida-removebg-preview.png?v=1656794556);
+  }
+  
+  .mobile-nav #mobile-menu li.level0.level-top:nth-child(8):before{
+    background-image: url(https://cdn.shopify.com/s/files/1/0256/2444/5014/files/video-removebg-preview.png?v=1656794556);
+  }
+  
+  .mobile-nav #mobile-menu li.level0.level-top:nth-child(9):before{
+    background-image: url(https://cdn.shopify.com/s/files/1/0256/2444/5014/files/blog__1_-removebg-preview.png?v=1656794556);
+  }
+  
+  .mobile-nav #mobile-menu li.level0.level-top:nth-child(10):before{
+    background-image: url(https://cdn.shopify.com/s/files/1/0256/2444/5014/files/contattaci-removebg-preview.png?v=1656794556);
+  }
+  
+  .mobile-nav #mobile-menu li.level0.level-top:nth-child(11):before{
+    background-image: url(https://cdn.shopify.com/s/files/1/0256/2444/5014/files/cassa-removebg-preview.png?v=1656794556);
+  	background-size: 26px;
+  }
+  li.level0.level-top:nth-child(12):before{
+    background-image: url(https://cdn.shopify.com/s/files/1/0256/2444/5014/files/login-removebg-preview.png?v=1656794556);
+  }
+  
+  li.level0.level-top:nth-child(13):before{
+    background-image: url(https://cdn.shopify.com/s/files/1/0256/2444/5014/files/registrati-removebg-preview.png?v=1656794556);
+  }
+    
+    .searchform .searchsubmit {
+    	color: #000 !important;
+	}
+    .mobile-search .search-extended {
+        background-color: #ffffff;
+        color: #000;
+	}
+    .mobile-nav .nav-accordion li span.expand:after{
+    	color:#000;
+    }   
+    .mobile-nav ul li a span {
+        font-family: Oswald,sans-serif;
+        font-weight: 400;
+        font-style: normal;
+        letter-spacing: 1px;
+        text-transform: uppercase;
+        font-size: 1.05rem;
+        display: inline-block;
+        width: 100%;
+        position: relative;
+        transition: all .3s ease-in-out;
+	}
+    .mobile-nav ul li:not(:last-child) {
+    	border-bottom: 1px solid #d6d6d6 !important;
+	}
+    .mobile-nav ul li{
+    	padding:7px 0px;
+    }
+    li.level0.level-top.parent a span {
+    	margin-left: 7px;
+	}
+    input.s.inputcolor.snize-input-style::placeholder {
+        color: #000 !important;
+        opacity: 1;
+    }
+    .icon-cancel:before, .mobile-nav .nav-accordion li span.collapse:after{
+    	color:#000;
+    }
+    .mobile-nav .nav-accordion li span.collapse:after{
+    	margin-top:6px;
+    }
+  }
+  @media(max-width:400px){
+    .mobile-nav ul li a span{
+    	font-size:1rem;
+    }
+  }
+</style>
+{%- assign list = linklists[settings.nav_linklist] -%}
+{%- if include_second_menu -%}
+  {%- assign list = linklists[settings.nav_linklist2] -%}
+{%- endif -%}
+{%- if settings.header_design == 'type13' or settings.header_design == 'type14' or settings.header_design == 'type24' or settings.header_design == 'type26' or settings.header_design == 'type4' or settings.header_design == 'type32' -%}
+<div class="switcher-wrap">
+  {% include 'menu-setting' %}
+</div>
+{%- endif -%}
+<div class="nav_footer">
+  <div class="stars">
+    <img src="https://cdn.shopify.com/s/files/1/0256/2444/5014/files/2b50.png?v=1656711751" />
+    <img src="https://cdn.shopify.com/s/files/1/0256/2444/5014/files/2b50.png?v=1656711751" />
+    <img src="https://cdn.shopify.com/s/files/1/0256/2444/5014/files/2b50.png?v=1656711751" />
+    <img src="https://cdn.shopify.com/s/files/1/0256/2444/5014/files/2b50.png?v=1656711751" />
+    <img src="https://cdn.shopify.com/s/files/1/0256/2444/5014/files/2b50.png?v=1656711751" />
+  </div>
+  <p>Oltre 10.000 Clienti Soddisfatti</p>
+</div>
+
+<ul id="mobile-menu" class="nav-accordion nav-categories">
+  {%- for link in list.links -%}
+  {%- capture menu_label -%}menu_item_label_{{ forloop.index }}{%- endcapture -%}
+  {%- capture menu_label_text1 -%}menu_item_label_{{ forloop.index }}_text1{%- endcapture -%}
+  {%- capture menu_label_text2 -%}menu_item_label_{{ forloop.index }}_text2{%- endcapture -%}
+  {%- assign child_list_handle = link.title | handleize -%}
+  {%- if linklists[child_list_handle].links != blank -%}
+  <li class="level0 level-top parent {% if forloop.index == list.links.size %}last{% endif %}">
+    <a href="{{ link.url }}" class="level-top">
+      <span> 
+        {{ link.title }} 
+        {%- if settings[menu_label] !='' and settings[menu_label] == '1' -%}
+        <span class="cat-label cat-label-label1 pin-bottom"> 
+          {{ settings[menu_label_text1] }} 
+        </span>
+        {%- endif -%}
+        {%- if settings[menu_label] !='' and settings[menu_label] == '2' -%}
+        <span class="cat-label cat-label-label2 pin-bottom"> 
+          {{ settings[menu_label_text2] }} 
+        </span>
+        {%- endif -%}
+      </span>
+    </a>
+    <ul class="level0">
+      {%- for childlink in linklists[child_list_handle].links -%}
+      {%- assign grand_child_list_handle = childlink.title | handle -%}
+      {%- if linklists[grand_child_list_handle].links != blank -%}
+      <li class="level1 parent {% if forloop.index == linklists[child_list_handle].links.size %}last{% endif %}">
+        <a href="{{ childlink.url }}"><span>{{ childlink.title }}</span></a>
+        <ul class="level1">
+          {%- for grand_child_link in linklists[grand_child_list_handle].links -%}
+          <li class="level2 {% if forloop.index == linklists[grand_child_list_handle].links.size %}last{% endif %}">
+            <a href="{{ grand_child_link.url }}" class="site-nav__link"> 
+                {{ grand_child_link.title | split: '[' | first | capitalize }} 
+                {%- if grand_child_link.title contains '[' -%}
+                {%- assign label_child  = grand_child_link.title |  split: '[' | last  | split: ']' | first -%}
+                <span class="cat-label cat-label-{{label_child | handleize }} pin-left">{{label_child | upcase }}</span>
+              {%- endif -%}
+            </a>
+          </li>
+          {%- endfor -%}
+        </ul>
+      </li>
+      {%- else -%}
+      <li class="level1 {% if forloop.index == linklists[child_list_handle].links.size %}last{% endif %}">
+        <a href="{{ childlink.url }}">
+          <span>{{ childlink.title }}</span>
+        </a>
+      </li>
+      {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  </li>
+  {%- else -%}
+  <li class="level0 level-top">
+    <a href="{{ link.url }}" class="level-top">
+      <span> 
+        {{ link.title }} 
+        {%- if settings[menu_label] !='' and settings[menu_label] == '1' -%}
+        <span class="cat-label cat-label-label1 pin-bottom"> 
+          {{ settings[menu_label_text1] }} 
+        </span>
+        {%- endif -%}
+        {%- if settings[menu_label] !='' and settings[menu_label] == '2' -%}
+        <span class="cat-label cat-label-label2 pin-bottom"> 
+          {{ settings[menu_label_text2] }} 
+        </span>
+        {%- endif -%}
+      </span>
+    </a>
+  </li>
+  {%- endif -%}
+  {%- endfor -%}
+</ul>
+
+<div class="mobile-search">
+{% include 'header-search', is_mobile: true %}
+</div>
+
+<script type="text/javascript">
+  $('.searchform input[type=text]').addClass("inputcolor");
+  
+</script>

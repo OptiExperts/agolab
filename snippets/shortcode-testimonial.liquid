@@ -1,0 +1,87 @@
+{%- capture block_title -%}{%- include 'shortcode-render' render:'title' -%}{%- endcapture -%}
+{%- capture title_style -%}{%- include 'shortcode-render' render:'title_style', default:'border-bottom' -%}{%- endcapture -%}
+{%- capture title_align -%}{%- include 'shortcode-render' render:'title_align', default:'left' -%}{%- endcapture -%} 
+{%- capture design -%}{%- include 'shortcode-render' render:'design', default:'4' -%}{%- endcapture -%} 
+{%- capture autoplay %}{% include 'shortcode-render' render:'autoplay' default: '5000' -%}{%- endcapture -%}  
+{%- capture item_margin %}{% include 'shortcode-render' render:'item_margin' default: '10' -%}{%- endcapture -%}
+{%- capture nav %}{% include 'shortcode-render' render:'show_nav' default: 'false' -%}{%- endcapture -%}  
+{%- capture nav_side -%}{%- include 'shortcode-render' render:'nav_side' -%}{%- endcapture -%}
+{%- capture nav_position -%}{%- include 'shortcode-render' render:'nav_position' -%}{%- endcapture -%}
+{%- capture nav_type -%}{%- include 'shortcode-render' render:'nav_type' -%}{%- endcapture -%}
+{%- capture nav_onhover -%}{%- include 'shortcode-render' render:'nav_onhover' -%}{%- endcapture -%}
+{%- capture paging %}{% include 'shortcode-render' render:'show_paging' default: 'false' -%}{%- endcapture -%}   
+{%- capture desktop %}{% include 'shortcode-render' render:'desktop' default: '3' -%}{%- endcapture -%}  
+{%- capture tablet %}{% include 'shortcode-render' render:'tablet' default: '2' -%}{%- endcapture -%}  
+{%- capture mobile %}{% include 'shortcode-render' render:'mobile' default: '1' -%}{%- endcapture -%}
+{%- capture total %}{% include 'shortcode-render' render:'total' default: '' -%}{%- endcapture -%}
+{%- assign total_items = total | plus: 0 -%}
+{%- assign aspect_ratio = false  -%} 
+{%- if ratio == 'true' -%}{%- assign aspect_ratio = true -%}{%- endif -%}
+{%- assign show_nav = false  -%} 
+{%- if nav == 'true' -%}{%- assign show_nav = true -%}{%- endif -%}
+{%- assign show_paging = false  -%} 
+{%- if paging == 'true' -%}{%- assign show_paging = true -%}{%- endif -%}
+
+<div class="porto-testimonial title-{{title_style}}"> 
+  {%- if block_title != '' -%}
+  <h2 class="section-title text-{{title_align}}">
+    {%- if title_style == 'border-middle' and title_align != 'left' -%}
+    <span class="line-l"></span>
+    {%- endif -%}
+    <span class="inline-title"> 
+      {{ block_title }} 
+    </span>
+    {%- if title_style == 'border-middle' and title_align != 'right' -%}
+    <span class="line-r"></span>
+    {%- endif -%}
+  </h2>
+  {%- endif -%}  
+  <div class="testimonial-items">
+    <div class="data-carousel"
+           data-auto="{{ autoplay }}"
+           data-items="{{ desktop }}"
+           data-1200="{{ desktop }}"
+           data-992="{{ tablet }}"
+           data-768="{{ tablet }}"
+           data-640="{{ mobile }}"
+           data-480="{{ mobile }}"
+           data-320="{{ mobile }}"
+           data-paging="{{ show_paging }}"
+           data-nav="{{ show_nav }}"
+           data-margin="{{ item_margin }}"
+           data-prev='' 
+           data-next='' style="display: none;"></div>
+    <div class="testimonial-carousel owl-carousel dots-style-1 carousel-init owl-carousel-lazy {{nav_position}} {{nav_side}} {{nav_type}} {% if nav_onhover %}show-nav-hover{% endif %}">
+      {%- for i in (1..total_items)  -%} 
+      {%- assign src_current = 'src' | append: i -%}
+      {%- assign name_current = 'name' | append: i -%}
+      {%- assign desc_current = 'desc' | append: i -%}
+      {%- assign content_current = 'content' | append: i -%}
+ 
+      {%- capture img_src %}{%- include 'shortcode-render' render:src_current -%}{%- endcapture -%} 
+      {%- capture name %}{%- include 'shortcode-render' render:name_current -%}{%- endcapture -%}
+      {%- capture desc %}{%- include 'shortcode-render' render:desc_current -%}{%- endcapture -%}
+      {%- capture content %}{%- include 'shortcode-render' render:content_current -%}{%- endcapture -%}  
+      <div class="item"> 
+        <div class="testimonial testimonial-style-{{design}}">
+          <div class="testimonial-author clearfix">
+            <div class="testimonial-author-thumbnail">
+              {%- if img_src -%}
+              {%- assign img_url = img_src -%}
+              {%- else -%}
+              {%- assign img_url = 'img60x60.png' | asset_url -%}
+              {%- endif -%}  
+              <img class="img-responsive img-circle" data-src="{{ img_url }}" alt="">
+            </div>
+            <p><strong style="color: #222529;">{{ name | split: '|' | first }}</strong><span>{{ desc | split: '|' | first }}</span></p>
+          </div>
+          <div class="testimonial-arrow-down"></div>
+          <blockquote> 
+            {{ content }} 
+          </blockquote>
+        </div> 
+      </div>  
+      {%- endfor -%}
+    </div>
+  </div> 
+</div> 

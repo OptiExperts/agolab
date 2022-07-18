@@ -1,0 +1,83 @@
+<div class="mobile-canvas-overlay close-right"></div>
+<div class="block-main-canvas canvas-right">
+  <div class="canvas-icon sicon-right d-block d-lg-none"><a href="javascript:void(0)"><i class="fa fa-sliders"></i></a></div>
+  <div class="canvas-inner">
+    {%- if section.blocks.size > 0 -%}
+      {%- for block in section.blocks -%}
+      {%- case block.type -%}
+      {%- when 'html-right' -%} 
+        <div class="custom-block custom-block-1"> 
+          {{ block.settings.html }} 
+        </div> 
+      {%- when 'banner-right' -%}
+        <div class="custom-block">
+          <div class="owl-banner">
+            <div class="data-carousel"
+                 data-items="1"
+                 data-auto=""
+                 data-paging="true"
+                 data-nav="false"
+                 data-prev=''
+                 data-margin="0"
+                 data-next='' style="display: none;"></div>
+            <div class="owl-carousel carousel-init owl-carousel-lazy">
+              {%- for i in (1..3) -%}
+              {%- capture banner %}banner{{ i }}{% endcapture -%}
+              {%- capture link %}banner_link_{{ i }}{% endcapture -%}
+              {%- capture banner_enable %}banner{{ i }}_enable{% endcapture -%}
+              {%- if block.settings[banner_enable] != blank -%}
+              <div class="item">
+                {%- assign promo_src = block.settings[banner] | img_url: '500x' -%}
+                {%- if promo_src contains 'no-image' -%}
+                {%- assign promo_src = 'img270x350.png' | asset_url -%}
+                {%- endif -%}
+                {%- if block.settings[link] != '' -%}
+                <a href="{{ block.settings[link] }}" class="image-link">
+                  {%- endif -%}
+                  <img src="{{ promo_src }}" />
+                  {%- if block.settings[link] != '' -%}
+                </a>
+                {%- endif -%}
+              </div>
+              {%- endif -%}
+              {%- endfor -%}
+            </div>
+          </div>
+        </div> 
+      {%- when 'products-right' -%} 
+        <div class="block bestseller-product sidebar-cate-toogle">
+          <div class="block-title"> 
+            {{ block.settings.title }} 
+          </div>
+          <div class="sidebar-content block-content">
+            {% include 'bestseller-product', sb_collection: block.settings.collection, sb_limit: block.settings.limit %}
+          </div>
+        </div> 
+      {%- endcase -%}
+      {%- endfor -%}
+    {%- endif -%} 
+  </div>
+</div>
+<script type="text/javascript">
+  jQuery(function($) {
+    $('.canvas-icon.sicon-right, .close-right').click(function(event) {
+      if(!$('body').hasClass('canvas-right')) {
+        $('body').addClass('mobile-canvas-shown');
+        $('body').addClass('canvas-right', function() {
+          setTimeout(function(){
+            $(document).one("click",function(e) {
+              var target = e.target;
+              if (!$(target).is('.canvas-right .block') && !$(target).parents().is('.canvas-right .canvas-inner')) {
+                $('body').removeClass('canvas-right'); 
+        		$('body').removeClass('mobile-canvas-shown');
+              }
+            });
+          }, 111);
+        });
+      } else{
+        $('body').removeClass('canvas-right'); 
+        $('body').removeClass('mobile-canvas-shown');
+      }
+    });
+  });
+</script>

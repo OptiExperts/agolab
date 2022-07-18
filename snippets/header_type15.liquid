@@ -1,0 +1,40 @@
+{% include 'header-top-bar' %}
+<div class="header container">
+  <div class="header-left">
+    {% include 'header-logo' %}
+  </div>
+  <div class="header-center"> 
+    <div class="menu-icon"><a href="javascript:void(0)" title="Menu"><i class="fa fa-bars"></i></a></div>
+    <div class="search-area show-icon-tablet">
+      <a href="javascript:void(0);" class="search-icon"><span><i class="icon-search"></i></span></a>
+      {% include 'header-search' %}
+    </div>
+  </div>
+  <div class="header-right">
+    <div class="cart-area">
+      {% if settings.header_custom_text != '' %}
+      <div class="custom-block"> 
+        {{ settings.header_custom_text }} 
+      </div>
+      {% endif %}
+      <div class="mini-cart">
+        {% include 'header-cart' %}
+      </div>
+    </div> 
+  </div> 
+</div>
+<div class="header-wrapper">
+  <div class="main-nav wrapper-top-menu">
+    <div class="container">
+      <div id="main-top-nav" class="main-top-nav">
+        {% include 'header-logo-sticky' %}
+        <!-- Main Menu -->
+        {% include 'main-menu' %}
+        <!-- End Main Menu -->
+        <div class="mini-cart">
+          {% include 'header-cart' %}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

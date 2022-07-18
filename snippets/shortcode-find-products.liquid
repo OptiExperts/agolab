@@ -1,0 +1,54 @@
+{% capture title %}{% include 'shortcode-render' render:'title' %}{% endcapture %} 
+{%- if title != '' -%}
+<h3 style="font-size: 1.125rem;line-height: 1;text-align: center;letter-spacing:-.01em" class="mb-3 text-uppercase"> 
+  {{ title }} 
+</h3>
+{%- endif -%} 
+<form action="/" class="porto_products_filter_form widget  my-0">
+  <select class="filter-category">
+    <option selected>By Category</option>
+    {%- for collection in collections -%} 
+    <option value="{{collection.url}}">{{ collection.title }}</option> 
+    {%- endfor -%}
+  </select>
+  <select class="filter-tag">
+    <option selected>By Product Type</option>
+    {%- for product_type in shop.types -%}
+    {%- if product_type != blank -%}
+    <option value="{{ product_type | url_for_type }}">{{ product_type }}</option>
+    {%- else -%}
+    <option value="{{ product_type | url_for_type }}">All Products</option>
+    {%- endif -%}
+    {%- endfor -%}
+  </select>
+</form>
+<style>
+  .porto_products_filter_form select {
+    display: block;
+    width: 100%;
+    margin-bottom: .625rem;
+  } 
+  .porto_products_filter_form select+select {
+    margin-bottom: 0;
+  }
+</style> 
+<script type="text/javascript">
+  jQuery(function($) {
+    $('.filter-category').change(function() {
+      var url = $(this).val();
+      if (url) {
+        window.location = url;
+      }
+      return false;
+    });
+
+    $('.filter-tag').change(function() {
+      var url = $(this).val();
+      if (url) {
+        console.log(url);
+        window.location = url;
+      }
+      return false;
+    }); 
+  }); 
+</script>

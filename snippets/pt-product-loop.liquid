@@ -1,0 +1,23 @@
+{% assign sold_out = true %}
+{% if product.available %}
+{% assign sold_out = false %}
+{% endif %}
+{% assign on_sale = false %}
+{% if product.compare_at_price_min > product.price_min %}
+{% assign on_sale = true %}
+{% endif %}
+{% assign variant_tmp = product.selected_or_first_available_variant  %}
+{% for variant in product.variants %}
+{% if variant.available == true and variant.price < variant_tmp.price %}
+{% assign variant_tmp = variant %}
+{% endif %}
+{% endfor %}
+<div class="item product product-col {{layout_class}} product-type-simple {% if view_mode == 'creative' %}masonry-grid-item {{cr_class}}{% endif %}" {% if view_mode == 'creative' %}{{cr_style}}{% endif %}>
+  {% case pt_layout %} 
+  {% when 'outimage_aq_onimage','outimage_aq_onimage2','awq_onimage','onimage','onimage2','onimage3','wq_onimage','quantity' %} 
+  {%- assign ic_layout = 'pt-product-loop-layout-onimage' -%} 
+  {% else %}
+  {%- assign ic_layout = 'pt-product-loop-layout-default' -%} 
+  {% endcase %}
+  {%- include ic_layout -%}
+</div>

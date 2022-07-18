@@ -1,0 +1,108 @@
+{% capture block_title %}{% include 'shortcode-render' render:'title' %}{% endcapture %}
+{% capture title_style %}{% include 'shortcode-render' render:'title_style', default:'border-bottom' %}{% endcapture %}
+{% capture title_align %}{% include 'shortcode-render' render:'title_align', default:'left' %}{% endcapture %}
+{% capture limit %}{% include 'shortcode-render' render:'limit' default:'8' %}{% endcapture %}
+{% capture item_show %}{% include 'shortcode-render' render:'item_show' default:'3' %}{% endcapture %} 
+{% capture view_mode %}{% include 'shortcode-render' render:'view_mode' %}{% endcapture %} 
+{% capture autoplay %}{% include 'shortcode-render' render:'autoplay' %}{% endcapture %}
+{% capture arrows %}{% include 'shortcode-render' render:'arrows' %}{% endcapture %}
+{% capture arrows_side %}{% include 'shortcode-render' render:'arrows_side' %}{% endcapture %}
+{% capture arrows_type %}{% include 'shortcode-render' render:'arrows_type' %}{% endcapture %}
+{% capture arrows_onhover %}{% include 'shortcode-render' render:'arrows_onhover' %}{% endcapture %}
+{% capture position_nav %}{% include 'shortcode-render' render:'positionArr' %}{% endcapture %}
+{% capture pagenav %}{% include 'shortcode-render' render:'dots' %}{% endcapture %}
+{% capture position_pag %}{% include 'shortcode-render' render:'positionPag' %}{% endcapture %}
+{% capture handle_collection %}{% include 'shortcode-render' render:'handle_collection' %}{% endcapture %} 
+{%- assign paginate_index = limit | plus: 0  -%} 
+{%- assign autoplay_index = autoplay | plus: 0  -%}
+{%- assign item_show_index = item_show | plus: 0  -%}
+{%- assign use_arrows = false  -%}
+{%- assign use_pagenav = false  -%}  
+{%- assign use_arrows_onhover = false -%}
+{%- if arrows == 'true' -%}{%- assign use_arrows = true -%}{%- endif -%}
+{%- if pagenav == 'true' -%}{%- assign use_pagenav = true -%}{%- endif -%}
+{%- if arrows_onhover == 'true' -%}{%- assign use_arrows_onhover = true -%}{%- endif -%}
+
+<div class="products-collection widget-products porto-products title-{{title_style}}"> 
+  {%- if block_title != '' -%}
+  <h2 class="section-title{% if view_mode == 'products-slider' %} slider-title{% endif %} text-{{title_align}}">
+    {%- if title_style == 'border-middle' and title_align != 'left' -%}
+    <span class="line-l"></span>
+    {%- endif -%}
+    <span class="inline-title"> 
+      {{ block_title }} 
+    </span>
+    {%- if title_style == 'border-middle' and title_align != 'right' -%}
+    <span class="line-r"></span>
+    {%- endif -%}
+  </h2>
+  {%- endif -%}  
+  <div class="widget">
+    {%- if view_mode == 'products-slider' -%}
+    <div class="data-carousel"
+         data-auto="{{ autoplay_index }}"
+         data-items="{{ column_index }}"
+         data-1200="{{ column_index }}"
+         data-992="4"
+         data-768="3"
+         data-640="2"
+         data-480="2"
+         data-320="2"
+         data-nav="{{ use_arrows }}" 
+         data-paging="{{ use_pagenav }}"
+         data-margin='0' style="display: none;"></div>
+    {%- endif -%}
+    {%- assign name_collection = handle_collection -%}
+    {%- if name_collection == blank -%}{%- assign name_collection = "all" -%}{%- endif -%}
+    {%- assign collection = collections[name_collection] -%}
+    {%- assign limit = paginate_index -%}
+    {%- if collection.products.size == 0 -%}
+    <p style="text-align:center;color:#999;padding: 5px 10px;font-style:italic;">{{ 'products.general.no_more_product' | t }}</p>
+    {%- else -%}
+    <ul class="product_list_widget{% if view_mode == 'products-slider' %} owl-carousel carousel-init owl-carousel-lazy {{position_nav}}{% if position_nav != 'show-nav-title' %} {{arrows_side}} {{arrows_type}}{% endif %} {{position_pag}} {% if use_arrows_onhover %}show-nav-hover{% endif %}{% endif %}">
+      {%- for product in collection.products limit: limit -%}
+      {%- assign on_sale = false -%}
+      {%- if product.compare_at_price_min > product.price_min -%}
+      {%- assign on_sale = true -%}
+      {%- endif %}
+      {%- assign imgsrc = 'img600x600.png' | asset_img_url: '150x' -%}
+      {%- assign pt = '100%' -%}
+      {%- if product.featured_image -%}
+      {%- assign pt = 100 | divided_by: product.featured_image.aspect_ratio | append: '%' -%}
+      {%- assign imgsrc = product.featured_image.src | img_url: '250x250' -%}
+      {%- endif %}
+      {%- assign row = forloop.index | modulo:item_show_index -%}
+      {%- if view_mode == 'products-slider' -%}
+      {%- if row == 1 -%}<div class="item-wrap">{%- endif -%} 
+      {%- endif -%}
+      <li>
+        <a class="product-image" href="{{ product.url | within: collection }}">
+          <div class="inner">
+            <img data-src="{{ imgsrc }}" alt="{{ product.featured_image.alt | escape }}" class="img-responsive main" style="padding-top: {{pt}};"/>
+          </div> 
+        </a>
+        <div class="product-details">  
+          <a href="{{ product.url | within: collection }}" title="{{ product.title }}">
+            <span class="product-title"> 
+              {{ product.title }} 
+            </span>
+          </a>
+          <div class="star-rating">
+            <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+          </div>  
+          {%- if on_sale -%} 
+          <del><span class="shopify-Price-amount amount"><span class="money">{{ product.compare_at_price | money }}</span></span></del> 
+          <ins><span class="shopify-Price-amount amount"><span class="money">{{ product.price | money }}</span></span></ins>
+          {%- else -%}
+          <span class="shopify-Price-amount amount"><span class="money">{{ product.price | money }}</span></span>
+          {%- endif -%}  
+        </div>
+      </li>
+      {%- if view_mode == 'products-slider' -%}
+      {%- if row == 0 or forloop.last -%}</div>{%- endif -%} 
+      {%- endif -%}
+      {%- endfor-%}
+    </ul>
+    {%- endif -%}
+  </div>
+</div>

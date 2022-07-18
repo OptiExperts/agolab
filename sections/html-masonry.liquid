@@ -1,0 +1,148 @@
+<div data-section-id="{{ section.id }}" data-section-type="banner-masonry-section">
+  <div id="banner-masonry-{{ section.id }}" style="margin-top: {{section.settings.margin_top | remove: 'px' | append: 'px' }};margin-bottom: {{section.settings.margin_bottom | remove: 'px' | append: 'px' }};padding: {{section.settings.section_padding}};">
+    {%- if section.settings.section_layout == '0' -%}
+    <div class="container">
+      {%- endif-%}
+      <div class="banner-masonry-grid html-masonry" style="margin: -{{section.settings.item_space | remove: 'px' | append: 'px' }};">
+        <div class="grid-sizer" style="flex: {{section.settings.grid_sizer}};max-width: {{section.settings.grid_sizer}};"></div>
+        {%- for block in section.blocks -%}
+        <div class="masonry-grid-item" style="padding:{{section.settings.item_space | remove: 'px' | append: 'px' }};{% if block.settings.fixed_height != '' %}height: {{block.settings.fixed_height  | remove: 'px' | append: 'px'}};{% endif %}{% if block.settings.fixed_width != '' %}width: {{block.settings.fixed_width}};{% endif %}">
+          {%- if block.settings.content != '' -%} 
+          {% include 'shortcode' load: block.settings.content %} 
+          {%- endif -%}
+        </div>
+        {%- endfor -%}
+      </div>
+      {%- if section.settings.section_layout == '0' -%}
+    </div>
+    {%- endif-%}
+  </div>
+</div>
+{% schema %}
+{
+  "name": "t:sections.html-masonry.name",
+  "tag": "section",
+  "class": "spaced-section html-masonry",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.html-masonry.settings.header.content"
+    },
+    {
+      "type": "text",
+      "id": "margin_top",
+      "label": "t:sections.html-masonry.settings.margin_top.label",
+      "info": "40px"
+    },
+    {
+      "type": "text",
+      "id": "margin_bottom",
+      "label": "t:sections.html-masonry.settings.margin_bottom.label",
+      "info": "40px"
+    },
+    {
+      "type": "text",
+      "id": "section_padding",
+      "label": "t:sections.html-masonry.settings.section_padding.label",
+      "info": "t:sections.html-masonry.settings.section_padding.info"
+    },
+	{
+      "type": "select",
+      "id": "section_layout",
+      "label": "t:sections.html-masonry.settings.section_layout.label",
+      "options": [
+        {
+          "value": "0",
+          "label": "t:sections.html-masonry.settings.section_layout.options__1.label"
+        },
+        {
+          "value": "1",
+          "label": "t:sections.html-masonry.settings.section_layout.options__2.label"
+        } 
+      ],
+      "default": "0"
+    },
+    {
+      "type": "text",
+      "id": "grid_sizer",
+      "label": "t:sections.html-masonry.settings.grid_sizer.label",
+      "info": "t:sections.html-masonry.settings.grid_sizer.info",
+      "default": "0 0 25%"
+    },
+    {
+      "type": "text",
+      "id": "item_space",
+      "label": "t:sections.html-masonry.settings.item_space.label",
+      "info": "t:sections.html-masonry.settings.item_space.info",
+      "default": "10px"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "content",
+      "name": "t:sections.html-masonry.blocks.content.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "fixed_height",
+          "label": "t:sections.html-masonry.blocks.content.settings.fixed_height.label",
+          "info": "t:sections.html-masonry.blocks.content.settings.fixed_height.label"
+        },
+        {
+          "type": "text",
+          "id": "fixed_width",
+          "label": "t:sections.html-masonry.blocks.content.settings.fixed_width.label",
+          "info": "t:sections.html-masonry.blocks.content.settings.fixed_width.info"
+        },
+        {
+          "type": "html",
+          "id": "content",
+          "label": "t:sections.html-masonry.blocks.content.settings.content.label" 
+        },
+        {
+          "type": "text",
+          "id": "extra_class",
+          "label": "t:sections.html-masonry.blocks.content.settings.extra_class.label",
+          "info": "t:sections.html-masonry.blocks.content.settings.extra_class.info"
+        }
+      ]
+    }
+  ],
+  "presets": [{
+    "name": "t:sections.html-masonry.presets.name",
+    "category": "Banner",
+    "settings": {
+		"grid_sizer": "0 0 33.33%"
+    },
+    "blocks": [
+      {
+        "type": "content",
+      	"settings": {
+          "content": "<div class=\"porto-ibanner mb-0\"> <img src=\"//cdn.shopify.com/s/files/1/1613/0225/files/shop20_home_banner1.jpg\" alt=\"\" width=\"780\" height=\"464\"><div class=\"porto-ibanner-desc no-padding d-flex\"><div class=\"porto-ibanner-layer\" style=\"left: 10%; top: 50%; transform: translateY(-50%);\"><div><h3 style=\"font-size: 2.625em; color: #777777; line-height: 1; font-weight: 500; letter-spacing: -0.035em;\" class=\"vc_custom_heading mb-1 align-left\">Save Big Sale</h3><h4 style=\"font-size: 6.375em; line-height: 1; letter-spacing: 0.03em;\" class=\"vc_custom_heading off-text d-flex align-items-center vc_custom_1579773378843 align-left heading-dark\">50%<small>OFF</small></h4><h5 style=\"font-size: 1.125em; line-height: 1; letter-spacing: -0.02em; padding-top: 0.275em;\" class=\"vc_custom_heading pull-left mr-2 vc_custom_1579773893940 align-left heading-dark\">STARTING AT</h5><h5 style=\"font-size: 2.375em; line-height: 1; letter-spacing: -0.02em;\" class=\"vc_custom_heading mb-3 align-left heading-primary\"> <sup>$</sup>199<sup>99</sup></h5><div class=\"vc_custom_heading mb-0 d-inline-block align-left heading heading-border heading-bottom-border heading1479552070\"><h6 style=\"font-size: 0.875em; color: #777777; line-height: 0.8; font-weight: 700; letter-spacing: 0.01em;border-bottom-color: #777777;\" class=\"heading-tag\"><a style=\"color:inherit;\" href=\"#\">SHOP NOW</a></h6></div></div></div></div></div><style>.heading.heading-border .heading-tag{border-top-color:#dbdbdb;border-bottom-color:#dbdbdb}.off-text small{display:inline-block !important;font-size:39% !important;font-weight:inherit;transform:rotate(-90deg) translateY(-35%)}.vc_custom_1579773378843{margin-left:-0.06em !important}</style>",
+		  "fixed_width":"66.6%"
+        }
+      },
+      {
+        "type": "content",
+        "settings": {
+          "content": "<div class=\"porto-ultimate-content-box vc_custom_1579858805451 has-content-pos justify-content-center\" style=\"background-color:#282828;min-height:222px;padding-left: 1.8125em;padding-right: 1.8125em;\"><h3 style=\"font-size: 1.125rem;line-height: 1;text-align: center;letter-spacing:-.01em\" class=\"vc_custom_heading mb-3 text-uppercase heading-light\">Find A Product</h3>[find-products title=\"\" ]</div><style>.porto_products_filter_form select{height:2.8125rem;margin-bottom: .625rem;background-color:#fff}</style>",
+          "fixed_width":"33.3%"
+		}
+      },
+      {
+        "type": "content",
+        "settings": {
+          "content": "<div class=\"porto-ibanner\" style=\"background: #f4f4f4; min-height: 222px;\"> <img src=\"//cdn.shopify.com/s/files/1/1613/0225/files/shop20_home_banner2.jpg\" /><div class=\"porto-ibanner-desc no-padding d-flex\"><div class=\"porto-ibanner-layer text-right\" style=\"right: 10%; top: 50%; transform: translateY(-50%);\"><h4 style=\"font-size: 1.5275em; line-height: 1.1; letter-spacing: 0.01em;\" class=\"vc_custom_heading mb-3 align-right\"> ELECTRONIC<br /> DEALS</h4><div class=\"porto-ultimate-content-box-container d-inline-block text-left\"><div class=\"porto-ultimate-content-box\" style=\"\" id=\"porto_ucb_3783\"><div style=\"font-size: 0.75em; line-height: 1.4; font-weight: 700; letter-spacing: 0.01em;\" class=\"vc_custom_heading m-b-xs background-color-dark coupon-sale-text align-left heading-light\">Exclusive COUPON</div><div style=\"font-size: 1.1em; line-height: 0.8; font-weight: 700;\" class=\"vc_custom_heading mb-0 background-color-dark coupon-sale-text d-inline-block align-left heading-light\"><i>UP TO</i>$100<sub>OFF</sub></div></div></div></div></div></div><style>.banner-masonry-grid .grid-sizer{width:33.3333%;flex:0 0 33.3333%}</style>",
+          "fixed_width":"33.3%"        
+        }
+      } 
+    ]
+  }]
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

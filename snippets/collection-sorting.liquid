@@ -1,0 +1,181 @@
+<!-- /snippets/collection-sorting.liquid --> 
+{% liquid
+  assign currencies_using_comma_decimals = 'ANG,ARS,BRL,BYN,BYR,CLF,CLP,COP,CRC,CZK,DKK,EUR,HRK,HUF,IDR,ISK,MZN,NOK,PLN,RON,RUB,SEK,TRY,UYU,VES,VND' | split: ','
+  assign uses_comma_decimals = false
+  if currencies_using_comma_decimals contains cart.currency.iso_code
+    assign uses_comma_decimals = true
+  endif
+%}
+<div class="collection-sorting-row">
+  <a href="javascript:void(0);" class="porto-product-filters-toggle sidebar-toggle d-inline-flex d-lg-none">
+    <svg data-name="Layer 3" id="Layer_3" viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+      <line class="cls-1" x1="15" x2="26" y1="9" y2="9"></line><line class="cls-1" x1="6" x2="9" y1="9" y2="9"></line>
+      <line class="cls-1" x1="23" x2="26" y1="16" y2="16"></line><line class="cls-1" x1="6" x2="17" y1="16" y2="16"></line>
+      <line class="cls-1" x1="17" x2="26" y1="23" y2="23"></line><line class="cls-1" x1="6" x2="11" y1="23" y2="23"></line>
+      <path class="cls-2" d="M14.5,8.92A2.6,2.6,0,0,1,12,11.5,2.6,2.6,0,0,1,9.5,8.92a2.5,2.5,0,0,1,5,0Z"></path>
+      <path class="cls-2" d="M22.5,15.92a2.5,2.5,0,1,1-5,0,2.5,2.5,0,0,1,5,0Z"></path>
+      <path class="cls-3" d="M21,16a1,1,0,1,1-2,0,1,1,0,0,1,2,0Z"></path>
+      <path class="cls-2" d="M16.5,22.92A2.6,2.6,0,0,1,14,25.5a2.6,2.6,0,0,1-2.5-2.58,2.5,2.5,0,0,1,5,0Z"></path>
+    </svg> 
+    <span>Filter</span>
+  </a>
+  <script type="text/javascript">
+    jQuery(function($) { 
+      $(document).off('click', '.sidebar-toggle').on('click', '.sidebar-toggle',  function(e) { 
+        if(!$('body').hasClass('canvas-left')) {
+          $('body').addClass('mobile-canvas-shown');
+          $('body').addClass('canvas-left', function() {
+            setTimeout(function(){
+              $(document).one("click",function(e) {
+                var target = e.target;
+                if (!$(target).is('.canvas-left .block') && !$(target).parents().is('.canvas-left .canvas-inner')) {
+                  $('body').removeClass('canvas-left');
+                  $('body').removeClass('mobile-canvas-shown');
+                }
+              });
+            }, 111);
+          });
+        } else{
+          $('body').removeClass('canvas-left');
+          $('body').removeClass('mobile-canvas-shown');
+        }
+      }); 
+      // sticky filter on mobile
+      if ($('.toolbar').length > 0) { 
+        var init_filter_sticky = function() {
+          var $obj = $('.toolbar.top_toolbar'); 
+          if (!$obj.prev('.filter-placeholder').length) {
+            $('<div class="filter-placeholder m-0"></div>').insertBefore($obj);
+          }
+          var sticky_height = 0;
+          if($('.header-container.sticky-header').length > 0){
+            sticky_height = $('.header-container.sticky-header').outerHeight();
+          } 
+          var $ph = $obj.prev('.filter-placeholder'),
+              scrollTop = $(window).scrollTop(),
+              offset = sticky_height; 
+          if ($ph.offset().top <= scrollTop + offset) {
+            $ph.css('height', $obj.outerHeight() + parseInt($obj.css('margin-bottom')));
+            $obj.addClass('sticky').css('top', offset);
+          } else {
+            $ph.css('height', '');
+            $obj.removeClass('sticky');
+          }
+        };
+        if (window.innerWidth < 992) {
+          window.removeEventListener('scroll', init_filter_sticky);
+          window.addEventListener('scroll', init_filter_sticky, {passive: true});
+          init_filter_sticky();
+        } 
+        $(window).on('resize', function() {   
+          if (window.innerWidth < 992) {
+            window.removeEventListener('scroll', init_filter_sticky);
+            window.addEventListener('scroll', init_filter_sticky, {passive: true});
+          }else{  
+            window.removeEventListener('scroll', init_filter_sticky); 
+            $('.toolbar.top_toolbar').removeClass('sticky').css('top', '').prev('.filter-placeholder').css('height', '');
+          }
+        });
+      }
+    });
+  </script>
+  <div class="sorter_wrap">
+    {% if sorting_enable != blank %}
+    <div class="sort-by">
+      <div class="select-new">
+        <div class="select-inner">  
+          <facet-filters-form>
+            <form id="CollectionSort_by" class="facets__form">
+              {%- for filter in collection.filters -%} 
+              {% if filter.type == 'list' %}
+              {%- for value in filter.active_values -%}
+              <input type="hidden" name="{{ value.param_name }}" value="{{ value.value }}">
+              {% endfor %}
+              {% else %}
+              {%- if filter.min_value.value != nil or filter.max_value.value != nil -%}
+              <input type="hidden" name="{{ filter.min_value.param_name }}" 
+                     {% if uses_comma_decimals %}
+                     value="{{ filter.min_value.value | money_without_currency | replace: '.', '' | replace: ',', '' | replace: '00', '' }}"
+                     {% else %}
+                     value="{{ filter.min_value.value | money_without_currency | replace: ',', '' | replace: '.00', ''  }}"
+                     {% endif %} />
+              <input  type="hidden" name="{{ filter.max_value.param_name }}" 
+                     {% if uses_comma_decimals %}
+                     value="{{ filter.max_value.value | money_without_currency | replace: '.', '' | replace: ',', '' | replace: '00', '' }}"
+                     {% else %}
+                     value="{{ filter.max_value.value | money_without_currency | replace: ',', '' | replace: '.00', ''  }}"
+                     {% endif %} />
+              {% endif %}
+              {% endif %}
+              {% endfor %}  
+              <div class="collection-filters__field"> 
+                <div class="select">
+                  <span>{{ 'collections.sorting.title' | t }}: </span>
+                  {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
+                  <select name="sort_by" class="select__select collection-filters__sort field bootstrap-select" id="SortBy" aria-describedby="a11y-refresh-page-message">
+                    {%- for option in collection.sort_options -%}
+                    <option value="{{ option.value | escape }}"{% if option.value == sort_by %} selected="selected"{% endif %}>{{ option.name | escape }}</option>
+                    {%- endfor -%}
+                  </select> 
+                </div>
+              </div> 
+              {% if collection.current_vendor or collection.current_type %}
+              <input type="hidden" name="q" value="{{ collection.current_vendor }}{{ collection.current_type }}">
+              {% endif %}
+
+              {%- if results.terms -%}
+              <input type="hidden" name="q" value="{{ collection.terms | escape }}">
+              <input name="options[prefix]" type="hidden" value="last">
+              {%- endif -%}
+            </form>
+          </facet-filters-form>
+        </div>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+  <div class="view-mode">
+    <a href="javascript::void(0);" data-layout="grid">
+      <span class="layout-opt icon-mode-grid {% if cart.attributes.layout != blank and cart.attributes.layout %}{% if cart.attributes.layout == 'grid' %}active{% endif %}{% else %}{% if view_mode == 'grid' or view_mode == 'divider' %}active{% endif %}{% endif %}" data-layout="grid" title="{{ 'collections.general.grid_view' | t }}"></span>
+    </a>
+    <a href="javascript::void(0);" data-layout="list">
+      <span class="layout-opt icon-mode-list {% if cart.attributes.layout != blank and cart.attributes.layout %}{% if cart.attributes.layout == 'list' %}active{% endif %}{% else %}{% if view_mode == 'list' %}active{% endif %}{% endif %}" data-layout="list" title="{{ 'collections.general.list_view' | t }}"></span>
+    </a>
+  </div>
+  {% if paginate.pages > 1 and infinite_scrolling == blank %}
+  <div class="pagenav-wrap">
+    <div class="pagination">
+      {% include 'pagination-page' %}
+    </div>
+  </div>
+  {% endif %}
+  <div class="limited-wrap">
+    {% if infinite_scrolling == blank %}
+    <div class="limited-view select-new">
+      <div class="select-inner">
+        <span>{{ 'collections.limiter.title' | t }}: </span>
+        <select name="limiter" class="field bootstrap-select">
+          <option value="{{limit_default}}" {% if cart.attributes.pagination != blank and cart.attributes.pagination %}{% if cart.attributes.pagination == limit_default %}selected="selected"{% endif %}{% else %}{% if limit == '12' %}selected="selected"{% endif %}{% endif %}>{{limit_default}}</option>
+          <option value="24" {% if cart.attributes.pagination != blank and cart.attributes.pagination %}{% if cart.attributes.pagination == '24' %}selected="selected"{% endif %}{% else %}{% if limit == '24' %}selected="selected"{% endif %}{% endif %}>24</option>
+          <option value="36" {% if cart.attributes.pagination != blank and cart.attributes.pagination %}{% if cart.attributes.pagination == '36' %}selected="selected"{% endif %}{% else %}{% if limit == '36' %}selected="selected"{% endif %}{% endif %}>36</option> 
+        </select>
+      </div>
+    </div>
+    {% endif %}
+  </div>
+  {% if toolbar_filter %}
+  <div class="filter-bar">
+    <a href="#" class="btn-button bordered uppercase small">{{ 'collections.general.filter' | t }} +</a>
+  </div>
+  {% endif %}
+</div>
+{% if toolbar_filter %}
+<div class="filter-option-group">
+  <div class="filter-option-inner"> 
+    {% if current_tags.size > 0 %}<a href="javascript:;" class="clearall">{{ 'collections.general.clear_all' | t }}</a>{% endif %}
+  </div>
+</div>
+{% endif %}  
+{%- if sidebar-left == blank and sidebar-right == blank -%}
+<script src="{{ 'collection-filters-form.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}

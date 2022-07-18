@@ -1,0 +1,319 @@
+<div data-section-id="{{ section.id }}" data-section-type="widget-products-section">
+  <div class="widget_list_{{section.id}}"> 
+    <div class="products-collection widget-products porto-products title-{{section.settings.title_border_style}}">
+      <h3>Code:</h3>
+      <code>
+        <!-- Shortcode product --> 
+        [product-widget title="{{section.settings.title}}" title_align="{{section.settings.title_align}}" title_style="{{section.settings.title_border_style}}" limit="{{section.settings.limit}}" item_show="{{section.settings.item_show}}" view_mode="{{section.settings.view_mode}}" autoplay="{{ section.settings.autoplay }}" arrows="{{section.settings.show_nav}}" arrows_side="{{section.settings.nav_side}}" arrows_type="{{section.settings.nav_type}}" arrows_onhover="{{section.settings.show_nav_hover}}" positionArr="{{section.settings.nav_position}}" dots="{{section.settings.show_paging}}" positionPag="{{section.settings.page_position}}" handle_collection="{{section.settings.collection}}" ] 
+        <!-- / Shortcode product -->
+      </code>
+      <style>
+        code {
+          background-color: #d1d1d1;
+          padding: 3px 2px;
+          color: #777;
+          font-size: 14px;
+          line-height: 24px;
+        }
+        .products-collection > h3,.products-collection code {text-align: center;}
+      </style> 
+      {%- if section.settings.title != '' -%}
+      <h2 class="section-title text-{{section.settings.title_align}}" style="max-width: 30%;">
+        {%- if section.settings.title_border_style == 'border-middle' and section.settings.title_align != 'left' -%}
+        <span class="line-l"></span>
+        {%- endif -%}
+        <span class="inline-title"> 
+          {{ section.settings.title }} 
+        </span>
+        {%- if section.settings.title_border_style == 'border-middle' and section.settings.title_align != 'right' -%}
+        <span class="line-r"></span>
+        {%- endif -%}
+      </h2>
+      {%- endif -%} 
+      {%- assign view_mode = section.settings.view_mode -%} 
+      <div class="widget" style="max-width: 30%;">
+        {%- if view_mode == 'products-slider' -%}
+        <div class="data-carousel"
+             data-auto="{{ section.settings.autoplay }}"
+             data-items="{{ section.settings.columns }}"
+             data-1200="{{ section.settings.columns }}"
+             data-992="4"
+             data-768="3"
+             data-640="2"
+             data-480="2"
+             data-320="2"
+             data-nav="{{ section.settings.show_nav }}" 
+             data-paging="{{ section.settings.show_paging }}"
+             data-margin='0' style="display: none;"></div>
+        {%- endif -%}
+        {%- assign name_collection = section.settings.collection -%}
+        {%- if name_collection == blank -%}{%- assign name_collection = "all" -%}{%- endif -%}
+        {%- assign collection = collections[name_collection] -%}
+        {%- assign limit = section.settings.limit | default: '3' -%}
+        {%- if collection.products.size == 0 -%}
+        <p style="text-align:center;color:#999;padding: 5px 10px;font-style:italic;">{{ 'products.general.no_more_product' | t }}</p>
+        {%- else -%}
+        <ul class="product_list_widget{% if view_mode == 'products-slider' %} owl-carousel carousel-init owl-carousel-lazy {{section.settings.nav_position}}{% if section.settings.nav_position != 'show-nav-title' %} {{section.settings.nav_side}} {{section.settings.nav_type}}{% endif %} {{section.settings.page_position}} {% if section.settings.show_nav_hover %}show-nav-hover{% endif %}{% endif %}">
+          {%- for product in collection.products limit: limit -%}
+          {%- assign on_sale = false -%}
+          {%- if product.compare_at_price_min > product.price_min -%}
+          {%- assign on_sale = true -%}
+          {%- endif %}
+          {%- assign imgsrc = 'img600x600.png' | asset_img_url: '150x' -%}
+          {%- assign pt = '100%' -%}
+          {%- if product.featured_image -%}
+          {%- assign pt = 100 | divided_by: product.featured_image.aspect_ratio | append: '%' -%}
+          {%- assign imgsrc = product.featured_image.src | img_url: '150x150' -%}
+          {%- endif %}
+          {%- assign row = forloop.index | modulo:section.settings.item_show -%}
+          {%- if view_mode == 'products-slider' -%}
+          {%- if row == 1 -%}<div class="item-wrap">{%- endif -%} 
+          {%- endif -%}
+          <li>
+            <a class="product-image" href="{{ product.url | within: collection }}">
+              <div class="inner">
+                <img data-src="{{ imgsrc }}" alt="{{ product.featured_image.alt | escape }}" class="img-responsive main lazyload" style="padding-top: {{pt}};"/>
+              </div> 
+            </a>
+            <div class="product-details">  
+              <a href="{{ product.url | within: collection }}" title="{{ product.title }}">
+                <span class="product-title"> 
+                  {{ product.title }} 
+                </span>
+              </a>
+              <div class="star-rating">
+                <span class="shopify-product-reviews-badge" data-id="{{ product.id }}"></span>
+              </div>  
+              {%- if on_sale -%} 
+              <del><span class="shopify-Price-amount amount"><span class="money">{{ product.compare_at_price | money }}</span></span></del> 
+              <ins><span class="shopify-Price-amount amount"><span class="money">{{ product.price | money }}</span></span></ins>
+              {%- else -%}
+              <span class="shopify-Price-amount amount"><span class="money">{{ product.price | money }}</span></span>
+              {%- endif -%}  
+            </div>
+          </li>
+          {%- if view_mode == 'products-slider' -%}
+          {%- if row == 0 or forloop.last -%}</div>{%- endif -%} 
+          {%- endif -%}
+          {%- endfor-%}
+        </ul>
+        {%- endif -%}
+      </div>
+    </div> 
+  </div>
+</div> 
+{% schema %}
+{
+  "name": "t:sections.shortcode-pr-widget.name",
+  "settings": [
+    {
+      "type": "header",
+      "content": "t:sections.shortcode-pr-widget.settings.header__1.content"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "Title",
+      "default": "t:sections.shortcode-pr-widget.settings.title.label"
+    },
+    {
+      "type": "select",
+      "id": "title_border_style",
+      "label": "t:sections.shortcode-pr-widget.settings.title_border_style.label",
+      "options": [
+        {
+          "value": "",
+          "label": "t:sections.shortcode-pr-widget.settings.title_border_style.options__1.label"
+        },
+        {
+          "value": "border-bottom",
+          "label": "t:sections.shortcode-pr-widget.settings.title_border_style.options__2.label"
+        },
+        {
+          "value": "border-middle",
+          "label": "t:sections.shortcode-pr-widget.settings.title_border_style.options__3.label"
+        }
+      ],
+      "default": "border-bottom"
+    }, 
+    {
+      "type": "select",
+      "id": "title_align",
+      "label": "t:sections.shortcode-pr-widget.settings.title_align.label",
+      "options": [
+        {
+          "value": "left",
+          "label": "t:sections.shortcode-pr-widget.settings.title_align.options__1.label"
+        },
+        {
+          "value": "right",
+          "label": "t:sections.shortcode-pr-widget.settings.title_align.options__2.label"
+        },
+        {
+          "value": "center",
+          "label": "t:sections.shortcode-pr-widget.settings.title_align.options__3.label"
+        } 
+      ],
+      "default": "left"
+    }, 
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "t:sections.shortcode-pr-widget.settings.collection.label"
+    },
+    {
+      "type": "text",
+      "id": "limit",
+      "label": "t:sections.shortcode-pr-widget.settings.limit.label",
+      "default": "3"
+    }, 
+    {
+      "type": "text",
+      "id": "item_show",
+      "label": "t:sections.shortcode-pr-widget.settings.item_show.label",
+      "default": "3"
+    },
+    {
+      "type": "header",
+      "content": "t:sections.shortcode-pr-widget.settings.header__2.content"
+    },
+    {
+      "type": "select",
+      "id": "view_mode",
+      "label": "t:sections.shortcode-pr-widget.settings.view_mode.label",
+      "options": [ 
+        {
+          "value": "list",
+          "label": "t:sections.shortcode-pr-widget.settings.view_mode.options__1.label"
+        },
+        {
+          "value": "products-slider",
+          "label": "t:sections.shortcode-pr-widget.settings.view_mode.options__2.label"
+        }
+      ],
+      "default": "list"
+    }, 
+    {
+      "type": "header",
+      "content": "t:sections.shortcode-pr-widget.settings.header__3.content"
+    }, 
+    {
+      "type": "text",
+      "id": "autoplay",
+      "label": "t:sections.shortcode-pr-widget.settings.autoplay.label",
+      "info": "t:sections.shortcode-pr-widget.settings.autoplay.info",
+      "default": "5000"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_nav",
+      "label": "t:sections.shortcode-pr-widget.settings.show_nav.label",
+      "default": true
+    },
+    {
+      "type": "select",
+      "id": "nav_position",
+      "label": "t:sections.shortcode-pr-widget.settings.nav_position.label",
+      "options": [
+        {
+          "value": "middle",
+          "label": "t:sections.shortcode-pr-widget.settings.nav_position.options__1.label"
+        },
+        {
+          "value": "nav-center-images-only",
+          "label": "t:sections.shortcode-pr-widget.settings.nav_position.options__2.label"
+        },
+        {
+          "value": "show-nav-title",
+          "label": "t:sections.shortcode-pr-widget.settings.nav_position.options__3.label"
+        },
+        {
+          "value": "nav-bottom",
+          "label": "t:sections.shortcode-pr-widget.settings.nav_position.options__4.label"
+        }
+      ],
+      "default": "middle"
+    },
+    {
+      "type": "select",
+      "id": "nav_side",
+      "label": "t:sections.shortcode-pr-widget.settings.nav_side.label",
+      "options": [
+        {
+          "value": "",
+          "label": "t:sections.shortcode-pr-widget.settings.nav_side.options__1.label"
+        },
+        {
+          "value": "nav-pos-inside",
+          "label": "t:sections.shortcode-pr-widget.settings.nav_side.options__2.label"
+        },
+        {
+          "value": "nav-pos-outside",
+          "label": "t:sections.shortcode-pr-widget.settings.nav_side.options__3.label"
+        } 
+      ] 
+    },
+    {
+      "type": "select",
+      "id": "nav_type",
+      "label": "t:sections.shortcode-pr-widget.settings.nav_type.label",
+      "options": [
+        {
+          "value": "",
+          "label": "t:sections.shortcode-pr-widget.settings.nav_type.options__1.label"
+        },
+        {
+          "value": "rounded-nav",
+          "label": "t:sections.shortcode-pr-widget.settings.nav_type.options__2.label"
+        },
+        {
+          "value": "big-nav",
+          "label": "t:sections.shortcode-pr-widget.settings.nav_type.options__3.label"
+        },
+        {
+          "value": "nav-style-1",
+          "label": "t:sections.shortcode-pr-widget.settings.nav_type.options__4.label"
+        },
+        {
+          "value": "nav-style-2",
+          "label": "t:sections.shortcode-pr-widget.settings.nav_type.options__5.label"
+        },
+        {
+          "value": "nav-style-4",
+          "label": "t:sections.shortcode-pr-widget.settings.nav_type.options__6.label"
+        },
+        {
+          "value": "nav-style-3",
+          "label": "t:sections.shortcode-pr-widget.settings.nav_type.options__7.label"
+        } 
+      ],
+      "default": "nav-style-4"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_nav_hover",
+      "label": "t:sections.shortcode-pr-widget.settings.show_nav_hover.label"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_paging",
+      "label": "t:sections.shortcode-pr-widget.settings.show_paging.label"
+    },
+    {
+      "type": "select",
+      "id": "page_position",
+      "label": "t:sections.shortcode-pr-widget.settings.page_position.label",
+      "options": [ 
+        {
+          "value": "",
+          "label": "t:sections.shortcode-pr-widget.settings.page_position.options__1.label"
+        },
+        {
+          "value": "show-dots-title-right",
+          "label": "t:sections.shortcode-pr-widget.settings.page_position.options__2.label"
+        }
+      ] 
+    }
+  ] 
+}
+{% endschema %}

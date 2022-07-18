@@ -1,0 +1,23 @@
+{%- capture blog %}{% include 'shortcode-render' render:'blog' default: 'news' -%}{%- endcapture -%}    
+{%- capture limit %}{% include 'shortcode-render' render:'limit' default: '4' -%}{%- endcapture -%}  
+{%- assign paginate_index = limit | plus: 0  -%} 
+{%- assign blog = blogs[blog] -%}
+{%- unless blog.empty? -%}  
+<div class="post-slide">
+  {%- for article in blog.articles limit:paginate_index -%} 
+  <div class="post-item-small">
+    {%- if article.image -%}  
+    <div class="post-image">
+      <a href="{{ article.url }}">
+        <img class="lazyload" data-src="{{ article | img_url: '150x150', crop: 'center' }}" />
+      </a>
+    </div>
+    {%- endif -%}
+    <a href="{{ article.url }}"> 
+      {{ article.title }} 
+    </a>
+    <span class="post-date">{{ article.published_at  | date: '%b %d, %Y' }}</span>
+  </div>
+  {%- endfor -%} 
+</div>
+{%- endunless -%} 

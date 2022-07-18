@@ -1,0 +1,60 @@
+<div data-section-id="{{ section.id }}" data-section-type="instagram-section">
+  <div id="instagram-section-{{ section.id }}" class="article-section">  
+    <div style="position:relative;">
+      <h3>Code:</h3>
+      <code>
+        <!-- Shortcode product --> 
+        [article-widget blog="{{section.settings.blog}}" limit="{{section.settings.limit}}" ] 
+        <!-- / Shortcode product -->
+      </code>
+      {%- assign blog = blogs[section.settings.blog] -%}
+      {%- unless blog.empty? -%}
+      <div class="post-slide">
+        {%- for article in blog.articles limit:section.settings.limit -%} 
+        <div class="post-item-small">
+          {%- if article.image -%}  
+          <div class="post-image">
+            <a href="{{ article.url }}">
+              <img class="lazyload" data-src="{{ article | img_url: '150x150', crop: 'center' }}" />
+            </a>
+          </div>
+          {%- endif -%}
+          <a href="{{ article.url }}"> 
+            {{ article.title }} 
+          </a>
+          <span class="post-date">{{ article.published_at  | date: '%b %d, %Y' }}</span>
+        </div>
+        {%- endfor -%}
+      </div>
+      {%- endunless -%} 
+    </div> 
+  </div>
+</div>
+{% schema %}
+{
+  "name": "t:sections.shortcode-article-widget.name",
+  "settings": [ 
+    {
+      "type": "header",
+      "content": "t:sections.shortcode-article-widget.settings.header.content"
+    },    
+    {
+      "id": "blog",
+      "type": "blog",
+      "label": "t:sections.shortcode-article-widget.settings.blog.label"
+    },
+    {
+      "type": "text",
+      "id": "limit",
+      "label": "t:sections.shortcode-article-widget.settings.limit.label",
+      "default": "4"
+    }
+  ] 
+}
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

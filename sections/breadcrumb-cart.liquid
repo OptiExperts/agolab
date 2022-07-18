@@ -1,0 +1,25 @@
+{%- capture breadcrumb -%}
+<div class="sp-page-header page-header-8">
+  <ul class="breadcrumb text-center">
+    <li class="current"><a href="/cart/">{{ 'cart.general.title' | t }}</a></li>
+    <li class=""><i class="icon-angle-right"></i> <a href="/checkout/">{{ 'cart.general.checkout' | t }}</a></li>
+    <li class="disable"><i class="icon-angle-right"></i> <a href="#">{{ 'cart.general.complete' | t }}</a></li>
+  </ul>
+</div>
+{%- endcapture -%}
+{%- if settings.sidebar_move == blank -%}
+{{breadcrumb}}
+{%- endif -%} 
+
+{% schema %}
+  {
+    "name": "Breadcrumb",
+    "settings": []
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

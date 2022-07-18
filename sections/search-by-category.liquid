@@ -1,0 +1,74 @@
+<div class="search-by-category input-dropdown">
+  <div class="input-dropdown-inner shopify-scroll-content">
+    <input type="hidden" name="product_cat" value="all">
+    <a href="#" data-val="all">{{ 'general.search.category' | t }}</a>
+    <div class="list-wrapper shopify-scroll has-scrollbar">
+      <ul class="shopify-scroll-content" tabindex="0">
+        <li style="display:none;"><a href="#" data-val="all">{{ 'general.search.category' | t }}</a></li>
+        {%- if section.settings.select_collection == '1' -%}
+          {%- for collection in collections -%}
+            {%- if collection.products.size > 0 -%}
+              <li class="cat-item cat-item-{{collection.id}}">
+                <a href="{{collection.url}}" data-val="{{collection.title | handleize}}"> 
+                  {{ collection.title }} 
+                </a>
+              </li>
+            {%- endif -%}
+          {%- endfor -%}
+        {%- else -%}
+          {%- for block in section.blocks -%}
+            {%- assign collection = collections[block.settings.collection] -%}
+          {%- if collection.products.size > 0 -%}
+            <li class="cat-item cat-item-{{collection.id}}">
+              <a href="{{collection.url}}" data-val="{{collection.title | handleize}}"> 
+                {{ collection.title }} 
+              </a>
+            </li>
+          {%- endif -%}
+          {%- endfor -%}
+        {%- endif -%}
+      </ul>
+    </div>
+  </div>
+</div>
+{% schema %}
+  {
+    "name": "t:sections.search-by-category.name",
+    "settings": [
+      {
+        "type": "radio",
+        "id": "select_collection",
+        "label": "t:sections.search-by-category.settings.select_collection.label",
+        "options": [
+          {
+            "value": "1",
+            "label": "t:sections.search-by-category.settings.select_collection.options__1.label"
+          },
+          {
+            "value": "2",
+            "label": "t:sections.search-by-category.settings.select_collection.options__2.label"
+          }
+        ]
+      }
+     ],
+     "blocks": [
+      {
+        "type":"collection",
+        "name":"t:sections.search-by-category.blocks.collection.name",
+        "settings": [
+          {
+            "type":"collection",
+            "id":"collection",
+            "label":"t:sections.search-by-category.blocks.collection.settings.collection.label"
+          }
+        ]
+      }
+    ]
+  }
+{% endschema %}
+
+{% stylesheet %}
+{% endstylesheet %}
+
+{% javascript %}
+{% endjavascript %}

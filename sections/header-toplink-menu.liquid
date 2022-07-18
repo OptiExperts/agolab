@@ -1,0 +1,126 @@
+<ul class="links">
+  {%- if settings.header_design == 'type16' -%}
+  <li>
+    <a id='header-compare' href="javascript:;" ><i class="icon-compare-link"></i><span>{{'header.settings.compare' | t}}</span> <span class='compareCount'>(0)</span></a>
+  </li>
+  {%- endif -%}
+  {%- if section.blocks.size > 0 -%}
+  {%- for block in section.blocks -%}
+  {%- case block.type -%}
+  {%- when 'menu_wishlist' -%}
+  <li {% if forloop.last %}class="last"{% endif %}>
+    <a id='header-wishlist' class="wishlist-popup" href="javascript:;">
+      <span>{{ block.settings.title }}</span>
+      <span class='wishlistCount'></span>
+    </a>
+  </li>
+  {%- when 'menu_login' -%}
+  <li {% if forloop.last %}class="last"{% endif %}>
+    {%- if customer -%}
+    <a href="/account/logout">{{ 'header.settings.logout' | t }}</a>
+    {%- else -%}
+    <a href="/account/login">{{ block.settings.title }}</a>
+    {%- endif -%}
+  </li>
+  {%- when 'html' -%}
+  <li class="d-none d-lg-block {% if forloop.last %}last{% endif %}"> 
+    {{ block.settings.html }} 
+  </li>
+  {%- when 'menu_item' -%}
+  {%- if block.settings.button_link != blank and block.settings.title != blank -%}
+  <li {% if forloop.last %}class="last"{% endif %}>
+    <a href="{{block.settings.button_link}}"> 
+      {{ block.settings.title }} 
+    </a>
+  </li>
+  {%- endif -%}
+  {%- endcase -%}
+  {%- endfor -%}
+  {%- endif -%}
+</ul>
+{%- if section.blocks.size > 0 -%}
+{%- for block in section.blocks -%}
+{%- case block.type -%} 
+{%- when 'html2' -%}
+<span class="separator"></span>
+<div class="custom-html"> 
+  {{ block.settings.html }} 
+</div>
+{%- endcase -%}
+{%- endfor -%}
+{%- endif -%}
+{% schema %}
+{
+  "name": "t:sections.header-toplink.name",
+  "tag": "section",
+  "class": "spaced-section header-toplink", 
+  "blocks": [
+    {
+      "type": "menu_wishlist",
+      "name": "t:sections.header-toplink.blocks.menu_wishlist.name",
+      "limit": 1,
+        "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.header-toplink.blocks.general.settings.title.label",
+          "default": "My Wishlist"
+        }
+      ]
+    },
+    {
+      "type": "menu_login",
+      "name": "t:sections.header-toplink.blocks.menu_login.name",
+      "limit": 1,
+        "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.header-toplink.blocks.general.settings.title.label",
+          "default": "Login"
+        }
+      ]
+    },
+    {
+      "type":"menu_item",
+      "name":"t:sections.header-toplink.blocks.menu_item.name",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "t:sections.header-toplink.blocks.general.settings.title.label",
+          "default": "Contact Us"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "t:sections.header-toplink.blocks.general.settings.button_link.label"
+        }
+      ]
+    },
+    {
+      "type": "html",
+      "name": "t:sections.header-toplink.blocks.html.name",
+        "settings": [
+        {
+          "type": "text",
+          "id": "html",
+          "label": "t:sections.header-toplink.blocks.general.settings.html.label",
+          "default": "DEFAULT WELCOME MSG!"
+        }
+      ]
+    },
+    {
+      "type": "html2",
+      "name": "t:sections.header-toplink.blocks.html2.name",
+        "settings": [
+        {
+          "type": "textarea",
+          "id": "html",
+          "label": "t:sections.header-toplink.blocks.general.settings.html.label" 
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}

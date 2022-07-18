@@ -1,0 +1,16 @@
+{%- capture link_list %}{% include 'shortcode-render' render:'handle_link' -%}{%- endcapture -%}    
+{%- capture extra_class %}{% include 'shortcode-render' render:'extra_class' -%}{%- endcapture -%}   
+{%- if link_list != '' -%} 
+<ul class="link-list {{extra_class}}">
+  {%- for link in linklists[link_list].links -%} 
+  {%- if link.title contains '[' -%}
+  {%- assign extra_class = link.title | split: '[' | last | split: ']' | first -%}
+  {%- endif -%}
+  <li{% if link.title contains '[' %} class="{{extra_class}}"{% endif %}> 
+    <a href="{{ link.url }}"> 
+      {{ link.title | split: '[' | first | capitalize }} 
+    </a>
+  </li> 
+  {%- endfor -%}
+</ul> 
+{%- endif -%}

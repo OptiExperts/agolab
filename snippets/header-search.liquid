@@ -1,0 +1,20 @@
+<div class="search-extended {% if settings.header_search_colletion != blank %}has-categories{% endif %}">
+  <form role="search" method="get" class="searchform {% if settings.header_search_colletion != blank  and is_mobile == blank %}has-categories-dropdown{% endif %} {% if settings.header_ajax_search != blank %}porto-ajax-search{% endif %}" action="/search" data-thumbnail="1" data-price="1" data-post-type="product" data-count="15">
+    <label class="screen-reader-text" for="q"></label>
+    <input type="text" class="s" placeholder="{{ 'general.search.placeholder' | t }}" value="" name="q" autocomplete="off">
+    <input type="hidden" name="type" value="product">
+    {%- if settings.header_search_colletion != blank and is_mobile == blank -%}
+      {%- section 'search-by-category' -%}
+    {%- endif -%}
+    <button type="submit" class="searchsubmit">{{ 'general.search.submit' | t }}</button>
+  </form>
+  <div class="search-info-text"><span>{{ 'general.search.info_search' | t }}</span></div>
+  <div class="search-results-wrapper">
+    <div class="shopify-scroll has-scrollbar">
+      <div class="shopify-search-results shopify-scroll-content" tabindex="0">
+        <div class="autocomplete-suggestions" style="position: absolute; max-height: 300px; z-index: 9999; width: 308px; display: flex;"></div>
+      </div>
+    </div>
+    <div class="shopify-search-loader"></div>
+  </div>
+</div>

@@ -1,0 +1,290 @@
+{{ 'sidebar.css' | asset_url | stylesheet_tag }}
+{{ 'page-cart.css' | asset_url | stylesheet_tag }}
+{%- assign sidebar_style = section.settings.sidebar_style -%}
+{%- capture breadcrumb -%}
+<div class="sp-page-header page-header-8">
+  <ul class="breadcrumb text-center">
+    <li class="current"><a href="/cart/">{{ 'cart.general.title' | t }}</a></li>
+    <li class=""><i class="icon-angle-right"></i> <a href="/checkout/">{{ 'cart.general.checkout' | t }}</a></li>
+    <li class="disable"><i class="icon-angle-right"></i> <a href="#">{{ 'cart.general.complete' | t }}</a></li>
+  </ul>
+</div>
+{%- endcapture -%}
+<div class="container"> 
+  <div class="row">
+    {%- assign sidebar_class = 'col-lg-3' -%}
+    {%- if section.settings.sidebar_left != blank -%}
+    {%- assign main_class = 'col-lg-9' -%}
+    {%- endif -%} 
+    {%- if section.settings.sidebar_right != blank -%}
+    {%- assign main_class = 'col-lg-9' -%} 
+    {%- endif -%}
+    {%- if section.settings.sidebar_left != blank and section.settings.sidebar_right != blank -%}
+    {%- assign main_class = 'col-lg-6' -%} 
+    {%- endif -%}   
+    {%- if section.settings.sidebar_left == blank and section.settings.sidebar_right == blank -%}
+    {%- assign main_class = 'col-lg-12' -%} 
+    {%- endif -%}   
+    <div class="{{main_class}} main-content main-cart">
+      {%- if settings.sidebar_move != blank -%}
+      {{breadcrumb}}
+      {%- endif -%}  
+      {% include 'cart-template' %}
+    </div>
+    {% if section.settings.sidebar_left != blank %}
+    <div class="{{sidebar_class}} sidebar col-left">
+      {% include 'sidebar-left' %}
+    </div>
+    {% endif %}  
+    {% if section.settings.sidebar_right != blank %}
+    <div class="{{sidebar_class}} sidebar-right col-right">
+      {% include 'sidebar-right' %}
+    </div>
+    {% endif %} 
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "t:sections.main-cart.name",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "cart_notes_enable",
+        "label": "t:sections.main-cart.settings.cart_notes_enable.label",
+        "default": true
+      },
+	  {
+        "type": "header",
+        "content": "t:sections.sidebar-left.settings.header.content"
+      }, 
+      {
+        "type": "checkbox",
+        "id": "sidebar_left",
+        "label": "t:sections.sidebar-left.settings.sidebar_left.label",
+        "default": false
+      }, 
+      {
+        "type": "select",
+        "id": "sidebar_style",
+        "label": "t:sections.sidebar-left.settings.sidebar_style.label",
+        "options": [
+          {
+            "value": "1",
+            "label": "t:sections.sidebar-left.settings.sidebar_style.options__1.label"
+          },
+          {
+            "value": "2",
+            "label": "t:sections.sidebar-left.settings.sidebar_style.options__2.label"
+          },
+          {
+            "value": "3",
+            "label": "t:sections.sidebar-left.settings.sidebar_style.options__3.label"
+          }
+        ],
+        "default": "1"
+      }, 
+	  {
+        "type": "header",
+        "content": "t:sections.sidebar-right.settings.header.content"
+      }, 
+      {
+        "type": "checkbox",
+        "id": "sidebar_right",
+        "label": "t:sections.sidebar-right.settings.sidebar_right.label",
+        "default": false
+      }
+    ],
+	"blocks": [
+      {
+        "type": "html",
+        "name": "t:sections.sidebar-left.blocks.html.name",
+        "settings": [  
+          {
+            "type": "header", 
+            "content": "t:sections.sidebar-left.blocks.html.settings.header.content"
+          },
+          {
+            "type": "html",
+            "id": "html",
+            "label": "t:sections.sidebar-left.blocks.html.settings.html.label",
+            "default": "<h2>Custom HTML Block</h2><h5>This is a custom sub-title.</h5><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras non placerat mi. Etiam non tellus </p>"
+          } 
+        ]
+      },
+      {
+        "type": "menu",
+        "name": "t:sections.sidebar-left.blocks.menu.name",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "header", 
+            "content": "t:sections.sidebar-left.blocks.menu.settings.header.content"
+          },
+          {
+            "type": "link_list",
+            "id": "menu",
+            "label": "t:sections.sidebar-left.blocks.menu.settings.menu.label"
+          }
+        ]
+      },
+      {
+        "type": "products",
+        "name": "t:sections.sidebar-left.blocks.products.name",
+        "settings": [  
+          {
+            "type": "header", 
+            "content": "t:sections.sidebar-left.blocks.products.settings.header.content"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "t:sections.sidebar-left.blocks.products.settings.title.label",
+            "default": "Featured"
+          },
+          {
+            "type": "collection",
+            "id": "collection",
+            "label": "t:sections.sidebar-left.blocks.products.settings.collection.label"
+          },
+          {
+            "type": "text",
+            "id": "limit",
+            "label": "t:sections.sidebar-left.blocks.products.settings.limit.label",
+            "default": "3"
+          }
+        ]
+      }, 
+      {
+        "type": "menu_collection",
+        "name": "t:sections.sidebar-left.blocks.menu_collection.name",
+        "limit": 1,
+        "settings": [  
+          {
+            "type": "header", 
+            "content": "t:sections.sidebar-left.blocks.menu_collection.settings.header.content"
+          },
+          {
+            "type": "link_list",
+            "id": "menu_collection",
+            "label": "t:sections.sidebar-left.blocks.menu_collection.settings.menu_collection.label"
+          },
+          {
+            "type": "checkbox",
+            "id": "show_count",
+            "label": "t:sections.sidebar-left.blocks.menu_collection.settings.show_count.label",
+            "default": false
+          }
+        ]
+      },
+	  
+      {
+        "type": "html-right",
+        "name": "t:sections.sidebar-right.blocks.html.name",
+        "settings": [  
+          {
+            "type": "header", 
+            "content": "t:sections.sidebar-right.blocks.html.settings.header.content"
+          },
+          {
+            "type": "html",
+            "id": "html",
+            "label": "t:sections.sidebar-right.blocks.html.settings.html.label",
+            "default": "<div><div><i class=\"icon-shipped\"></i><h3>FREE<br>SHIPPING</h3></div><div><i class=\"icon-us-dollar\"></i><h3>100% MONEY<br>BACK GUARANTEE</h3></div><div><i class=\"icon-online-support\"></i><h3>ONLINE<br>SUPPORT 24/7</h3></div></div>"
+          } 
+        ]
+      },
+      {
+        "type": "banner-right",
+        "name": "t:sections.sidebar-right.blocks.banner.name",
+        "limit": 1,
+        "settings": [
+          {
+            "type": "header", 
+            "content": "t:sections.sidebar-right.blocks.banner.settings.header.content"
+          },
+          {
+            "type": "checkbox",
+            "id": "banner1_enable",
+            "label": "t:sections.sidebar-right.blocks.banner.settings.banner1_enable.label",
+            "default": true
+          },
+          {
+            "type": "image_picker",
+            "id": "banner1",
+            "label": "t:sections.sidebar-right.blocks.banner.settings.banner1.label",
+            "info": "t:sections.sidebar-right.blocks.banner.settings.banner1.info"
+          },
+          {
+            "type": "url",
+            "id": "banner_link_1",
+            "label": "t:sections.sidebar-right.blocks.banner.settings.banner_link_1.label"
+          },
+          {
+            "type": "checkbox",
+            "id": "banner2_enable",
+            "label": "t:sections.sidebar-right.blocks.banner.settings.banner2_enable.label",
+            "default": true
+          },
+          {
+            "type": "image_picker",
+            "id": "banner2",
+            "label": "t:sections.sidebar-right.blocks.banner.settings.banner2.label",
+            "info": "t:sections.sidebar-right.blocks.banner.settings.banner2.info"
+          },
+          {
+            "type": "url",
+            "id": "banner_link_2",
+            "label": "t:sections.sidebar-right.blocks.banner.settings.banner_link_2.label"
+          },
+          {
+            "type": "checkbox",
+            "id": "banner3_enable",
+            "label": "t:sections.sidebar-right.blocks.banner.settings.banner3_enable.label",
+            "default": true
+          },
+          {
+            "type": "image_picker",
+            "id": "banner3",
+            "label": "t:sections.sidebar-right.blocks.banner.settings.banner3.label",
+            "info": "t:sections.sidebar-right.blocks.banner.settings.banner3.info"
+          },
+          {
+            "type": "url",
+            "id": "banner_link_3",
+            "label": "t:sections.sidebar-right.blocks.banner.settings.banner_link_3.label"
+          }
+        ]
+      },
+      {
+        "type": "products-right",
+        "name": "t:sections.sidebar-right.blocks.products.name",
+        "limit": 1,
+        "settings": [  
+          {
+            "type": "header", 
+            "content": "t:sections.sidebar-right.blocks.products.settings.header.content"
+          },
+          {
+            "type": "text",
+            "id": "title",
+            "label": "t:sections.sidebar-right.blocks.products.settings.title.label",
+            "default": "Featured"
+          },
+          {
+            "type": "collection",
+            "id": "collection",
+            "label": "t:sections.sidebar-right.blocks.products.settings.collection.label"
+          },
+          {
+            "type": "text",
+            "id": "limit",
+            "label": "t:sections.sidebar-right.blocks.products.settings.limit.label",
+            "default": "6"
+          }
+        ]
+      }
+	]
+  }
+{% endschema %}
+

@@ -1,0 +1,59 @@
+<!-- /templates/page.liquid -->
+{% include 'breadcrumb' %}
+<div class="container">
+  <div class="page-container">
+    <div class="rte">
+      <div class="shortcode-box">
+        <h3>Products</h3>
+        {%- section 'shortcode-pr' -%}
+      </div>
+      <div class="shortcode-box">
+        <h3>Products Widget</h3>
+        {%- section 'shortcode-pr-widget' -%}
+      </div>
+      <div class="shortcode-box">
+        <h3>Find Product Widget</h3>
+        {%- section 'shortcode-find-products' -%}
+      </div>
+      <div class="shortcode-box">
+        <h3>Collection</h3>
+        {%- section 'shortcode-collection' -%}
+      </div>
+      <div class="shortcode-box">
+        <h3>Instagram</h3>
+        {%- section 'shortcode-instagram' -%}
+      </div>
+      <div class="shortcode-box">
+        <h3>Blog Article</h3>
+        {%- section 'shortcode-article' -%}
+      </div>
+      <div class="shortcode-box">
+        <h3>Blog Article Widget</h3>
+        {%- section 'shortcode-article-widget' -%}
+      </div>
+      <div class="shortcode-box">
+        <h3>Testimonials</h3>
+        {%- section 'shortcode-testimonials' -%}
+      </div>
+      <div class="shortcode-box">
+        <h3>Brands</h3>
+        {%- section 'shortcode-brands' -%}
+      </div> 
+    </div>
+    <style>
+      .shortcode-box {
+        margin-bottom: 40px;
+        padding: 40px 20px;
+        border: solid 1px #e7e7e7;
+        box-shadow:0 1px 0 0 rgba(0,0,0,.06);
+      }
+      .shortcode-box h3 {
+        text-align: left;
+      }
+      .shortcode-box code {
+        display: block;
+        margin-bottom: 30px;
+      }
+    </style>
+  </div>
+</div>

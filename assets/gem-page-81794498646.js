@@ -1,0 +1,235 @@
+
+jQuery(function() {
+  var mode = jQuery('.gryffeditor').hasClass('editing') ? 'dev' : 'production';
+  var $module = jQuery('#m-1585738713034').children('.module');
+  if (mode == 'dev') {
+      jQuery('#m-1585738713034').attr('data-name', '').css('background-image', 'none').removeAttr('data-image');
+      
+      var flag = true;
+      var $bkLiquid = parent.jQuery('body').find('#gfFrame').contents().find('#module-1585738713034');
+      if ($bkLiquid && $bkLiquid.length > 0) {
+          var $settings = $bkLiquid.find('.settings');
+          try {
+              var name = '';
+              var imageUrl = '';
+              settings = JSON.parse($settings.html());
+              for (var i = 0; i < settings.length; i++) {
+                  if (settings[i].name == 'name') {
+                      name = settings[i].default_value
+                  }
+                  if (settings[i].name == 'image') {
+                      imageUrl = settings[i].default_value
+                  }
+              }
+              if (imageUrl != '') {
+                  flag = false;
+                  jQuery('#m-1585738713034').css('background-image', 'url(' + imageUrl + ')').css('min-height', '100px').attr('data-image', 'true');
+              }
+              if (name != '' && name != 'Custom Code') {
+                  flag = false;
+                  jQuery('#m-1585738713034').attr('data-name', name);
+              }
+          } catch(error) {
+              console.log(error);
+          }
+      }
+      if (flag) {
+          jQuery('#m-1585738713034').attr('data-name', 'Right click on the module, then choose Edit Html / Liquid option to start writing your custom code.');
+      }
+  }
+});jQuery(function() {
+  var $module = jQuery('#m-1585737621887').children('.module');
+});
+    jQuery(function() {
+      var $module = jQuery('#m-1585737621870').children('.module');
+    });
+  
+    
+    
+    jQuery(function() {
+  var $module = jQuery('#m-1585737621913').children('.module');
+});jQuery(function() {
+  var $module = jQuery('#m-1585737621929').children('.module');
+});
+    jQuery(function() {
+      var $module = jQuery('#m-1585743724573').children('.module');
+    });
+  
+    jQuery(function() {
+        var $module = jQuery('#m-1585737621917').children('.module');
+        $module.gfV3Product();
+    });
+  
+    jQuery(function() {
+        var $module = jQuery('#m-1585737621917-1').children('.module');
+    });
+  
+    jQuery(function() {
+        var $module = jQuery('#m-1585737621917-2').children('.module');
+        $module.gfV3ProductPrice();
+    });
+  
+    jQuery(function() {
+        var $module = jQuery('#m-1585737621896').children('.module');
+        $module.gfV3ProductCartButton({ onItemAdded: function() {}});
+    });
+  
+    jQuery(function() {
+        var $module = jQuery('#m-1585737621853').children('.module');
+        $module.gfV3Product();
+    });
+  
+    jQuery(function() {
+        var $module = jQuery('#m-1585737621853-1').children('.module');
+    });
+  
+    jQuery(function() {
+        var $module = jQuery('#m-1585737621785').children('.module');
+        $module.gfV3ProductPrice();
+    });
+  
+    jQuery(function() {
+        var $module = jQuery('#m-1585737621934').children('.module');
+        $module.gfV3ProductCartButton({ onItemAdded: function() {}});
+    });
+  
+    jQuery(function() {
+        var $module = jQuery('#m-1600551227686').children('.module');
+        $module.gfV3Product();
+    });
+  
+    jQuery(function() {
+        var $module = jQuery('#m-1600551227686-1').children('.module');
+    });
+  
+    jQuery(function() {
+        var $module = jQuery('#m-1600551227676').children('.module');
+        $module.gfV3ProductPrice();
+    });
+  
+    jQuery(function() {
+        var $module = jQuery('#m-1600551227765').children('.module');
+        $module.gfV3ProductCartButton({ onItemAdded: function() {}});
+    });
+  
+    jQuery(function() {
+        var $module = jQuery('#m-1600551369674').children('.module');
+        $module.gfV3Product();
+    });
+  
+    jQuery(function() {
+        var $module = jQuery('#m-1600551369674-1').children('.module');
+    });
+  
+    jQuery(function() {
+        var $module = jQuery('#m-1600551369566').children('.module');
+        $module.gfV3ProductPrice();
+    });
+  
+    jQuery(function() {
+        var $module = jQuery('#m-1600551369611').children('.module');
+        $module.gfV3ProductCartButton({ onItemAdded: function() {}});
+    });
+  
+    jQuery(function() {
+        var $module = jQuery('#m-1600551369722').children('.module');
+        $module.gfV3Product();
+    });
+  
+    jQuery(function() {
+        var $module = jQuery('#m-1600551369722-1').children('.module');
+    });
+  
+    jQuery(function() {
+        var $module = jQuery('#m-1600551369722-2').children('.module');
+        $module.gfV3ProductPrice();
+    });
+  
+    jQuery(function() {
+        var $module = jQuery('#m-1600551369688').children('.module');
+        $module.gfV3ProductCartButton({ onItemAdded: function() {}});
+    });
+  
+    jQuery(function() {
+        var $module = jQuery('#m-1600551369648').children('.module');
+        $module.gfV3Product();
+    });
+  
+    jQuery(function() {
+        var $module = jQuery('#m-1600551369648-1').children('.module');
+    });
+  
+    jQuery(function() {
+        var $module = jQuery('#m-1600551369702').children('.module');
+        $module.gfV3ProductPrice();
+    });
+  
+    jQuery(function() {
+        var $module = jQuery('#m-1600551369641').children('.module');
+        $module.gfV3ProductCartButton({ onItemAdded: function() {}});
+    });
+  
+        jQuery(function() {
+            var $module = jQuery('#m-1585737621821').children('.module');
+            var single   = $module.attr('data-single');
+            var openDefault  = $module.attr('data-openDefault');
+            var openTab  = $module.attr('data-openTab');
+            var mode     = jQuery('.gryffeditor').hasClass('editing') ? 'dev' : 'production';
+
+            if(openDefault == 0 || openDefault == '0') {
+                openTab = '0';
+            }
+
+            $module.gfAccordion({
+                single: single,
+                openTab: openTab,
+                mode: mode
+            });
+
+            var borderColor = $module.attr('data-borderColor');
+            var borderSize = $module.attr('data-borderSize');
+
+            $module.children('[data-accordion]').children('[data-control]').css('border-bottom', borderSize + ' solid ' + borderColor);
+            $module.children('[data-accordion]').children('[data-content]').children().css('border-bottom', borderSize + ' solid ' + borderColor);
+        });
+    
+        jQuery(function() {
+            var mode = jQuery('.gryffeditor').hasClass('editing') ? 'dev' : 'production';
+            var $module = jQuery('#m-1585737621798').children('.module');
+            if (mode == 'dev') {
+                jQuery('#m-1585737621798').attr('data-name', '').css('background-image', 'none').css('min-height', '50px').removeAttr('data-image');
+                
+                var flag = true;
+                var $bkLiquid = parent.jQuery('body').find('#gfFrame').contents().find('#module-1585737621798');
+                if ($bkLiquid && $bkLiquid.length > 0) {
+                    var $settings = $bkLiquid.find('.settings');
+                    try {
+                        var name = '';
+                        var imageUrl = '';
+                        settings = JSON.parse($settings.html());
+                        for (var i = 0; i < settings.length; i++) {
+                            if (settings[i].name == 'name') {
+                                name = settings[i].default_value
+                            }
+                            if (settings[i].name == 'image') {
+                                imageUrl = settings[i].default_value
+                            }
+                        }
+                        if (imageUrl != '') {
+                            flag = false;
+                            jQuery('#m-1585737621798').css('background-image', 'url(' + imageUrl + ')').css('min-height', '100px').attr('data-image', 'true');
+                        }
+                        if (name != '' && name != 'Custom Code') {
+                            flag = false;
+                            jQuery('#m-1585737621798').attr('data-name', name);
+                        }
+                    } catch(error) {
+                        console.log(error);
+                    }
+                }
+                if (flag) {
+                    jQuery('#m-1585737621798').attr('data-name', 'Right click on the module, then choose Edit Html / Liquid option to start writing your custom code.');
+                }
+            }
+        });
+  

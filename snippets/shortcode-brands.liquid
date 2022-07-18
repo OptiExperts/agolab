@@ -1,0 +1,50 @@
+{%- capture autoplay %}{% include 'shortcode-render' render:'autoplay' default: '5000' -%}{%- endcapture -%}  
+{%- capture columns %}{% include 'shortcode-render' render:'columns' default: '6' -%}{%- endcapture -%}  
+{%- capture item_margin %}{% include 'shortcode-render' render:'item_margin' default: '20' -%}{%- endcapture -%}
+{%- capture nav %}{% include 'shortcode-render' render:'show_nav' default: 'false' -%}{%- endcapture -%}  
+{%- capture paging %}{% include 'shortcode-render' render:'show_paging' default: 'false' -%}{%- endcapture -%}
+{%- capture total %}{% include 'shortcode-render' render:'total' default: '' -%}{%- endcapture -%}
+{%- assign total_brands = total | plus: 0 -%} 
+{%- assign show_nav = false  -%} 
+{%- if nav == 'true' -%}{%- assign show_nav = true -%}{%- endif -%}
+{%- assign show_paging = false  -%} 
+{%- if paging == 'true' -%}{%- assign show_paging = true -%}{%- endif -%}
+{%- if total -%} 
+<div class="brands-slider"> 
+  <div class="data-carousel"
+       data-auto="{{ autoplay }}"
+       data-items="{{ columns }}"
+       data-1200="{{ columns }}"
+       data-992="5"
+       data-768="3"
+       data-640="3"
+       data-480="2"
+       data-paging="{{ show_paging }}"
+       data-nav="{{ show_nav }}"
+       data-margin="{{ item_margin }}"
+       data-prev=''
+       data-next='' style="display: none;"></div> 
+  <div class="owl-carousel carousel-init dots-style-1 owl-carousel-lazy"> 
+    {%- for i in (1..total_brands)  -%}
+    {%- assign url_current = 'url' | append: i -%}
+    {%- assign src_current = 'src' | append: i -%}
+    {%- assign alt_current = 'alt' | append: i -%}
+
+    {%- capture url %}{%- include 'shortcode-render' render:url_current -%}{%- endcapture -%}
+    {%- capture img_src %}{%- include 'shortcode-render' render:src_current -%}{%- endcapture -%} 
+    {%- capture alt %}{%- include 'shortcode-render' render:alt_current -%}{%- endcapture -%}
+
+    <div class="item">  
+      {%- if img_src -%}
+      {%- assign img_url = img_src -%}
+      {%- else -%}
+      {%- assign img_url = 'img160x70.png' | asset_url -%}
+      {%- endif -%} 
+      <a href="{{ url }}">
+        <img data-src="{{ img_src }}" alt="{{ alt }}" />
+      </a>
+    </div>
+    {%- endfor -%}
+  </div>
+</div> 
+{%- endif -%}

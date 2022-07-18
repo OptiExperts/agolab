@@ -1,0 +1,77 @@
+{%- assign list = linklists[settings.nav_linklist3] -%}
+<ul class="main-menu">
+  {%- for link in list.links -%}
+  {%- capture menu_label -%}menu_item_label_{{ forloop.index }}{%- endcapture -%}
+  {%- capture menu_label_text1 -%}menu_item_label_{{ forloop.index }}_text1{%- endcapture -%}
+  {%- capture menu_label_text2 -%}menu_item_label_{{ forloop.index }}_text2{%- endcapture -%}
+  {%- assign child_list_handle = link.title | handleize -%}
+  {%- if linklists[child_list_handle].links != blank -%}
+  <li class="menu-item menu-item-has-children {% if forloop.index == list.links.size %}last{% endif %}">
+    <a href="{{ link.url }}" class="level-top">
+      <span> 
+        {{ link.title }} 
+        {%- if settings[menu_label] !='' and settings[menu_label] == '1' -%}
+        <span class="cat-label cat-label-label1 pin-bottom"> 
+          {{ settings[menu_label_text1] }} 
+        </span>
+        {%- endif -%}
+        {%- if settings[menu_label] !='' and settings[menu_label] == '2' -%}
+        <span class="cat-label cat-label-label2 pin-bottom"> 
+          {{ settings[menu_label_text2] }} 
+        </span>
+        {%- endif -%}
+      </span>
+    </a>
+    <ul class="sub-menu">
+      {%- for childlink in linklists[child_list_handle].links -%}
+      {%- assign grand_child_list_handle = childlink.title | handle -%}
+      {%- if linklists[grand_child_list_handle].links != blank -%}
+      <li class="menu-item menu-item-has-children {% if forloop.index == linklists[child_list_handle].links.size %}last{% endif %}">
+        <a href="{{ childlink.url }}"><span>{{ childlink.title }}</span></a>
+        <ul class="sub-menu">
+          {%- for grand_child_link in linklists[grand_child_list_handle].links -%}
+          <li class="menu-item {% if forloop.index == linklists[grand_child_list_handle].links.size %}last{% endif %}">
+            <a href="{{ grand_child_link.url }}" class="site-nav__link"> 
+                {{ grand_child_link.title | split: '[' | first | capitalize }} 
+                {%- if grand_child_link.title contains '[' -%}
+                {%- assign label_child  = grand_child_link.title |  split: '[' | last  | split: ']' | first -%}
+                <span class="cat-label cat-label-{{label_child | handleize }} pin-left">{{label_child | upcase }}</span>
+              {%- endif -%}
+            </a>
+          </li>
+          {%- endfor -%}
+        </ul>
+      </li>
+      {%- else -%}
+      <li class="menu-item {% if forloop.index == linklists[child_list_handle].links.size %}last{% endif %}">
+        <a href="{{ childlink.url }}">
+          <span> 
+            {{ childlink.title }} 
+          </span>
+        </a>
+      </li>
+      {%- endif -%}
+      {%- endfor -%}
+    </ul>
+  </li>
+  {%- else -%}
+  <li class="menu-item">
+    <a href="{{ link.url }}" class="level-top">
+      <span> 
+        {{ link.title }} 
+        {%- if settings[menu_label] !='' and settings[menu_label] == '1' -%}
+        <span class="cat-label cat-label-label1 pin-bottom"> 
+          {{ settings[menu_label_text1] }} 
+        </span>
+        {%- endif -%}
+        {%- if settings[menu_label] !='' and settings[menu_label] == '2' -%}
+        <span class="cat-label cat-label-label2 pin-bottom"> 
+          {{ settings[menu_label_text2] }} 
+        </span>
+        {%- endif -%}
+      </span>
+    </a>
+  </li>
+  {%- endif -%}
+  {%- endfor -%}
+</ul> 

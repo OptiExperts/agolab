@@ -1,0 +1,38 @@
+<!-- /snippets/collection-sorting.liquid -->
+{% if infinite_scrolling != blank %}
+  {% if paginate.next %}
+    <div class="infinite-loader" data-mode={{infinite_mode}} data-getfrom={{ paginate.next.url }}>
+      {%- if infinite_mode == 'byscroll' -%}
+      <span class="btn-load-more" style="display: none;">{{ 'collections.general.loading' | t}} ...</a>
+      {% else %}
+      <a href="javascript;" class="btn-load-more">{{ 'collections.general.show_more' | t}} ...</a>
+      {%- endif -%}
+    </div>
+  {% endif %}
+{% else %}
+<div class="toolbar-bottom">
+  <div class="toolbar">
+    <div class="collection-sorting-row">
+      {% if paginate.pages > 1 %}
+        <div class="pagenav-wrap">
+          <div class="pagination">
+            {% include 'pagination-page' %}
+          </div>
+        </div>
+      {% endif %}
+      <div class="limited-wrap">
+        <div class="limited-view select-new">
+          <div class="select-inner">
+            <span>{{ 'collections.limiter.title' | t }}: </span>
+            <select name="limiter" class="field bootstrap-select">
+              <option value="{{limit}}" {% if cart.attributes.pagination != blank and cart.attributes.pagination %}{% if cart.attributes.pagination == limit %}selected="selected"{% endif %}{% else %}{% if limit == '12' %}selected="selected"{% endif %}{% endif %}>{{limit}}</option>
+              <option value="24" {% if cart.attributes.pagination != blank and cart.attributes.pagination %}{% if cart.attributes.pagination == '24' %}selected="selected"{% endif %}{% else %}{% if limit == '24' %}selected="selected"{% endif %}{% endif %}>24</option>
+              <option value="36" {% if cart.attributes.pagination != blank and cart.attributes.pagination %}{% if cart.attributes.pagination == '36' %}selected="selected"{% endif %}{% else %}{% if limit == '36' %}selected="selected"{% endif %}{% endif %}>36</option> 
+            </select>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endif %}

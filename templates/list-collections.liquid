@@ -1,0 +1,58 @@
+{% comment %}
+This page represents the /collections and /products pages.
+It is an optional, but highly recommended, template for your theme.
+
+More info:
+- http://docs.shopify.com/manual/configuration/store-customization/taking-control-of-collections-listing
+{% endcomment %}
+
+{%- if settings.sidebar_move == blank -%}
+{% include 'breadcrumb' %}
+{%- endif -%}
+{%- assign sidebar-left = settings.sidebar_left_collection -%}
+{%- assign sidebar-right = settings.sidebar_right_collection -%} 
+<div class="collection-main">
+  <div class="container">
+    <div class="row"> 
+      {%- assign sidebar_class = 'col-lg-3' -%}
+      {%- if sidebar-left != blank -%}
+      {%- assign main_class = 'col-lg-9' -%}
+      {%- endif -%} 
+      {%- if sidebar-right != blank -%}
+      {%- assign main_class = 'col-lg-9' -%} 
+      {%- endif -%}
+      {%- if sidebar-left != blank and sidebar-right != blank -%}
+      {%- assign main_class = 'col-lg-6' -%} 
+      {%- endif -%}   
+      {%- if sidebar-left == blank and sidebar-right == blank -%}
+      {%- assign main_class = 'col-lg-12' -%} 
+      {%- endif -%}  
+      <div class="{{main_class}} collection-content">
+        <div class="category-products item-1200-3 item-992-3 item-768-2 item-640-2 item-320-1 ">
+          {%- if settings.sidebar_move != blank -%}
+          {% include 'breadcrumb' %}
+          {%- endif -%}
+          <ul id="products-grid" class="products-grid columns3">
+            {% for sub_collection in collections %}
+            {% if sub_collection.handle != 'frontpage' and sub_collection.all_products_count > 0 %}
+            <li class="item product product-layout-grid">
+              {% include 'collection-grid-item' %}
+            </li>
+            {% endif %}
+            {% endfor %}
+          </ul>
+        </div>
+      </div>
+      {% if sidebar-left != blank %}
+      <div class="{{sidebar_class}} sidebar col-left">
+        {% section 'sidebar-left' %}
+      </div>
+      {% endif %}
+      {% if sidebar-right != blank %}
+      <div class="{{sidebar_class}} sidebar-right col-right">
+        {% section 'sidebar-right' %}
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</div>

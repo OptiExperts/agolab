@@ -1,0 +1,101 @@
+<h3 class="title-widget"><span class="inner">{{ 'products.general.related_products' | t }}</span></h3>
+{% if collection == null or collection.handle == 'frontpage' or collection.handle == 'all' %}
+  {% assign found_a_collection = false %}
+  {% for c in product.collections %}
+    {% if found_a_collection == false and c.handle != 'frontpage' and c.handle != 'all' and c.all_products_count > 1 %}
+      {% assign found_a_collection = true %}
+      {% assign collection = c %}
+    {% endif %}
+  {% endfor %}
+{% endif %}
+{%- if collection and collection.products_count > 1 -%}
+
+  {%- assign show_discount = settings.related_show_discount -%}
+  {%- assign show_sale = settings.related_show_sale -%}
+  {%- assign sale_label_text = settings.related_sale_label_text -%}
+  {%- assign alternative_image = settings.related_alternative_image -%}
+  {%- assign show_grid_quickview = settings.related_grid_quickview -%}
+  {%- assign show_product_category = settings.related_product_category -%}
+  {%- assign show_rating_star = settings.related_rating_star -%}
+  {%- assign show_product_price = settings.related_product_price -%} 
+  {%- assign grid_swatch_type = settings.related_grid_swatch_type -%}
+  {%- assign show_addtocart = settings.related_show_addtocart -%}
+  {%- assign show_addtolinks = settings.related_show_addtolinks -%} 
+
+  {%- assign view_mode = settings.related_view_mode -%} 
+  {%- assign view_mode_class = view_mode -%}
+  {%- case settings.related_view_mode -%}
+  {%- when 'divider' -%} 
+  {%- assign view_mode_class = 'grid divider-line' -%}  
+  {%- when 'list' -%} 
+  {%- assign view_mode_class = 'grid' -%} 
+  {%- endcase -%} 
+  {%- assign layout_class = 'product-' | append:settings.related_product_layout  -%}
+  {%- assign pt_layout = settings.related_product_layout  -%}
+  {%- case settings.related_product_layout -%}
+  {%- when 'onhover' -%}
+  {%- assign layout_class = 'product-default show-links-hover' -%} 
+  {%- when 'outimage_aq_onimage' -%}
+  {%- assign layout_class = 'product-outimage_aq_onimage' -%} 
+  {%- when 'outimage_aq_onimage2' -%}
+  {%- assign layout_class = 'product-outimage_aq_onimage with-padding' -%}  
+  {%- when 'quantity' -%}
+  {%- assign layout_class = 'product-wq_onimage' -%} 
+  {%- endcase -%}  
+  {%- case settings.collection_aspect_ratio -%}
+  {%- when '1' -%}
+    {%- assign image_width = settings.collection_ratio_width -%}
+    {%- assign image_height = '' -%}
+    {%- assign ar = 1 -%}
+  {%- else -%}
+    {%- assign image_width = settings.collection_ratio_width -%}
+    {%- assign image_height = settings.collection_ratio_height -%}
+    {%- if image_width < image_height -%}
+      {%- assign ar = image_width | divided_by: 1 -%}
+    {%- else -%}
+      {%- assign ar = image_width | divided_by: image_height -%}
+    {%- endif -%}
+  {%- endcase -%}
+  {%- capture image_size -%}{{ image_width }}x{{ image_height }}{%- endcapture -%}
+  {%- assign pt = 100 | divided_by: ar | append: '%' -%}
+  {%- assign column_index = settings.related_product_column | plus: 0 -%}
+  {%- if column_index >= 4 -%}
+  {%- capture class_grid %}item-1200-{{ column_index }} item-992-4 item-768-3 item-640-2 item-320-1{%- endcapture -%}
+  {%- endif -%}
+  {%- if column_index == 3 -%}
+  {%- capture class_grid %}item-1200-{{ column_index }} item-640-2 item-320-1{%- endcapture -%} 
+  {%- endif -%}
+  {%- if column_index <= 2 -%}
+  {%- capture class_grid %}item-1200-{{ column_index }}{%- endcapture -%}  
+  {%- endif -%}
+  <div class="category-products products products-container {{view_mode_class}} products-spacing-{{settings.space_related_product}}{% if view_mode == 'grid' or view_mode=='divider' %} {{class_grid}}{% endif %}"> 
+    {%- if view_mode == 'products-slider' -%}  
+    <div class="data-carousel"
+         data-auto="{{ settings.related_autoplay }}"
+         data-items="{{ settings.related_columns }}"
+         data-1200="{{ settings.related_columns }}"
+         data-992="4"
+         data-768="3"
+         data-640="2"
+         data-480="2"
+         data-320="2"
+         data-nav="{{ settings.related_show_nav }}" 
+         data-paging="{{ settings.related_show_paging }}"
+         data-margin='0' style="display: none;"></div>
+    {%- endif -%} 
+    {%- assign limit = settings.related_product_limit | plus: 1 -%} 
+    <div class="{% if view_mode != 'products-slider' %}products-grid {% endif %}{% if view_mode == 'products-slider' %} owl-carousel carousel-init owl-carousel-lazy {{settings.related_nav_position}}{% if settings.related_nav_position != 'show-nav-title' %} {{settings.related_nav_side}} {{settings.related_nav_type}}{% endif %} {{settings.related_page_position}} {% if settings.related_show_nav_hover %}show-nav-hover{% endif %}{% else %} columns{{column_index}}{% endif %}">
+      {%- assign current_product = product -%}
+      {%- assign current_product_found = false -%}
+      {%- for product in collection.products limit: limit -%}
+      {%- if product.handle == current_product.handle -%}
+      {%- assign current_product_found = true -%}
+      {%- else %}
+      {%- unless current_product_found == false and forloop.last -%} 
+      {% include 'pt-product-loop' %} 
+      {%- endunless -%}
+      {%- endif -%}
+      {%- endfor -%} 
+    </div> 
+  </div>
+{%- endif -%}
