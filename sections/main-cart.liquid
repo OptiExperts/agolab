@@ -1,5 +1,5 @@
-{{ 'sidebar.css' | asset_url | stylesheet_tag }}
-{{ 'page-cart.css' | asset_url | stylesheet_tag }}
+<link rel="stylesheet" data-href="{{ 'sidebar.css' | asset_url }}">
+<link rel="stylesheet" data-href=" 'page-cart.css' | asset_url }}">"
 {%- assign sidebar_style = section.settings.sidebar_style -%}
 {%- capture breadcrumb -%}
 <div class="sp-page-header page-header-8">
